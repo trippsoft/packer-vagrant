@@ -1,0 +1,17 @@
+---
+- name: Seal for template
+  hosts:
+    - default
+  roles:
+    - role: trippsc2.debian_seal_for_template
+      vars:
+        debian_target_hostname: "{{ target_hostname }}"
+        debian_is_vagrant: true
+  tasks:
+    # This is an absurd hack needed for Debian
+    - name: Change primary interface to one matching Vagrant box
+      become: true
+      ansible.builtin.replace:
+        path: /etc/network/interfaces
+        regexp: 'enp0s2'
+        replace: 'enp4s0'

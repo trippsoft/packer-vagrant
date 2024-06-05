@@ -1,0 +1,29 @@
+---
+- name: Seal for template
+  hosts:
+    - default
+  roles:
+    - role: trippsc2.ubuntu_seal_for_template
+      vars:
+        ubuntu_target_hostname: "{{ target_hostname }}"
+        ubuntu_is_vagrant: true
+  tasks:
+    # This is an absurd hack needed for Ubuntu
+    - name: Change primary interface to one matching Vagrant box
+      when:
+        - ansible_distribution_major_version == '24'
+      become: true
+      ansible.builtin.replace:
+        path: /etc/netplan/50-cloud-init.yaml
+        regexp: 'enp0s2'
+        replace: 'enp4s0'
+
+    # This is an absurd hack needed for Ubuntu
+    - name: Change primary interface to one matching Vagrant box
+      when:
+        - ansible_distribution_major_version != '24'
+      become: true
+      ansible.builtin.replace:
+        path: /etc/netplan/00-installer-config.yaml
+        regexp: 'enp0s2'
+        replace: 'enp4s0'

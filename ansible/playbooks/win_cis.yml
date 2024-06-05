@@ -1,0 +1,99 @@
+- name: Apply CIS Benchmarks to Windows
+  hosts:
+    - default
+  tasks:
+    - name: Include 'windows_2019_cis' role
+      when:
+        - ansible_distribution | regex_search('(Microsoft Windows Server 2019)')
+      ansible.builtin.include_role:
+        name: trippsc2.windows_2019_cis
+      vars:
+        w2019cis_level: 1
+        w2019cis_is_template: true
+        w2019cis_rule_2_3_1_4_enabled: false # Don't rename the Administrator account
+        w2019cis_admin_username: Administrator # Don't set the Administrator account name
+        w2019cis_rule_2_3_1_5_enabled: false # Don't rename the Guest account
+        w2019cis_guest_username: Guest # Don't set the Guest account name
+        w2019cis_rule_2_3_7_4_enabled: false # Don't set login banner
+        w2019cis_rule_2_3_7_5_enabled: false # Don't set login banner
+        w2019cis_rule_2_3_7_6_force: true # Limit cached credentials
+        w2019cis_rule_9_3_5_enabled: false # Don't disable local rules for Public firewall profile
+        w2019cis_rule_9_3_6_enabled: false # Don't disable local rules for Public firewall profile
+        w2019cis_rule_18_1_3_force: true # Disable Allow Online Tips
+        w2019cis_rule_18_6_19_2_1_force: true # Disable IPv6
+        w2019cis_rule_18_6_20_1_force: true # Disable Windows Connect Now
+        w2019cis_rule_18_6_20_2_force: true # Disable Windows Connect Now
+        w2019cis_rule_18_8_1_1_force: true # Disable network usage notifications
+        w2019cis_rule_18_9_20_1_2_force: true # Disable handwriting personalization data sharing
+        w2019cis_rule_18_9_20_1_3_force: true # Disable handwriting recognition data sharing
+        w2019cis_rule_18_9_20_1_4_force: true # Disable Internet Connection Wizard
+        w2019cis_rule_18_9_20_1_7_force: true # Disable Registration Wizard
+        w2019cis_rule_18_9_20_1_8_force: true # Disable Search Companion content file updates
+        w2019cis_rule_18_9_20_1_9_force: true # Disable Order Prints
+        w2019cis_rule_18_9_20_1_10_force: true # Disable Publish to Web
+        w2019cis_rule_18_9_20_1_11_force: true # Disable Windows Messenger CEIP
+        w2019cis_rule_18_9_20_1_12_force: true # Disable Windows CEIP
+        w2019cis_rule_18_9_20_1_13_force: true # Disable Windows Error Reporting
+        w2019cis_rule_18_9_30_2_force: true # Disable upload of User Activities
+        w2019cis_rule_18_9_46_5_1_force: true # Disable Microsoft Support Diagnostic Tool
+        w2019cis_rule_18_9_46_11_1_force: true # Disable PerfTrack
+        w2019cis_rule_18_9_48_1_force: true # Disable advertising ID
+        w2019cis_rule_18_10_15_2_force: true # Disable Telemetry
+        w2019cis_rule_18_10_37_1_force: true # Disable location tracking
+        w2019cis_rule_18_10_41_1_force: true # Disable Message Service Cloud Sync
+        w2019cis_rule_18_10_43_5_2_force: true # Disable Microsoft MAPS
+        w2019cis_rule_18_10_43_7_1_force: true # Enable file hashing
+        w2019cis_rule_18_10_43_12_1_force: true # Disable Watson events
+        w2019cis_rule_18_10_59_2_force: true # Allow Cloud Search
+        w2019cis_rule_18_10_80_1_force: true # Disable Windows Ink Workspace
+        w2019cis_rule_19_6_6_1_1_force: true # Disable Help Experience Improvement Program
+        w2019cis_rule_19_7_7_3_force: true # Disable diagnostic data
+        w2019cis_rule_19_7_7_4_force: true # Disable Windows spotlight
+
+    - name: Include 'windows_2022_cis' role
+      when:
+        - ansible_distribution | regex_search('(Microsoft Windows Server 2022)')
+      ansible.builtin.include_role:
+        name: trippsc2.windows_2022_cis
+      vars:
+        w2022cis_level: 1
+        w2022cis_is_template: true
+        w2022cis_rule_2_3_1_4_enabled: false # Don't rename the Administrator account
+        w2022cis_admin_username: Administrator # Don't set the Administrator account name
+        w2022cis_rule_2_3_1_5_enabled: false # Don't rename the Guest account
+        w2022cis_guest_username: Guest # Don't set the Guest account name
+        w2022cis_rule_2_3_7_4_enabled: false # Don't set login banner
+        w2022cis_rule_2_3_7_5_enabled: false # Don't set login banner
+        w2022cis_rule_2_3_7_6_force: true # Limit cached credentials
+        w2022cis_rule_9_3_5_enabled: false # Don't disable local rules for Public firewall profile
+        w2022cis_rule_9_3_6_enabled: false # Don't disable local rules for Public firewall profile
+        w2022cis_rule_18_1_3_force: true # Disable Allow Online Tips
+        w2022cis_rule_18_6_19_2_1_force: true # Disable IPv6
+        w2022cis_rule_18_6_20_1_force: true # Disable Windows Connect Now
+        w2022cis_rule_18_6_20_2_force: true # Disable Windows Connect Now
+        w2022cis_rule_18_8_1_1_force: true # Disable network usage notifications
+        w2022cis_rule_18_9_20_1_2_force: true # Disable handwriting personalization data sharing
+        w2022cis_rule_18_9_20_1_3_force: true # Disable handwriting recognition data sharing
+        w2022cis_rule_18_9_20_1_4_force: true # Disable Internet Connection Wizard
+        w2022cis_rule_18_9_20_1_7_force: true # Disable Registration Wizard
+        w2022cis_rule_18_9_20_1_8_force: true # Disable Search Companion content file updates
+        w2022cis_rule_18_9_20_1_9_force: true # Disable Order Prints
+        w2022cis_rule_18_9_20_1_10_force: true # Disable Publish to Web
+        w2022cis_rule_18_9_20_1_11_force: true # Disable Windows Messenger CEIP
+        w2022cis_rule_18_9_20_1_12_force: true # Disable Windows CEIP
+        w2022cis_rule_18_9_20_1_13_force: true # Disable Windows Error Reporting
+        w2022cis_rule_18_9_30_2_force: true # Disable upload of User Activities
+        w2022cis_rule_18_9_46_5_1_force: true # Disable Microsoft Support Diagnostic Tool
+        w2022cis_rule_18_9_46_11_1_force: true # Disable PerfTrack
+        w2022cis_rule_18_9_48_1_force: true # Disable advertising ID
+        w2022cis_rule_18_10_15_2_force: true # Disable Telemetry
+        w2022cis_rule_18_10_37_1_force: true # Disable location tracking
+        w2022cis_rule_18_10_41_1_force: true # Disable Message Service Cloud Sync
+        w2022cis_rule_18_10_43_5_2_force: true # Disable Microsoft MAPS
+        w2022cis_rule_18_10_43_7_1_force: true # Enable file hashing
+        w2022cis_rule_18_10_43_12_1_force: true # Disable Watson events
+        w2022cis_rule_18_10_59_2_force: true # Allow Cloud Search
+        w2022cis_rule_18_10_80_1_force: true # Disable Windows Ink Workspace
+        w2022cis_rule_19_6_6_1_1_force: true # Disable Help Experience Improvement Program
+        w2022cis_rule_19_7_7_3_force: true # Disable diagnostic data
+        w2022cis_rule_19_7_7_4_force: true # Disable Windows spotlight

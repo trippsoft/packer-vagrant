@@ -1,0 +1,8 @@
+---
+- name: Run first steps
+  hosts:
+    - default
+  roles:
+    - role: trippsc2.rhel_first_steps
+      vars:
+        rhel_is_workstation: "{{ is_workstation | bool }}"

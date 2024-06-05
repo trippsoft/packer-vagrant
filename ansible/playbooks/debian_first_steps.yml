@@ -1,0 +1,8 @@
+---
+- name: Run first steps
+  hosts:
+    - default
+  roles:
+    - role: trippsc2.debian_first_steps
+      vars:
+        debian_is_workstation: "{{ is_workstation | bool }}"

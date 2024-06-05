@@ -9,3 +9,6 @@ crash.log
 
 # All output directories
 **/output/**/*
+
+# VirtIO drivers
+**/virtio-win/**/*

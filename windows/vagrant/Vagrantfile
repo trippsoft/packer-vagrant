@@ -1,0 +1,27 @@
+require 'securerandom'
+
+Vagrant.configure(2) do |config|
+  config.vm.guest = :windows
+  config.vm.boot_timeout = 600
+  
+  config.vm.communicator = 'winssh'
+  config.winssh.shell = 'powershell'
+
+  config.vm.synced_folder '.', '/vagrant', disabled: true
+  
+  config.vm.provider 'virtualbox' do |vb|
+    vb.cpus = 2
+    vb.memory = 4096
+  end
+
+  config.vm.provider 'libvirt' do |lv|
+    lv.cpus = 2
+    lv.memory = 4096
+    lv.disk_driver :discard => 'unmap', :detect_zeroes => 'unmap'
+    lv.machine_type = 'q35'
+    lv.nested = true
+    lv.loader = "/usr/share/OVMF/OVMF_CODE.secboot.fd"
+    lv.nvram = "/tmp/#{SecureRandom.uuid}.fd"
+    lv.video_type = 'vga'
+  end
+end

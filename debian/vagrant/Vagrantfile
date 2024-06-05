@@ -1,0 +1,22 @@
+require 'securerandom'
+
+Vagrant.configure(2) do |config|
+  config.vm.guest = :linux
+  config.vm.boot_timeout = 600
+  
+  config.vm.synced_folder '.', '/vagrant', disabled: true
+  
+  config.vm.provider 'virtualbox' do |vb|
+    vb.cpus = 2
+    vb.memory = 2048
+  end
+
+  config.vm.provider 'libvirt' do |lv|
+    lv.cpus = 2
+    lv.memory = 2048
+    lv.disk_driver :discard => 'unmap', :detect_zeroes => 'unmap'
+    lv.machine_type = 'q35'
+    lv.nested = true
+    lv.video_type = 'vga'
+  end
+end

@@ -1,0 +1,163 @@
+#cloud-config
+autoinstall:
+  version: 1
+  early-commands:
+    # Stop ssh for packer
+    - sudo systemctl stop ssh
+  locale: en_US
+  keyboard:
+    layout: us
+  identity:
+    hostname: ubuntu2204
+    username: vagrant
+    password: '$6$rounds=4096$5CU3LEj/MQvbkfPb$LmKEF9pCfU8R.dA.GemgE/8GT6r9blge3grJvdsVTMFKyLEQwzEF3SGWqAzjawY/XHRpWj4fOiLBrRyxJhIRJ1'
+  ssh:
+    install-server: true
+    allow-pw: true
+  storage:
+    config:
+      - type: disk
+        id: vda
+        path: /dev/vda
+        ptable: msdos
+        wipe: superblock
+        grub_device: true
+      - type: partition
+        id: vda1
+        device: vda
+        number: 1
+        size: 512MB
+        flag: boot
+      - type: partition
+        id: vda2
+        device: vda
+        number: 2
+        size: 39GB
+        flag: lvm
+      - type: lvm_volgroup
+        id: vg_ubuntu
+        name: vg_ubuntu
+        devices:
+          - vda2
+      - type: lvm_partition
+        id: root-lv
+        volgroup: vg_ubuntu
+        name: root
+        size: 5GB
+      - type: lvm_partition
+        id: home-lv
+        volgroup: vg_ubuntu
+        name: home
+        size: 1GB
+      - type: lvm_partition
+        id: var-lv
+        volgroup: vg_ubuntu
+        name: var
+        size: 5GB
+      - type: lvm_partition
+        id: var-log-lv
+        volgroup: vg_ubuntu
+        name: var.log
+        size: 1.5GB
+      - type: lvm_partition
+        id: var-log-audit-lv
+        volgroup: vg_ubuntu
+        name: var.log.audit
+        size: 1.5GB
+      - type: lvm_partition
+        id: var-tmp-lv
+        volgroup: vg_ubuntu
+        name: var.tmp
+        size: 1GB
+      - type: lvm_partition
+        id: swap-lv
+        volgroup: vg_ubuntu
+        name: swap
+        size: 8GB
+      - type: format
+        id: vda1-fs
+        volume: vda1
+        fstype: ext4
+      - type: format
+        id: root-fs
+        volume: root-lv
+        fstype: ext4
+      - type: format
+        id: home-fs
+        volume: home-lv
+        fstype: ext4
+      - type: format
+        id: var-fs
+        volume: var-lv
+        fstype: ext4
+      - type: format
+        id: var-log-fs
+        volume: var-log-lv
+        fstype: ext4
+      - type: format
+        id: var-log-audit-fs
+        volume: var-log-audit-lv
+        fstype: ext4
+      - type: format
+        id: var-tmp-fs
+        volume: var-tmp-lv
+        fstype: ext4
+      - type: format
+        id: swap-fs
+        volume: swap-lv
+        fstype: swap
+      - type: mount
+        id: vda1-mount
+        device: vda1-fs
+        path: /boot
+      - type: mount
+        id: root-mount
+        device: root-fs
+        path: /
+      - type: mount
+        id: home-mount
+        device: home-fs
+        path: /home
+      - type: mount
+        id: var-mount
+        device: var-fs
+        path: /var
+      - type: mount
+        id: var-log-mount
+        device: var-log-fs
+        path: /var/log
+      - type: mount
+        id: var-log-audit-mount
+        device: var-log-audit-fs
+        path: /var/log/audit
+      - type: mount
+        id: var-tmp-mount
+        device: var-tmp-fs
+        path: /var/tmp
+      - type: mount
+        id: swap-mount
+        device: swap-fs
+        path: swap
+  apt:
+    primary:
+      - arches: [i386, amd64]
+        uri: "http://us.archive.ubuntu.com/ubuntu/"
+  packages:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg-agent
+    - software-properties-common
+    - ufw
+    - unzip
+    - python3
+    - python3-pip
+    - sshpass
+  user-data:
+    disable_root: false
+  late-commands:
+    - sed -i -e 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/g' /target/etc/ssh/sshd_config
+    - echo 'vagrant ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/vagrant
+    - curtin in-target --target=/target -- chmod 440 /etc/sudoers.d/vagrant
+    - curtin in-target --target=/target -- apt-get update
+    - curtin in-target --target=/target -- apt-get upgrade --yes
