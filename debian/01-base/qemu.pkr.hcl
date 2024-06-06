@@ -9,7 +9,7 @@ packer {
 
 source "qemu" "qemu" {
   vm_name = local.vm_name
-  headless = false
+  headless = true
   display = "none"
   machine_type = "q35"
 
