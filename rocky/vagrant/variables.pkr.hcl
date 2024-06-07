@@ -26,5 +26,5 @@ locals {
   previous_vm_directory = "${path.root}/${var.relative_previous_vm_directory}"
   qemu_efi_vars = "${local.previous_vm_directory}/${var.vm_name_prefix}/qemu/efivars.fd"
   qemu_source_path = "${local.previous_vm_directory}/${var.vm_name_prefix}/qemu/${var.vm_name_prefix}_${var.previous_vm_suffix}"
-  qemu_output_directory = "${path.root}/output/qemu/${local.vm_name}"
+  qemu_output_directory = "${path.root}/output/${local.vm_name}/qemu"
 }
