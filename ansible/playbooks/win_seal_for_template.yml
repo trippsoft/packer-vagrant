@@ -4,7 +4,7 @@
   hosts:
     - default
   roles:
-    - role: trippsc2.win_seal_for_template
+    - role: trippsc2.template.windows
       vars:
         win_target_hostname: "{{ target_hostname }}"
         win_is_vagrant: true

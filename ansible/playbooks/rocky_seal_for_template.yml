@@ -3,7 +3,7 @@
   hosts:
     - default
   roles:
-    - role: trippsc2.rhel_seal_for_template
+    - role: trippsc2.template.rhel
       vars:
         rhel_target_hostname: "{{ target_hostname }}"
         rhel_is_vagrant: true

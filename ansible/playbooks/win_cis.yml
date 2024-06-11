@@ -6,7 +6,7 @@
       when:
         - ansible_distribution | regex_search('(Microsoft Windows Server 2019)')
       ansible.builtin.include_role:
-        name: trippsc2.windows_2019_cis
+        name: trippsc2.cis.windows2019
       vars:
         w2019cis_level: 1
         w2019cis_is_template: true
@@ -54,7 +54,7 @@
       when:
         - ansible_distribution | regex_search('(Microsoft Windows Server 2022)')
       ansible.builtin.include_role:
-        name: trippsc2.windows_2022_cis
+        name: trippsc2.cis.windows2022
       vars:
         w2022cis_level: 1
         w2022cis_is_template: true

@@ -3,7 +3,7 @@
   hosts:
     - default
   roles:
-    - role: trippsc2.ubuntu_seal_for_template
+    - role: trippsc2.template.ubuntu
       vars:
         ubuntu_target_hostname: "{{ target_hostname }}"
         ubuntu_is_vagrant: true

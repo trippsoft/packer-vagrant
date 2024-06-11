@@ -3,6 +3,6 @@
   hosts:
     - default
   roles:
-    - role: trippsc2.ubuntu_first_steps
+    - role: trippsc2.first_steps.ubuntu
       vars:
         ubuntu_is_workstation: "{{ is_workstation | bool }}"

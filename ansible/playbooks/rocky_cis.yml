@@ -3,7 +3,7 @@
   hosts:
     - default
   roles:
-    - role: trippsc2.rhel_8_cis
+    - role: trippsc2.cis.rhel8
       vars:
         rhel8cis_level: 1
         rhel8cis_machine_type: "{{ machine_type }}"
