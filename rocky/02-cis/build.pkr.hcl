@@ -15,6 +15,16 @@ build {
   provisioner "ansible" {
     playbook_file = "${path.root}/../../ansible/playbooks/rocky_cis.yml"
     use_proxy = false
+    
+    ansible_env_vars = [
+      "ANSIBLE_HOST_KEY_CHECKING=False",
+      "ANSIBLE_NOCOLOR=True"
+    ]
+
+    ansible_ssh_extra_args = [
+      "-o IdentitiesOnly=yes",
+      "-o StrictHostKeyChecking=no"
+    ]
 
     extra_arguments = [
       "-e",

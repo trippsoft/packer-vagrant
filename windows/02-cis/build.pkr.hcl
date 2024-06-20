@@ -15,6 +15,17 @@ build {
   provisioner "ansible" {
     playbook_file = "${path.root}/../../ansible/playbooks/win_cis.yml"
     use_proxy = false
+    
+    ansible_env_vars = [
+      "ANSIBLE_HOST_KEY_CHECKING=False",
+      "ANSIBLE_NOCOLOR=True"
+    ]
+
+    ansible_ssh_extra_args = [
+      "-o IdentitiesOnly=yes",
+      "-o StrictHostKeyChecking=no"
+    ]
+
     extra_arguments = [
       "-e",
       "ansible_shell_type=powershell ansible_password=${build.Password} ansible_become_method=runas ansible_become_user=SYSTEM"
