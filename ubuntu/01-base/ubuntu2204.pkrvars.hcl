@@ -4,6 +4,6 @@ vm_name_prefix = "ubuntu2204"
 boot_command = [
   "e<wait>",
   "<down><down><down><end>",
-  " autoinstall ds=nocloud\\;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/",
+  " net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=1 autoinstall ds=nocloud\\;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/",
   "<f10>"
 ]

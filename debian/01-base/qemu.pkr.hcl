@@ -28,7 +28,7 @@ source "qemu" "qemu" {
  
   boot_wait = "12s"
   boot_command = [
-    "<down><tab>priority=critical auto=true preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg<enter>"
+    "<down><tab>priority=critical net.ifnames=0 biosdevname=0 auto=true preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg<enter>"
   ]
  
   ssh_username = "vagrant"

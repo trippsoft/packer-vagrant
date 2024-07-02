@@ -7,8 +7,14 @@ autoinstall:
   locale: en_US
   keyboard:
     layout: us
+  network:
+    network:
+      version: 2
+      ethernets:
+        eth0:
+          dhcp4: true
   identity:
-    hostname: ubuntu2204
+    hostname: ubuntu2004
     username: vagrant
     password: '$6$rounds=4096$5CU3LEj/MQvbkfPb$LmKEF9pCfU8R.dA.GemgE/8GT6r9blge3grJvdsVTMFKyLEQwzEF3SGWqAzjawY/XHRpWj4fOiLBrRyxJhIRJ1'
   ssh:
@@ -145,16 +151,32 @@ autoinstall:
   packages:
     - apt-transport-https
     - ca-certificates
+    - cloud-guest-utils
+    - cloud-init
     - curl
     - gnupg-agent
-    - software-properties-common
-    - ufw
+    - iproute2
     - python3
+    - software-properties-common
+    - sudo
+    - tar
+    - ufw
   user-data:
     disable_root: false
   late-commands:
     - sed -i -e 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/g' /target/etc/ssh/sshd_config
     - echo 'vagrant ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/vagrant
-    - curtin in-target --target=/target -- chmod 440 /etc/sudoers.d/vagrant
-    - curtin in-target --target=/target -- apt-get update
-    - curtin in-target --target=/target -- apt-get upgrade --yes
+    - |
+      curtin in-target --target=/target -- /bin/bash -c ' \
+            sed -ie "s/^GRUB_DEFAULT=.*/GRUB_DEFAULT=\"0\"/g" /etc/default/grub; \
+            sed -ie "s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\"net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=0\"/g" /etc/default/grub; \
+            sed -ie "s/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=\"net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=0\"/g" /etc/default/grub; \
+            chmod 440 /etc/sudoers.d/vagrant; \
+            update-grub; \
+            update-initramfs -c -k all; \
+            systemctl disable apt-daily.service; \
+            systemctl disable apt-daily.timer; \
+            systemctl disable apt-daily-upgrade.service; \
+            systemctl disable apt-daily-upgrade.timer; \
+            exit 0 \
+        '

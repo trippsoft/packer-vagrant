@@ -11,6 +11,6 @@ boot_command = [
   "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
   "/casper/vmlinuz ",
   "initrd=/casper/initrd ",
-  "autoinstall ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ ",
+  "net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=0 autoinstall ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ ",
   "<enter>"
 ]
