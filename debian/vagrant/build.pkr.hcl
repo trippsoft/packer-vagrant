@@ -6,7 +6,7 @@ packer {
     }
 
     vagrant = {
-      version = ">= 1.1.2"
+      version = ">= 1.1.4"
       source = "github.com/hashicorp/vagrant"
     }
   }
@@ -43,11 +43,13 @@ build {
       output = "${path.root}/${local.vm_name}_{{.BuildName}}_{{.Provider}}_{{.Architecture}}.box"
     }
 
-    post-processor "vagrant-cloud" {
-      access_token = var.vagrant_cloud_token
+    post-processor "vagrant-registry" {
+      client_id = var.vagrant_hcp_client_id
+      client_secret = var.vagrant_hcp_client_secret
       box_tag = local.box_tag
       version = local.box_version
-      keep_input_artifact = false
+      keep_input_artifact = true
+      no_direct_upload = true
     }
   }
 }

@@ -14,8 +14,14 @@ variable "vm_name_suffix" {
   type = string
 }
 
-variable "vagrant_cloud_token" {
+variable "vagrant_hcp_client_id" {
   type = string
+  sensitive = true
+}
+
+variable "vagrant_hcp_client_secret" {
+  type = string
+  sensitive = true
 }
 
 locals {

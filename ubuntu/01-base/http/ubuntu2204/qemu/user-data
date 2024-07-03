@@ -181,5 +181,8 @@ autoinstall:
             systemctl disable apt-daily.timer; \
             systemctl disable apt-daily-upgrade.service; \
             systemctl disable apt-daily-upgrade.timer; \
+            systemctl enable ssh.service; \
+            ufw enable; \
+            ufw allow in ssh; \
             exit 0 \
         '

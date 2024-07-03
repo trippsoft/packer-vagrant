@@ -1,8 +1,3 @@
-variable "vagrant_cloud_token" {
-  type = string
-  sensitive = true
-}
-
 variable "relative_previous_vm_directory" {
   type = string
 }
@@ -22,6 +17,16 @@ variable "vm_name_suffix" {
 variable "qemu_efi_core" {
   type = string
   default = "/usr/share/edk2/x64/OVMF_CODE.secboot.fd"
+}
+
+variable "vagrant_hcp_client_id" {
+  type = string
+  sensitive = true
+}
+
+variable "vagrant_hcp_client_secret" {
+  type = string
+  sensitive = true
 }
 
 locals {
