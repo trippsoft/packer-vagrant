@@ -28,7 +28,8 @@ build {
 
     ansible_ssh_extra_args = [
       "-o IdentitiesOnly=yes",
-      "-o StrictHostKeyChecking=no"
+      "-o StrictHostKeyChecking=no",
+      "-o UserKnownHostsFile=/dev/null"
     ]
 
     extra_arguments = [
