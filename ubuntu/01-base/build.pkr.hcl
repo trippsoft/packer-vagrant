@@ -13,7 +13,7 @@ build {
   ]
 
   provisioner "ansible" {
-    playbook_file = "${path.root}/../../ansible/playbooks/ubuntu_first_steps.yml"
+    playbook_file = "${path.root}/../../ansible/ubuntu_first_steps.yml"
     use_proxy = false
     
     ansible_env_vars = [

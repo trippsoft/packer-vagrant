@@ -13,7 +13,7 @@ build {
   ]
 
   provisioner "ansible" {
-    playbook_file = "${path.root}/../../ansible/playbooks/win_cis.yml"
+    playbook_file = "${path.root}/../../ansible/win_cis.yml"
     use_proxy = false
     
     ansible_env_vars = [

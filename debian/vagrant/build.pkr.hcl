@@ -18,7 +18,7 @@ build {
   ]
 
   provisioner "ansible" {
-    playbook_file = "${path.root}/../../ansible/playbooks/debian_seal_for_template.yml"
+    playbook_file = "${path.root}/../../ansible/debian_seal_for_template.yml"
     use_proxy = false
     
     ansible_env_vars = [
