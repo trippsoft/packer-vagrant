@@ -29,7 +29,7 @@ build {
 
     extra_arguments = [
       "-e",
-      "ansible_password=${build.Password} is_workstation=${var.is_workstation}"
+      "ansible_password=vagrant"
     ]
   }
 }

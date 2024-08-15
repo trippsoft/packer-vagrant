@@ -34,7 +34,7 @@ build {
 
     extra_arguments = [
       "-e",
-      "target_hostname=${local.hostname} ansible_password=${build.Password}"
+      "target_hostname=${local.hostname} ansible_password=vagrant"
     ]
   }
 
