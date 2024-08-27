@@ -49,7 +49,7 @@ autoinstall:
         id: root-lv
         volgroup: vg_ubuntu
         name: root
-        size: 5GB
+        size: 15GB
       - type: lvm_partition
         id: home-lv
         volgroup: vg_ubuntu
@@ -59,7 +59,7 @@ autoinstall:
         id: var-lv
         volgroup: vg_ubuntu
         name: var
-        size: 5GB
+        size: 10GB
       - type: lvm_partition
         id: var-log-lv
         volgroup: vg_ubuntu
