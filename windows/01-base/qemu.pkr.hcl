@@ -45,7 +45,7 @@ source "qemu" "qemu" {
   winrm_timeout = "1h"
   winrm_use_ssl = false
 
-  shutdown_command = "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\""
+  shutdown_command = "shutdown /s /t 10 /f"
   shutdown_timeout = "10m"
 
   output_directory = local.qemu_output_directory
