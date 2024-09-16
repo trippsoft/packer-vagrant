@@ -24,7 +24,10 @@ build {
 
   provisioner "windows-shell" {
     inline = [
-      "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\ngen.exe update /force",
+      "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\ngen.exe update /force",
+      "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\ngen.exe update /force"
     ]
+
+    valid_exit_codes = [0, 3010, 4294967295]
   }
 }
