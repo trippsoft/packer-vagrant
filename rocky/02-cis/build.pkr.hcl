@@ -29,7 +29,9 @@ build {
 
     extra_arguments = [
       "-e",
-      "ansible_password=${build.Password} machine_type=server"
+      "ansible_password=${build.Password} machine_type=server",
+      "--scp-extra-args",
+      "'-O'"
     ]
   }
 }
