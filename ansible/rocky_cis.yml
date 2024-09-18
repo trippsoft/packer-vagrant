@@ -1,9 +1,14 @@
 ---
-- name: Apply CIS RHEL 8 Benchmarks
+- name: Apply CIS RHEL Benchmarks
   hosts:
     - default
-  roles:
-    - role: trippsc2.cis.rhel8
+  tasks:
+    - name: Apply CIS RHEL 8 Benchmarks
+      when:
+        - ansible_os_family == 'RedHat'
+        - ansible_distribution_major_version == '8'
+      ansible.builtin.include_role:
+        name: trippsc2.cis.rhel8
       vars:
         rhel8cis_level: 1
         rhel8cis_machine_type: "{{ machine_type }}"
@@ -18,3 +23,26 @@
         rhel8cis_rule_1_5_1_5_force: true # SELinux is enforcing
         rhel8cis_rule_1_8_1_force: true # GNOME is not installed
         rhel8cis_rule_5_1_1_6_enabled: false # rsyslog is not being set to remote log host
+
+    - name: Apply CIS RHEL 9 Benchmarks
+      when:
+        - ansible_os_family == 'RedHat'
+        - ansible_distribution_major_version == '9'
+      ansible.builtin.include_role:
+        name: trippsc2.cis.rhel9
+      vars:
+        rhel8cis_level: 1
+        rhel8cis_machine_type: "{{ machine_type }}"
+        rhel9cis_rule_1_1_3_1_force: true # /var is a separate partition
+        rhel9cis_rule_1_1_4_1_force: true # /var/tmp is a separate partition
+        rhel9cis_rule_1_1_5_1_force: true # /var/log is a separate partition
+        rhel9cis_rule_1_1_6_1_enabled: false # /var/log/audit is not used
+        rhel9cis_rule_1_1_6_2_enabled: false # /var/log/audit is not used
+        rhel9cis_rule_1_1_6_3_enabled: false # /var/log/audit is not used
+        rhel9cis_rule_1_1_6_4_enabled: false # /var/log/audit is not used
+        rhel9cis_rule_1_1_7_1_force: true # /home is a separate partition
+        rhel9cis_rule_1_4_1_enabled: false # No bootloader password
+        rhel9cis_rule_1_6_1_5_force: true # SELinux is enforcing
+        rhel9cis_rule_1_8_1_force: true # GNOME is not installed
+        rhel9cis_rule_4_2_1_6_enabled: false # rsyslog is not being set to remote log host
+        rhel9cis_rule_5_3_4_enabled: false # Password authentication is not required for the vagrant user
