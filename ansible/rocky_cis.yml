@@ -23,6 +23,7 @@
         rhel8cis_rule_1_5_1_5_force: true # SELinux is enforcing
         rhel8cis_rule_1_8_1_force: true # GNOME is not installed
         rhel8cis_rule_5_1_1_6_enabled: false # rsyslog is not being set to remote log host
+        rhel8cis_mount_with_uuid: false
 
     - name: Apply CIS RHEL 9 Benchmarks
       when:
@@ -46,3 +47,4 @@
         rhel9cis_rule_1_8_1_force: true # GNOME is not installed
         rhel9cis_rule_4_2_1_6_enabled: false # rsyslog is not being set to remote log host
         rhel9cis_rule_5_3_4_enabled: false # Password authentication is not required for the vagrant user
+        rhel9cis_mount_with_uuid: false
