@@ -15,8 +15,7 @@ source "qemu" "qemu" {
   efi_firmware_code = "/usr/share/OVMF/OVMF_CODE.secboot.fd"
   use_pflash = true
   machine_type = "q35"
-  vtpm = true
-  
+
   cpu_model = "host"
   cores = 4
   memory = 8192
@@ -30,7 +29,7 @@ source "qemu" "qemu" {
 
   cd_files = [
     "${path.root}/cd/common/*",
-    "${path.root}/cd/common/qemu/*",
+    "${path.root}/cd/qemu/*",
     "${path.root}/cd/${var.vm_name_prefix}/qemu/*"
   ]
 

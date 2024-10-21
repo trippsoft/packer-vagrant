@@ -17,9 +17,6 @@
                   <Path>E:\virtio-win\NetKVM\2k19\amd64\</Path> 
               </PathAndCredentials>
               <PathAndCredentials wcm:keyValue="2" wcm:action="add">
-                  <Path>E:\virtio-win\vioscsi\2k19\amd64\</Path> 
-              </PathAndCredentials>
-              <PathAndCredentials wcm:keyValue="3" wcm:action="add">
                   <Path>E:\virtio-win\viostor\2k19\amd64\</Path> 
               </PathAndCredentials>
           </DriverPaths>
@@ -68,7 +65,7 @@
                 </ProductKey>
                 <AcceptEula>true</AcceptEula>
                 <FullName>Administrator</FullName>
-                <Organization>Precision Aviation Group</Organization>
+                <Organization>Vagrant Box</Organization>
             </UserData>
         </component>
     </settings>
@@ -183,27 +180,33 @@
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
+                    <CommandLine>C:\Windows\System32\WindowsPowershell\v1.0\powershell.exe -Command "E:\install-vcredist.ps1"</CommandLine>
+                    <Description>Install Virtual C++ Redistributable</Description>
+                    <Order>8</Order>
+                    <RequiresUserInput>true</RequiresUserInput>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
                     <CommandLine>C:\Windows\System32\WindowsPowershell\v1.0\powershell.exe -Command "E:\install-qemu-guest-agent.ps1"</CommandLine>
                     <Description>Install QEMU Guest Agent</Description>
-                    <Order>8</Order>
+                    <Order>9</Order>
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
                     <CommandLine>C:\Windows\System32\WindowsPowershell\v1.0\powershell.exe -Command "E:\start-openssh.ps1"</CommandLine>
                     <Description>Start OpenSSH</Description>
-                    <Order>9</Order>
+                    <Order>10</Order>
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
                     <CommandLine>C:\Windows\System32\WindowsPowershell\v1.0\powershell.exe -Command "E:\allow-winrm.ps1"</CommandLine>
                     <Description>Enable WinRM Firewall Rule</Description>
-                    <Order>10</Order>
+                    <Order>11</Order>
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
                     <CommandLine>cmd.exe /c E:\configure-winrm.bat</CommandLine>
                     <Description>Configure WinRM</Description>
-                    <Order>11</Order>
+                    <Order>12</Order>
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
             </FirstLogonCommands>
