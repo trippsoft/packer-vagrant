@@ -17,8 +17,8 @@
         w2019cis_rule_2_3_7_4_enabled: false # Don't set login banner
         w2019cis_rule_2_3_7_5_enabled: false # Don't set login banner
         w2019cis_rule_2_3_7_6_force: true # Limit cached credentials
+        w2019cis_rule_9_3_4_enabled: false # Don't disable local rules for Public firewall profile
         w2019cis_rule_9_3_5_enabled: false # Don't disable local rules for Public firewall profile
-        w2019cis_rule_9_3_6_enabled: false # Don't disable local rules for Public firewall profile
         w2019cis_rule_18_1_3_force: true # Disable Allow Online Tips
         w2019cis_rule_18_6_19_2_1_force: true # Disable IPv6
         w2019cis_rule_18_6_20_1_force: true # Disable Windows Connect Now
@@ -34,21 +34,21 @@
         w2019cis_rule_18_9_20_1_11_force: true # Disable Windows Messenger CEIP
         w2019cis_rule_18_9_20_1_12_force: true # Disable Windows CEIP
         w2019cis_rule_18_9_20_1_13_force: true # Disable Windows Error Reporting
-        w2019cis_rule_18_9_30_2_force: true # Disable upload of User Activities
-        w2019cis_rule_18_9_46_5_1_force: true # Disable Microsoft Support Diagnostic Tool
-        w2019cis_rule_18_9_46_11_1_force: true # Disable PerfTrack
-        w2019cis_rule_18_9_48_1_force: true # Disable advertising ID
+        w2019cis_rule_18_9_31_2_force: true # Disable upload of User Activities
+        w2019cis_rule_18_9_47_5_1_force: true # Disable Microsoft Support Diagnostic Tool
+        w2019cis_rule_18_9_47_11_1_force: true # Disable PerfTrack
+        w2019cis_rule_18_9_49_1_force: true # Disable advertising ID
         w2019cis_rule_18_10_15_2_force: true # Disable Telemetry
-        w2019cis_rule_18_10_37_1_force: true # Disable location tracking
-        w2019cis_rule_18_10_41_1_force: true # Disable Message Service Cloud Sync
-        w2019cis_rule_18_10_43_5_2_force: true # Disable Microsoft MAPS
-        w2019cis_rule_18_10_43_7_1_force: true # Enable file hashing
-        w2019cis_rule_18_10_43_12_1_force: true # Disable Watson events
-        w2019cis_rule_18_10_59_2_force: true # Allow Cloud Search
-        w2019cis_rule_18_10_80_1_force: true # Disable Windows Ink Workspace
+        w2019cis_rule_18_10_36_1_force: true # Disable location tracking
+        w2019cis_rule_18_10_40_1_force: true # Disable Message Service Cloud Sync
+        w2019cis_rule_18_10_42_5_2_force: true # Disable Microsoft MAPS
+        w2019cis_rule_18_10_42_7_1_force: true # Enable file hashing
+        w2019cis_rule_18_10_42_12_1_force: true # Disable Watson events
+        w2019cis_rule_18_10_58_2_force: true # Allow Cloud Search
+        w2019cis_rule_18_10_79_1_force: true # Disable Windows Ink Workspace
         w2019cis_rule_19_6_6_1_1_force: true # Disable Help Experience Improvement Program
-        w2019cis_rule_19_7_7_3_force: true # Disable diagnostic data
-        w2019cis_rule_19_7_7_4_force: true # Disable Windows spotlight
+        w2019cis_rule_19_7_8_3_force: true # Disable diagnostic data
+        w2019cis_rule_19_7_8_4_force: true # Disable Windows spotlight
 
     - name: Include 'windows_2022_cis' role
       when:
@@ -65,8 +65,8 @@
         w2022cis_rule_2_3_7_4_enabled: false # Don't set login banner
         w2022cis_rule_2_3_7_5_enabled: false # Don't set login banner
         w2022cis_rule_2_3_7_6_force: true # Limit cached credentials
+        w2022cis_rule_9_3_4_enabled: false # Don't disable local rules for Public firewall profile
         w2022cis_rule_9_3_5_enabled: false # Don't disable local rules for Public firewall profile
-        w2022cis_rule_9_3_6_enabled: false # Don't disable local rules for Public firewall profile
         w2022cis_rule_18_1_3_force: true # Disable Allow Online Tips
         w2022cis_rule_18_6_19_2_1_force: true # Disable IPv6
         w2022cis_rule_18_6_20_1_force: true # Disable Windows Connect Now
@@ -82,18 +82,18 @@
         w2022cis_rule_18_9_20_1_11_force: true # Disable Windows Messenger CEIP
         w2022cis_rule_18_9_20_1_12_force: true # Disable Windows CEIP
         w2022cis_rule_18_9_20_1_13_force: true # Disable Windows Error Reporting
-        w2022cis_rule_18_9_30_2_force: true # Disable upload of User Activities
-        w2022cis_rule_18_9_46_5_1_force: true # Disable Microsoft Support Diagnostic Tool
-        w2022cis_rule_18_9_46_11_1_force: true # Disable PerfTrack
-        w2022cis_rule_18_9_48_1_force: true # Disable advertising ID
+        w2022cis_rule_18_9_31_2_force: true # Disable upload of User Activities
+        w2022cis_rule_18_9_47_5_1_force: true # Disable Microsoft Support Diagnostic Tool
+        w2022cis_rule_18_9_47_11_1_force: true # Disable PerfTrack
+        w2022cis_rule_18_9_49_1_force: true # Disable advertising ID
         w2022cis_rule_18_10_15_2_force: true # Disable Telemetry
-        w2022cis_rule_18_10_37_1_force: true # Disable location tracking
-        w2022cis_rule_18_10_41_1_force: true # Disable Message Service Cloud Sync
-        w2022cis_rule_18_10_43_5_2_force: true # Disable Microsoft MAPS
-        w2022cis_rule_18_10_43_7_1_force: true # Enable file hashing
-        w2022cis_rule_18_10_43_12_1_force: true # Disable Watson events
-        w2022cis_rule_18_10_59_2_force: true # Allow Cloud Search
-        w2022cis_rule_18_10_80_1_force: true # Disable Windows Ink Workspace
+        w2022cis_rule_18_10_36_1_force: true # Disable location tracking
+        w2022cis_rule_18_10_40_1_force: true # Disable Message Service Cloud Sync
+        w2022cis_rule_18_10_42_5_2_force: true # Disable Microsoft MAPS
+        w2022cis_rule_18_10_42_7_1_force: true # Enable file hashing
+        w2022cis_rule_18_10_42_12_1_force: true # Disable Watson events
+        w2022cis_rule_18_10_58_2_force: true # Allow Cloud Search
+        w2022cis_rule_18_10_79_1_force: true # Disable Windows Ink Workspace
         w2022cis_rule_19_6_6_1_1_force: true # Disable Help Experience Improvement Program
-        w2022cis_rule_19_7_7_3_force: true # Disable diagnostic data
-        w2022cis_rule_19_7_7_4_force: true # Disable Windows spotlight
+        w2022cis_rule_19_7_8_3_force: true # Disable diagnostic data
+        w2022cis_rule_19_7_8_4_force: true # Disable Windows spotlight
