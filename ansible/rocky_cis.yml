@@ -50,8 +50,8 @@
         rhel9cis_rule_1_4_1_enabled: false # No bootloader password
         rhel9cis_rule_1_6_1_5_force: true # SELinux is enforcing
         rhel9cis_rule_1_8_1_force: true # GNOME is not installed
-        rhel9cis_rule_4_2_1_6_enabled: false # rsyslog is not being set to remote log host
-        rhel9cis_rule_5_3_4_enabled: false # Password authentication is not required for the vagrant user
+        rhel9cis_rule_5_2_4_enabled: false # Password authentication is not required for the vagrant user
+        rhel9cis_rule_6_2_3_6_enabled: false # rsyslog is not being set to remote log host
         rhel9cis_home_mount_with_uuid: false
         rhel9cis_var_mount_with_uuid: false
         rhel9cis_var_tmp_mount_with_uuid: false
