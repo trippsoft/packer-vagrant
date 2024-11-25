@@ -25,42 +25,55 @@
             <RunSynchronous>
                 <RunSynchronousCommand wcm:action="add">
                     <Order>1</Order>
-                    <Path>reg add "HKLM\SYSTEM\Setup" /v "CmdLine" /t REG_SZ /d "X:\sources\setup.exe" /f</Path>
-                    <Description>Switch to legacy Setup</Description>
-                </RunSynchronousCommand>
-                <RunSynchronousCommand wcm:action="add">
-                    <Order>2</Order>
                     <Path>reg add "HKLM\SYSTEM\Setup\LabConfig" /v "BypassTPMCheck" /t REG_DWORD /d 1 /f</Path>
                     <Description>Add BypassTPMCheck</Description>
                 </RunSynchronousCommand>
                 <RunSynchronousCommand wcm:action="add">
-                    <Order>3</Order>
+                    <Order>2</Order>
                     <Path>reg add "HKLM\SYSTEM\Setup\LabConfig" /v "BypassSecureBootCheck" /t REG_DWORD /d 1 /f</Path>
                     <Description>Add BypassSecureBootCheck</Description>
                 </RunSynchronousCommand>
             </RunSynchronous>
             <DiskConfiguration>
                 <Disk wcm:action="add">
-                    <CreatePartitions>
-                        <CreatePartition wcm:action="add">
-                            <Order>1</Order>
-                            <Size>500</Size>
-                            <Type>EFI</Type>
-                        </CreatePartition>
-                        <CreatePartition wcm:action="add">
-                            <Order>2</Order>
-                            <Size>128</Size>
-                            <Type>MSR</Type>
-                        </CreatePartition>
-                        <CreatePartition wcm:action="add">
-                            <Order>3</Order>
-                            <Extend>true</Extend>
-                            <Type>Primary</Type>
-                            <Format>NTFS</Format>
-                        </CreatePartition>
-                    </CreatePartitions>
-                    <DiskID>0</DiskID>
-                    <WillWipeDisk>true</WillWipeDisk>
+					<CreatePartitions>
+						<CreatePartition wcm:action="add">
+							<Order>1</Order>
+							<Size>512</Size>
+							<Type>EFI</Type>
+						</CreatePartition>
+						<CreatePartition wcm:action="add">
+							<Order>2</Order>
+							<Size>128</Size>
+							<Type>MSR</Type>
+						</CreatePartition>
+						<CreatePartition wcm:action="add">
+							<Order>3</Order>
+							<Extend>true</Extend>
+							<Type>Primary</Type>
+						</CreatePartition>
+					</CreatePartitions>
+					<ModifyPartitions>
+						<ModifyPartition wcm:action="add">
+							<Order>1</Order>
+							<PartitionID>1</PartitionID>
+							<Label>System</Label>
+							<Format>FAT32</Format>
+						</ModifyPartition>
+						<ModifyPartition wcm:action="add">
+							<Order>2</Order>
+							<PartitionID>2</PartitionID>
+						</ModifyPartition>
+						<ModifyPartition wcm:action="add">
+							<Order>3</Order>
+							<PartitionID>3</PartitionID>
+							<Letter>C</Letter>
+							<Label>Windows</Label>
+							<Format>NTFS</Format>
+						</ModifyPartition>
+					</ModifyPartitions>
+					<DiskID>0</DiskID>
+					<WillWipeDisk>true</WillWipeDisk>
                 </Disk>
             </DiskConfiguration>
             <ImageInstall>
@@ -113,7 +126,6 @@
             <InputLocale>en-US</InputLocale>
             <SystemLocale>en-US</SystemLocale>
             <UILanguage>en-US</UILanguage>
-            <UILanguageFallback>en-US</UILanguageFallback>
             <UserLocale>en-US</UserLocale>
         </component>
         <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
