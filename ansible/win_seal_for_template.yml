@@ -10,3 +10,11 @@
         win_is_vagrant: true
         win_set_sshd_manual: true
         win_use_bleachbit: false
+
+  tasks:
+    - name: Remove AppX packages that hold up sysprep # noqa ignore-errors
+      ansible.windows.win_powershell:
+        script: |
+          Get-AppxPackage Microsoft.Copilot -AllUsers | Remove-AppxPackage
+          Get-AppxPackage Microsoft.WidgetsPlatformRuntime -AllUsers | Remove-AppxPackage
+      ignore_errors: true
