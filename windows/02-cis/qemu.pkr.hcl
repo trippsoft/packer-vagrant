@@ -9,7 +9,7 @@ packer {
 
 source "qemu" "qemu" {
   vm_name = local.vm_name
-  headless = true
+  headless = var.headless
   display = "none"
   efi_boot = true
   efi_firmware_code = "/usr/share/OVMF/OVMF_CODE.secboot.fd"

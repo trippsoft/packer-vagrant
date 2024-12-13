@@ -6,6 +6,11 @@ variable "machine_type" {
   type = string
 }
 
+variable "headless" {
+  type = bool
+  default = true
+}
+
 locals {
   vm_name = "${var.vm_name_prefix}_cis"
   qemu_efi_vars = "${path.root}/../01-base/output/${var.vm_name_prefix}/qemu/efivars.fd"

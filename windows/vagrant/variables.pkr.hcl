@@ -29,6 +29,11 @@ variable "vagrant_hcp_client_secret" {
   sensitive = true
 }
 
+variable "headless" {
+  type = bool
+  default = true
+}
+
 locals {
   vm_name = "${var.vm_name_prefix}_${var.vm_name_suffix}"
   box_tag = "jtarpley/${local.vm_name}"

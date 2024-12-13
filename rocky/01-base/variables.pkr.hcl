@@ -10,6 +10,11 @@ variable "vm_name_prefix" {
   type = string
 }
 
+variable "headless" {
+  type = bool
+  default = true
+}
+
 locals {
   vm_name = "${var.vm_name_prefix}_base"
   qemu_http_directory = "${path.root}/http/${var.vm_name_prefix}/qemu"
