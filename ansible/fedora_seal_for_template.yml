@@ -1,0 +1,9 @@
+---
+- name: Seal for template
+  hosts:
+    - default
+  roles:
+    - role: trippsc2.template.rhel
+      vars:
+        rhel_target_hostname: "{{ target_hostname }}"
+        rhel_is_vagrant: true

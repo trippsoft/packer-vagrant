@@ -1,0 +1,6 @@
+---
+- name: Run first steps
+  hosts:
+    - default
+  roles:
+    - role: trippsc2.first_steps.fedora
