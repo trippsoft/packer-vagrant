@@ -26,7 +26,7 @@ variable "vagrant_hcp_client_secret" {
 
 variable "headless" {
   type = bool
-  default = false
+  default = true
 }
 
 locals {

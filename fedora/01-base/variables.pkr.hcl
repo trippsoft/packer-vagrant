@@ -12,7 +12,7 @@ variable "vm_name_prefix" {
 
 variable "headless" {
   type = bool
-  default = false
+  default = true
 }
 
 locals {
