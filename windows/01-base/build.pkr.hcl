@@ -1,7 +1,7 @@
 packer {
   required_plugins {
     windows-update = {
-      version = ">= 0.16.8"
+      version = ">= 0.16.9"
       source = "github.com/rgl/windows-update"
     }
   }
