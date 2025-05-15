@@ -1,3 +1,3 @@
-iso_url = "https://dl.rockylinux.org/vault/rocky/8.9/isos/x86_64/Rocky-8.9-x86_64-dvd1.iso"
-iso_checksum = "sha256:1abe38fd11279879e3e7658ef748c1ef06ee763351a53bb424020ec053c50d0b"
+iso_url = "https://download.rockylinux.org/pub/rocky/8/isos/x86_64/Rocky-8.10-x86_64-dvd1.iso"
+iso_checksum = "sha256:642ada8a49dbeca8cca6543b31196019ee3d649a0163b5db0e646c7409364eeb"
 vm_name_prefix = "rocky8_ws"
