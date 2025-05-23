@@ -22,6 +22,8 @@ variable "headless" {
 
 locals {
   vm_name = "${var.vm_name_prefix}_base"
+  hyperv_http_directory = "${path.root}/http/${var.vm_name_prefix}/hyperv"
+  hyperv_output_directory = "${path.root}/output/${var.vm_name_prefix}/hyperv"
   qemu_http_directory = "${path.root}/http/${var.vm_name_prefix}/qemu"
   qemu_output_directory = "${path.root}/output/${var.vm_name_prefix}/qemu"
 }
