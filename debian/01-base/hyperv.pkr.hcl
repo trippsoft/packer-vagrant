@@ -10,7 +10,7 @@ packer {
 source "hyperv-iso" "hyperv" {
   vm_name = local.vm_name
 
-  generation = 2
+  generation = 1
 
   http_directory = local.hyperv_http_directory
 
