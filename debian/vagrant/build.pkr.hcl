@@ -14,7 +14,8 @@ packer {
 
 build {
   sources = [
-    "source.qemu.qemu"
+    "source.qemu.qemu",
+    "source.hyperv-vmcx.hyperv"
   ]
 
   provisioner "ansible" {
