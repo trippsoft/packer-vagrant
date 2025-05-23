@@ -16,8 +16,6 @@ source "hyperv-iso" "hyperv" {
   memory = 2048
 
   disk_size = "40960"
-  disk_discard = "unmap"
-  format = "vhdx"
 
   iso_url = var.iso_url
   iso_checksum = var.iso_checksum
