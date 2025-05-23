@@ -20,6 +20,11 @@ variable "headless" {
   default = true
 }
 
+variable "hyperv_switch_name" {
+  type = string
+  default = "WSL (Hyper-V firewall)"
+}
+
 locals {
   vm_name = "${var.vm_name_prefix}_base"
   hyperv_http_directory = "${path.root}/http/${var.vm_name_prefix}/hyperv"

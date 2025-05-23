@@ -10,10 +10,14 @@ packer {
 source "hyperv-iso" "hyperv" {
   vm_name = local.vm_name
 
+  generation = 2
+
   http_directory = local.hyperv_http_directory
 
   cpus = 2
   memory = 2048
+
+  switch_name = var.hyperv_switch_name
 
   disk_size = "40960"
 
