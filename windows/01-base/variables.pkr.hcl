@@ -20,7 +20,13 @@ variable "headless" {
   default = true
 }
 
+variable "hyperv_switch_name" {
+  type    = string
+  default = "LAN"
+}
+
 locals {
   vm_name = "${var.vm_name_prefix}_base"
+  hyperv_output_directory = "${path.root}/output/${var.vm_name_prefix}/hyperv"
   qemu_output_directory = "${path.root}/output/${var.vm_name_prefix}/qemu"
 }

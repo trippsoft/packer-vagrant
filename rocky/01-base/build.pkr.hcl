@@ -9,11 +9,12 @@ packer {
 
 build {
   sources = [
-    "source.qemu.qemu"
+    "source.qemu.qemu",
+    "source.hyperv-iso.hyperv"
   ]
 
   provisioner "ansible" {
-    playbook_file = "${path.root}/../../ansible/rocky_first_steps.yml"
+    playbook_file = "${local.project_directory}/ansible/rocky_first_steps.yml"
     use_proxy = false
     
     ansible_env_vars = [

@@ -14,11 +14,12 @@ packer {
 
 build {
   sources = [
-    "source.qemu.qemu"
+    "source.qemu.qemu",
+    "source.hyperv-vmcx.hyperv"
   ]
 
   provisioner "ansible" {
-    playbook_file = "${path.root}/../../ansible/fedora_seal_for_template.yml"
+    playbook_file = "${local.project_directory}/ansible/fedora_seal_for_template.yml"
     use_proxy = false
     
     ansible_env_vars = [

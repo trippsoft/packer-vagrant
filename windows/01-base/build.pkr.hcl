@@ -9,7 +9,8 @@ packer {
 
 build {
   sources = [
-    "source.qemu.qemu"
+    "source.qemu.qemu",
+    "source.hyperv-iso.hyperv"
   ]
 
   provisioner "windows-update" {

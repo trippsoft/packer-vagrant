@@ -9,11 +9,12 @@ packer {
 
 build {
   sources = [
-    "source.qemu.qemu"
+    "source.qemu.qemu",
+    "source.hyperv-vmcx.hyperv"
   ]
 
   provisioner "ansible" {
-    playbook_file = "${path.root}/../../ansible/rocky_cis.yml"
+    playbook_file = "${local.project_directory}/ansible/rocky_cis.yml"
     use_proxy = false
     
     ansible_env_vars = [

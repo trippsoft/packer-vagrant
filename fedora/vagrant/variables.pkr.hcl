@@ -29,12 +29,20 @@ variable "headless" {
   default = true
 }
 
+variable "hyperv_switch_name" {
+  type = string
+  default = "LAN"
+}
+
 locals {
   vm_name = "${var.vm_name_prefix}_${var.vm_name_suffix}"
   box_tag = "jtarpley/${local.vm_name}"
   hostname = replace("${local.vm_name}", "_", "-")
   box_version = formatdate("YYYY.MM.DD", timestamp())
-  previous_vm_directory = "${path.root}/${var.relative_previous_vm_directory}"
+  project_directory = replace(path.root, "/fedora/vagrant", "")
+  previous_vm_directory = "${local.project_directory}/fedora/${var.relative_previous_vm_directory}"
+  hyperv_source_path = "${local.previous_vm_directory}/${var.vm_name_prefix}/hyperv"
+  hyperv_output_directory = "${path.root}/output/${local.vm_name}/hyperv"
   qemu_efi_vars = "${local.previous_vm_directory}/${var.vm_name_prefix}/qemu/efivars.fd"
   qemu_source_path = "${local.previous_vm_directory}/${var.vm_name_prefix}/qemu/${var.vm_name_prefix}_${var.previous_vm_suffix}"
   qemu_output_directory = "${path.root}/output/${local.vm_name}/qemu"
