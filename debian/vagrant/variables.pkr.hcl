@@ -39,8 +39,10 @@ locals {
   box_tag = "jtarpley/${local.vm_name}"
   hostname = replace("${local.vm_name}", "_", "-")
   box_version = formatdate("YYYY.MM.DD", timestamp())
-  previous_vm_directory = "${path.root}/${var.relative_previous_vm_directory}"
-  hyperv_previous_vm_name = "${var.vm_name_prefix}_${var.previous_vm_suffix}"
+  project_directory = replace(path.root, "/debian/vagrant", "")
+  previous_vm_directory = "${local.project_directory}/debian/${var.relative_previous_vm_directory}"
+  hyperv_source_path = "${local.previous_vm_directory}/${var.vm_name_prefix}/hyperv"
+  hyperv_output_directory = "${path.root}/output/${local.vm_name}/hyperv"
   qemu_efi_vars = "${local.previous_vm_directory}/${var.vm_name_prefix}/qemu/efivars.fd"
   qemu_source_path = "${local.previous_vm_directory}/${var.vm_name_prefix}/qemu/${var.vm_name_prefix}_${var.previous_vm_suffix}"
   qemu_output_directory = "${path.root}/output/${local.vm_name}/qemu"

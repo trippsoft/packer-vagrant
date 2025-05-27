@@ -40,5 +40,5 @@ source "hyperv-iso" "hyperv" {
 
   shutdown_command = "sudo -S /sbin/halt -h -p"
 
-  keep_registered = true
+  output_directory = local.hyperv_output_directory
 }

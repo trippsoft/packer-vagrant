@@ -13,7 +13,7 @@ source "hyperv-vmcx" "hyperv" {
   configuration_version = "9.0"
   generation = 2
 
-  clone_from_vm_name = local.hyperv_previous_vm_name
+  clone_from_vmcx_path = local.hyperv_source_path
 
   cpus = 2
   memory = 2048
@@ -27,4 +27,6 @@ source "hyperv-vmcx" "hyperv" {
   ssh_timeout = "60m"
 
   shutdown_command = "sudo -S /sbin/halt -h -p"
+
+  output_directory = local.hyperv_output_directory
 }

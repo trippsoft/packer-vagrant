@@ -14,7 +14,7 @@ build {
   ]
 
   provisioner "ansible" {
-    playbook_file = "${path.root}/../../ansible/debian_first_steps.yml"
+    playbook_file = "${local.project_directory}/ansible/debian_first_steps.yml"
     use_proxy = false
 
     ansible_env_vars = [
