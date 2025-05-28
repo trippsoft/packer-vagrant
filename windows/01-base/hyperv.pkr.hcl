@@ -20,6 +20,7 @@ source "hyperv-iso" "hyperv" {
 
   disk_size = "81920"
 
+  enable_secure_boot = false
   enable_tpm = true
 
   iso_url = var.iso_url
