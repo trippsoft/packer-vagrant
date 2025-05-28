@@ -22,9 +22,6 @@ source "hyperv-vmcx" "hyperv" {
 
   disk_size = "81920"
 
-  enable_secure_boot = false
-  enable_tpm = true
-
   cd_files = [
     "${path.root}/cd/hyperv/*"
   ]
