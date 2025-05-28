@@ -31,7 +31,7 @@ source "hyperv-iso" "hyperv" {
     "${path.root}/cd/${var.vm_name_prefix}/hyperv/*"
   ]
 
-  boot_wait = var.boot_wait
+  boot_wait = "0s"
   boot_command = [
     "<enter><wait><enter><wait><enter><wait><enter>"
   ]
