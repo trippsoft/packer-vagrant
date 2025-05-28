@@ -40,7 +40,7 @@ locals {
   hostname = replace("${local.vm_name}", "_", "-")
   box_version = formatdate("YYYY.MM.DD", timestamp())
   project_directory = replace(path.root, "/ubuntu/vagrant", "")
-  previous_vm_directory = "${path.root}/${var.relative_previous_vm_directory}"
+  previous_vm_directory = "${local.project_directory}/ubuntu/${var.relative_previous_vm_directory}"
   hyperv_source_path = "${local.previous_vm_directory}/${var.vm_name_prefix}/hyperv"
   hyperv_output_directory = "${path.root}/output/${local.vm_name}/hyperv"
   qemu_efi_vars = "${local.previous_vm_directory}/${var.vm_name_prefix}/qemu/efivars.fd"

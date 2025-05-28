@@ -44,7 +44,7 @@ locals {
   box_tag = "jtarpley/${local.vm_name}"
   box_version = formatdate("YYYY.MM.DD", timestamp())
   hostname = replace("${local.vm_name}", "_", "-")
-  project_directory = replace(path.root, "/debian/vagrant", "")
+  project_directory = replace(path.root, "/windows/vagrant", "")
   previous_vm_directory = "${local.project_directory}/windows/${var.relative_previous_vm_directory}"
   hyperv_source_path = "${local.previous_vm_directory}/${var.vm_name_prefix}/hyperv"
   hyperv_output_directory = "${path.root}/output/${local.vm_name}/hyperv"

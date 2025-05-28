@@ -16,7 +16,7 @@ source "hyperv-vmcx" "hyperv" {
   clone_from_vmcx_path = local.hyperv_source_path
 
   cpus = 2
-  memory = 2048
+  memory = 4096
 
   switch_name = var.hyperv_switch_name
 

@@ -19,7 +19,7 @@ source "qemu" "qemu" {
 
   cpu_model = "host"
   cores = 2
-  memory = 2048
+  memory = 4096
 
   disk_image = true
   disk_size = "40960"
