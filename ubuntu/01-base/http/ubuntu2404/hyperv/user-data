@@ -32,7 +32,6 @@ autoinstall:
         number: 1
         size: 512MB
         flag: boot
-        grub_device: true
       - type: partition
         id: sda2
         device: sda
@@ -89,6 +88,7 @@ autoinstall:
         volume: sda1
         fstype: fat32
         label: efi
+        grub_device: true
       - type: format
         id: sda2-fs
         volume: sda2
