@@ -43,17 +43,21 @@ build {
 
   post-processors {
     post-processor "vagrant" {
+      only = ["qemu.qemu"]
+      vagrantfile_template = "${path.root}/Vagrantfile"
+
+      include = [
+        "${local.qemu_output_directory}/efivars.fd"
+      ]
+
+      output = "${path.root}/${local.vm_name}_{{.BuildName}}_{{.Provider}}_{{.Architecture}}.box"
+    }
+
+    post-processor "vagrant" {
+      only = ["hyperv-vmcx.hyperv"]
       vagrantfile_template = "${path.root}/Vagrantfile"
 
       output = "${path.root}/${local.vm_name}_{{.BuildName}}_{{.Provider}}_{{.Architecture}}.box"
-
-      override = {
-        qemu = {
-          include = [
-            "${local.qemu_output_directory}/efivars.fd"
-          ]
-        }
-      }
     }
 
     post-processor "vagrant-registry" {
