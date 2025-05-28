@@ -45,11 +45,15 @@ build {
     post-processor "vagrant" {
       vagrantfile_template = "${path.root}/Vagrantfile"
 
-      include = [
-        "${local.qemu_output_directory}/efivars.fd"
-      ]
-
       output = "${path.root}/${local.vm_name}_{{.BuildName}}_{{.Provider}}_{{.Architecture}}.box"
+
+      override = {
+        qemu = {
+          include = [
+            "${local.qemu_output_directory}/efivars.fd"
+          ]
+        }
+      }
     }
 
     post-processor "vagrant-registry" {

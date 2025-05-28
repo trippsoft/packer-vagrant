@@ -15,6 +15,22 @@
     - name: Remove AppX packages that hold up sysprep # noqa ignore-errors
       ansible.windows.win_powershell:
         script: |
-          Get-AppxPackage Microsoft.Copilot -AllUsers | Remove-AppxPackage
-          Get-AppxPackage Microsoft.WidgetsPlatformRuntime -AllUsers | Remove-AppxPackage
+          $Ansible.Changed = $false
+          $matchingPackages = [Array](Get-AppxPackage -ErrorAction ContinueSilently | Where-Object {$_.InstallLocation -match 'C:\\Program Files'})
+
+          if ($matchingPackages.Count -eq 0) {
+            return
+          }
+
+          $Ansible.Result = @{RemovedPackages = @()}
+
+          foreach ($package in $matchingPackages) {
+            try {
+              Remove-AppxPackage $package -ErrorAction Stop
+              $Ansible.Changed = $true
+              $Ansible.Result.RemovedPackages += $package.Name
+            } catch {
+              $Ansible.Failed = $true
+            }
+          }
       ignore_errors: true
