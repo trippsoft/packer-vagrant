@@ -26,12 +26,17 @@ autoinstall:
         id: sda
         path: /dev/sda
         wipe: superblock
+        preserve: false
+        ptable: gpt
       - type: partition
         id: sda1
         device: sda
         number: 1
         size: 512MB
         flag: boot
+        partition_type: EF00
+        wipe: superblock
+        preserve: false
         grub_device: true
       - type: partition
         id: sda2
@@ -41,8 +46,8 @@ autoinstall:
       - type: partition
         id: sda3
         device: sda
-        number: 2
-        size: 38.5GB
+        number: 3
+        size: -1
         flag: lvm
       - type: lvm_volgroup
         id: vg_ubuntu
@@ -89,6 +94,7 @@ autoinstall:
         volume: sda1
         fstype: fat32
         label: efi
+        grub_device: true
       - type: format
         id: sda2-fs
         volume: sda2
