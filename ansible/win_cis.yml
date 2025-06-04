@@ -2,7 +2,7 @@
   hosts:
     - default
   tasks:
-    - name: Include 'windows_2019_cis' role
+    - name: Include 'trippsc2.cis.windows2019' role
       when:
         - ansible_distribution | regex_search('(Microsoft Windows Server 2019)')
       ansible.builtin.include_role:
@@ -50,7 +50,7 @@
         w2019cis_rule_19_7_8_3_force: true # Disable diagnostic data
         w2019cis_rule_19_7_8_4_force: true # Disable Windows spotlight
 
-    - name: Include 'windows_2022_cis' role
+    - name: Include 'trippsc2.cis.windows2022' role
       when:
         - ansible_distribution | regex_search('(Microsoft Windows Server 2022)')
       ansible.builtin.include_role:
@@ -97,3 +97,51 @@
         w2022cis_rule_19_6_6_1_1_force: true # Disable Help Experience Improvement Program
         w2022cis_rule_19_7_8_3_force: true # Disable diagnostic data
         w2022cis_rule_19_7_8_4_force: true # Disable Windows spotlight
+
+    - name: Include 'trippsc2.cis.windows2025' role
+      when:
+        - ansible_distribution | regex_search('(Microsoft Windows Server 2025)')
+      ansible.builtin.include_role:
+        name: trippsc2.cis.windows2025
+      vars:
+        w2025cis_level: 1
+        w2025cis_is_template: true
+        w2025cis_rule_2_3_1_4_enabled: false # Don't rename the Administrator account
+        w2025cis_admin_username: Administrator # Don't set the Administrator account name
+        w2025cis_rule_2_3_1_5_enabled: false # Don't rename the Guest account
+        w2025cis_guest_username: Guest # Don't set the Guest account name
+        w2025cis_rule_2_3_7_4_enabled: false # Don't set login banner
+        w2025cis_rule_2_3_7_5_enabled: false # Don't set login banner
+        w2025cis_rule_2_3_7_6_force: true # Limit cached credentials
+        w2025cis_rule_9_3_4_enabled: false # Don't disable local rules for Public firewall profile
+        w2025cis_rule_9_3_5_enabled: false # Don't disable local rules for Public firewall profile
+        w2025cis_rule_18_1_3_force: true # Disable Allow Online Tips
+        w2025cis_rule_18_6_4_3_force: true # Disable default IPv6 DNS servers
+        w2025cis_rule_18_6_19_2_1_force: true # Disable IPv6
+        w2025cis_rule_18_6_20_1_force: true # Disable Windows Connect Now
+        w2025cis_rule_18_6_20_2_force: true # Disable Windows Connect Now
+        w2025cis_rule_18_8_1_1_force: true # Disable network usage notifications
+        w2025cis_rule_18_9_20_1_2_force: true # Disable handwriting personalization data sharing
+        w2025cis_rule_18_9_20_1_3_force: true # Disable handwriting recognition data sharing
+        w2025cis_rule_18_9_20_1_4_force: true # Disable Internet Connection Wizard
+        w2025cis_rule_18_9_20_1_7_force: true # Disable Registration Wizard
+        w2025cis_rule_18_9_20_1_8_force: true # Disable Search Companion content file updates
+        w2025cis_rule_18_9_20_1_9_force: true # Disable Order Prints
+        w2025cis_rule_18_9_20_1_10_force: true # Disable Publish to Web
+        w2025cis_rule_18_9_20_1_11_force: true # Disable Windows Messenger CEIP
+        w2025cis_rule_18_9_20_1_12_force: true # Disable Windows CEIP
+        w2025cis_rule_18_9_20_1_13_force: true # Disable Windows Error Reporting
+        w2025cis_rule_18_9_31_2_force: true # Disable upload of User Activities
+        w2025cis_rule_18_9_47_5_1_force: true # Disable Microsoft Support Diagnostic Tool
+        w2025cis_rule_18_9_47_11_1_force: true # Disable PerfTrack
+        w2025cis_rule_18_9_49_1_force: true # Disable advertising ID
+        w2025cis_rule_18_10_16_2_force: true # Disable Telemetry
+        w2025cis_rule_18_10_37_1_force: true # Disable location tracking
+        w2025cis_rule_18_10_41_1_force: true # Disable Message Service Cloud Sync
+        w2025cis_rule_18_10_43_5_2_force: true # Disable Microsoft MAPS
+        w2025cis_rule_18_10_43_12_1_force: true # Disable Watson events
+        w2025cis_rule_18_10_59_2_force: true # Allow Cloud Search
+        w2025cis_rule_18_10_80_1_force: true # Disable Windows Ink Workspace
+        w2025cis_rule_19_6_6_1_1_force: true # Disable Help Experience Improvement Program
+        w2025cis_rule_19_7_8_3_force: true # Disable diagnostic data
+        w2025cis_rule_19_7_8_4_force: true # Disable Windows spotlight
