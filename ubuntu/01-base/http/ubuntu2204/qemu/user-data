@@ -5,6 +5,7 @@ autoinstall:
     # Stop ssh for packer
     - sudo systemctl stop ssh
   locale: en_US
+  timezone: America/New_York
   keyboard:
     layout: us
   network:

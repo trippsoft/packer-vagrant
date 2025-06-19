@@ -5,6 +5,7 @@ autoinstall:
     # Stop ssh for packer
     - sudo systemctl stop ssh
   locale: en_US
+  timezone: America/New_York
   keyboard:
     layout: us
   network:
@@ -199,6 +200,7 @@ autoinstall:
             systemctl disable apt-daily-upgrade.service; \
             systemctl disable apt-daily-upgrade.timer; \
             systemctl enable ssh.service; \
+            timedatectl set-local-rtc 1; \
             ufw enable; \
             ufw allow ssh; \
             exit 0 \
