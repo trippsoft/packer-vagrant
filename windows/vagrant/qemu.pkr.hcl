@@ -16,9 +16,11 @@ source "qemu" "qemu" {
   efi_firmware_vars = local.qemu_efi_vars
   use_pflash = true
   machine_type = "q35"
-  vtpm = true
 
-  cpu_model = "host"
+  qemuargs = [
+    ["-cpu", "host,arch_capabilities=off"]
+  ]
+
   cores = 4
   memory = 8192
 

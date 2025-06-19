@@ -16,7 +16,10 @@ source "qemu" "qemu" {
   use_pflash = true
   machine_type = "q35"
 
-  cpu_model = "host"
+  qemuargs = [
+    ["-cpu", "host,arch_capabilities=off"]
+  ]
+
   cores = 4
   memory = 8192
 
