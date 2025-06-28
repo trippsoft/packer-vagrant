@@ -23,5 +23,6 @@ Vagrant.configure(2) do |config|
     lv.machine_type = 'q35'
     lv.nested = true
     lv.video_type = 'vga'
+    lv.input :type => 'tablet', :bus => 'usb'
   end
 end
