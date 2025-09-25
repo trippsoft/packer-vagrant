@@ -50,6 +50,6 @@ locals {
     hyperv_output_directory = "${path.root}/output/${local.vm_name}/hyperv"
     qemu_source_path = "${local.previous_vm_directory}/${var.vm_name_prefix}/qemu/${var.vm_name_prefix}_${var.previous_vm_suffix}"
     qemu_output_directory = "${path.root}/output/${local.vm_name}/qemu"
-    vmware_source_path = "${local.previous_vm_directory}/${var.vm_name_prefix}/vmware"
+    vmware_source_path = "${local.previous_vm_directory}/${var.vm_name_prefix}/vmware/${var.vm_name_prefix}_${var.previous_vm_suffix}.vmx"
     vmware_output_directory = "${path.root}/output/${local.vm_name}/vmware"
 }
