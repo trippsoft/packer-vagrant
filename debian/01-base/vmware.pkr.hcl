@@ -14,6 +14,8 @@ source "vmware-iso" "vmware" {
     firmware = "efi-secure"
     guest_os_type = "debian11-64" # Debian 11 64-bit is closest match to current Debian
 
+    vnc_disable_password = true
+
     http_directory = local.vmware_http_directory
 
     cpus = 2

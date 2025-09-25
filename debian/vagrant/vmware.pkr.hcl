@@ -14,6 +14,8 @@ source "vmware-vmx" "vmware" {
     firmware = "efi-secure"
     guest_os_type = "debian11-64" # Debian 11 64-bit is closest match to current Debian
 
+    vnc_disable_password = true
+
     source_path = local.vmware_source_path
 
     cpus = 2
