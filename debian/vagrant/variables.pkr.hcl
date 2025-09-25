@@ -34,6 +34,11 @@ variable "hyperv_switch_name" {
     default = "LAN"
 }
 
+variable "vmware_version" {
+    type = number
+    default = 19
+}
+
 locals {
     vm_name = "${var.vm_name_prefix}_${var.vm_name_suffix}"
     box_tag = "jtarpley/${local.vm_name}"
@@ -43,7 +48,8 @@ locals {
     previous_vm_directory = "${local.project_directory}/debian/${var.relative_previous_vm_directory}"
     hyperv_source_path = "${local.previous_vm_directory}/${var.vm_name_prefix}/hyperv"
     hyperv_output_directory = "${path.root}/output/${local.vm_name}/hyperv"
-    qemu_efi_vars = "${local.previous_vm_directory}/${var.vm_name_prefix}/qemu/efivars.fd"
     qemu_source_path = "${local.previous_vm_directory}/${var.vm_name_prefix}/qemu/${var.vm_name_prefix}_${var.previous_vm_suffix}"
     qemu_output_directory = "${path.root}/output/${local.vm_name}/qemu"
+    vmware_source_path = "${local.previous_vm_directory}/${var.vm_name_prefix}/vmware"
+    vmware_output_directory = "${path.root}/output/${local.vm_name}/vmware"
 }

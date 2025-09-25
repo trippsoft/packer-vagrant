@@ -10,7 +10,8 @@ packer {
 build {
     sources = [
         "source.qemu.qemu",
-        "source.hyperv-iso.hyperv"
+        "source.hyperv-iso.hyperv",
+        "source.vmware-iso.vmware"
     ]
 
     provisioner "ansible" {
