@@ -12,3 +12,6 @@ crash.log
 
 # VirtIO drivers
 **/virtio-win/**/*
+
+# VMware drivers
+**/vmware-drivers/**/*

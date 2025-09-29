@@ -13,13 +13,17 @@
         </component>
         <component name="Microsoft-Windows-PnpCustomizationsWinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <DriverPaths>
+                <PathAndCredentials wcm:action="add" wcm:keyValue="pvscsi">
+                    <Path>E:\pvscsi\</Path>
+                </PathAndCredentials>
+                <PathAndCredentials wcm:action="add" wcm:keyValue="vmxnet3">
+                    <Path>E:\vmxnet3\</Path>
+                </PathAndCredentials>
             </DriverPaths>
         </component>
         <component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <DiskConfiguration>
-				<Disk wcm:action="add">
-					<DiskID>0</DiskID>
-					<WillWipeDisk>true</WillWipeDisk>
+                <Disk wcm:action="add">
 					<CreatePartitions>
 						<CreatePartition wcm:action="add">
 							<Order>1</Order>
@@ -56,22 +60,22 @@
 							<Format>NTFS</Format>
 						</ModifyPartition>
 					</ModifyPartitions>
-				</Disk>
-		    </DiskConfiguration>
+                    <DiskID>0</DiskID>
+                    <WillWipeDisk>true</WillWipeDisk>
+                </Disk>
+            </DiskConfiguration>
             <ImageInstall>
                 <OSImage>
                     <InstallFrom>
                         <MetaData wcm:action="add">
                             <Key>/IMAGE/NAME </Key>
-                            <Value>Windows Server 2025 SERVERDATACENTER</Value>
+                            <Value>Windows Server 2022 SERVERDATACENTER</Value>
                         </MetaData>
                     </InstallFrom>
                     <InstallTo>
                         <DiskID>0</DiskID>
                         <PartitionID>3</PartitionID>
                     </InstallTo>
-                    <WillShowUI>OnError</WillShowUI>
-                    <InstallToAvailablePartition>false</InstallToAvailablePartition>
                 </OSImage>
             </ImageInstall>
             <UserData>
@@ -95,8 +99,12 @@
             <TimeZone>Eastern Standard Time</TimeZone>
             <RegisteredOwner />
         </component>
-		<component name="Microsoft-Windows-ServerManager-SvrMgrNc" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <component name="Microsoft-Windows-ServerManager-SvrMgrNc" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <DoNotOpenServerManagerAtLogon>true</DoNotOpenServerManagerAtLogon>
+        </component>
+        <component name="Microsoft-Windows-IE-ESC" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <IEHardenAdmin>false</IEHardenAdmin>
+            <IEHardenUser>false</IEHardenUser>
         </component>
         <component name="Microsoft-Windows-OutOfBoxExperience" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <DoNotOpenInitialConfigurationTasksAtLogon>true</DoNotOpenInitialConfigurationTasksAtLogon>
@@ -176,21 +184,27 @@
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
+                    <CommandLine>C:\Windows\System32\WindowsPowershell\v1.0\powershell.exe -Command "E:\install-vmware-tools.ps1"</CommandLine>
+                    <Description>Install VMware Tools</Description>
+                    <Order>6</Order>
+                    <RequiresUserInput>true</RequiresUserInput>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
                     <CommandLine>C:\Windows\System32\WindowsPowershell\v1.0\powershell.exe -Command "E:\start-openssh.ps1"</CommandLine>
                     <Description>Start OpenSSH</Description>
-                    <Order>6</Order>
+                    <Order>7</Order>
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
                     <CommandLine>C:\Windows\System32\WindowsPowershell\v1.0\powershell.exe -Command "E:\allow-winrm.ps1"</CommandLine>
                     <Description>Enable WinRM Firewall Rule</Description>
-                    <Order>7</Order>
+                    <Order>8</Order>
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
                     <CommandLine>cmd.exe /c E:\configure-winrm.bat</CommandLine>
                     <Description>Configure WinRM</Description>
-                    <Order>8</Order>
+                    <Order>9</Order>
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
             </FirstLogonCommands>
