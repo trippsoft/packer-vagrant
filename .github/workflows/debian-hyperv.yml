@@ -4,7 +4,7 @@ name: Debian Hyper-V Boxes
   workflow_dispatch: {}
 defaults:
   run:
-    shell: bash
+    shell: wsl {0}
 jobs:
   packer:
     name: Build Debian Hyper-V boxes
@@ -53,6 +53,7 @@ jobs:
         id: base1
         continue-on-error: true
         run: |
+          source ~/venv/ansible-2.16/bin/activate
           /usr/bin/packer build \
             -only "*.hyperv" \
             -var-file="./debian/01-base/${{ matrix.box }}.pkrvars.hcl" \
@@ -67,6 +68,7 @@ jobs:
       - name: Retry build base image if failed
         if: steps.base1.outcome == 'failure'
         run: |
+          source ~/venv/ansible-2.16/bin/activate
           /usr/bin/packer build \
             -only "*.hyperv" \
             -var-file="./debian/01-base/${{ matrix.box }}.pkrvars.hcl" \
@@ -81,6 +83,7 @@ jobs:
       - name: Build Vagrant box
         id: box1
         run: |
+          source ~/venv/ansible-2.16/bin/activate
           /usr/bin/packer build \
             -only "*.hyperv" \
             -var-file="./debian/vagrant/${{ matrix.box }}_base.pkrvars.hcl" \
@@ -97,6 +100,7 @@ jobs:
       - name: Retry build Vagrant box if failed
         if: steps.box1.outcome == 'failure'
         run: |
+          source ~/venv/ansible-2.16/bin/activate
           /usr/bin/packer build \
             -only "*.hyperv" \
             -var-file="./debian/vagrant/${{ matrix.box }}_base.pkrvars.hcl" \
