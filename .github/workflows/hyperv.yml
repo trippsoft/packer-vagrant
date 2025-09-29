@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Install prerequisites
         run: |
-          C:\Windows\System32\wsl.exe -e ./.github/workflows/scripts/hyperv/install-prerequisites.sh
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/install-prerequisites.sh
   debian_base:
     name: Build Debian base images
     needs: prerequisites
@@ -37,7 +37,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Build Debian base box
         run: |
-          C:\Windows\System32\wsl.exe -e ./.github/workflows/scripts/hyperv/build-base.sh debian ${{ matrix.box }}
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-base.sh debian ${{ matrix.box }}
   debian_vagrant:
     name: Build Debian Vagrant boxes
     needs: debian_base
@@ -58,4 +58,4 @@ jobs:
         uses: actions/checkout@v4
       - name: Build Debian Vagrant box
         run: |
-          C:\Windows\System32\wsl.exe -e ./.github/workflows/scripts/hyperv/build-box.sh debian ${{ matrix.box }} base
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh debian ${{ matrix.box }} base
