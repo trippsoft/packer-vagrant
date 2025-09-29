@@ -17,8 +17,8 @@ jobs:
       - name: Install prerequisites
         run: |
           C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/install-prerequisites.sh
-  debian_base:
-    name: Build Debian base images
+  debian:
+    name: Build Debian boxes
     needs: prerequisites
     runs-on:
       - self-hosted
@@ -38,30 +38,11 @@ jobs:
       - name: Build Debian base box
         run: |
           C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-base.sh debian ${{ matrix.box }}
-  debian_vagrant:
-    name: Build Debian Vagrant boxes
-    needs: debian_base
-    runs-on:
-      - self-hosted
-      - Windows
-      - packer
-      - hyper-v
-      - X64
-    strategy:
-      fail-fast: false
-      matrix:
-        box:
-          - debian12
-          - debian13
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Build Debian Vagrant box
-        run: |
+          Start-Sleep -Seconds 30
           C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh debian ${{ matrix.box }} base
   debian_cleanup:
     name: Cleanup Debian output
-    needs: debian_vagrant
+    needs: debian
     if: always()
     runs-on:
       - self-hosted
@@ -72,9 +53,9 @@ jobs:
     steps:
       - name: Cleanup
         run: |
-          Remove-Item -Path .\debian\01-base\output -Force -Recurse
-          Remove-Item -Path .\debian\vagrant\output -Force -Recurse
-          Remove-Item -Path .\debian\vagrant\*.box -Force
+          Remove-Item -Path .\debian\01-base\output -Force -Recurse -ErrorAction SilentlyContinue
+          Remove-Item -Path .\debian\vagrant\output -Force -Recurse -ErrorAction SilentlyContinue
+          Remove-Item -Path .\debian\vagrant\*.box -Force -ErrorAction SilentlyContinue
   cleanup:
     name: Final cleanup
     needs:
