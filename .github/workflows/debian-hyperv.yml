@@ -4,7 +4,7 @@ name: Debian Hyper-V Boxes
   workflow_dispatch: {}
 defaults:
   run:
-    shell: C:\Windows\System32\wsl.exe
+    shell: C:\Windows\System32\wsl.exe "{0}"
 jobs:
   packer:
     name: Build Debian Hyper-V boxes
