@@ -20,3 +20,7 @@ ansible-galaxy collection install --upgrade trippsc2.cis trippsc2.first_steps tr
 /usr/bin/packer init ./windows/01-base
 /usr/bin/packer init ./windows/02-cis
 /usr/bin/packer init ./windows/vagrant
+
+mkdir -p ./windows/01-base/cd/qemu/virtio-win
+
+ln -s /home/github-actions/virtio-win ./windows/01-base/cd/qemu/virtio-win

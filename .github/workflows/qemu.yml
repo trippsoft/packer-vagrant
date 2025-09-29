@@ -263,6 +263,7 @@ jobs:
     steps:
       - name: Cleanup
         run: |
+          rm .\windows\01-base\cd\qemu\virtio-win
           rm -rf .\windows\01-base\output
           rm -rf .\windows\02-cis\output
           rm -rf .\windows\vagrant\output
