@@ -14,7 +14,7 @@ jobs:
       - Windows
       - packer
       - hyper-v
-      - x64
+      - X64
     strategy:
       fail-fast: false
       matrix:
