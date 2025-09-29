@@ -22,8 +22,10 @@ source "vmware-iso" "vmware" {
     memory = 2048
 
     network = "nat"
+    network_adapter_type = "vmxnet3"
 
     disk_size = 40960
+    disk_adapter_type = "pvscsi"
 
     iso_url = var.iso_url
     iso_checksum = var.iso_checksum
