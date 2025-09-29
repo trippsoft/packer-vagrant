@@ -35,10 +35,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Build Debian base box
+      - name: Build Debian box
         run: |
           C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-base.sh debian ${{ matrix.box }}
-          Start-Sleep -Seconds 30
           C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh debian ${{ matrix.box }} base
   debian_cleanup:
     name: Cleanup Debian output
@@ -56,10 +55,224 @@ jobs:
           Remove-Item -Path .\debian\01-base\output -Force -Recurse -ErrorAction SilentlyContinue
           Remove-Item -Path .\debian\vagrant\output -Force -Recurse -ErrorAction SilentlyContinue
           Remove-Item -Path .\debian\vagrant\*.box -Force -ErrorAction SilentlyContinue
+  fedora:
+    name: Build Fedora boxes
+    needs: prerequisites
+    runs-on:
+      - self-hosted
+      - Windows
+      - packer
+      - hyper-v
+      - X64
+    strategy:
+      fail-fast: false
+      matrix:
+        box:
+          - fedora41
+          - fedora42
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build Fedora box
+        run: |
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-base.sh fedora ${{ matrix.box }}
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh fedora ${{ matrix.box }} base
+  fedora_cleanup:
+    name: Cleanup Fedora output
+    needs: fedora
+    if: always()
+    runs-on:
+      - self-hosted
+      - Windows
+      - packer
+      - hyper-v
+      - X64
+    steps:
+      - name: Cleanup
+        run: |
+          Remove-Item -Path .\fedora\01-base\output -Force -Recurse -ErrorAction SilentlyContinue
+          Remove-Item -Path .\fedora\vagrant\output -Force -Recurse -ErrorAction SilentlyContinue
+          Remove-Item -Path .\fedora\vagrant\*.box -Force -ErrorAction SilentlyContinue
+  rocky_base:
+    name: Build Rocky boxes with base only
+    needs: prerequisites
+    runs-on:
+      - self-hosted
+      - Windows
+      - packer
+      - hyper-v
+      - X64
+    strategy:
+      fail-fast: false
+      matrix:
+        box:
+          - rocky10
+          - rocky10_ws
+          - rocky9_ws
+          - rocky8_ws
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build Rocky box
+        run: |
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-base.sh rocky ${{ matrix.box }}
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh rocky ${{ matrix.box }} base
+  rocky_cis:
+    name: Build Rocky boxes with CIS
+    needs: prerequisites
+    runs-on:
+      - self-hosted
+      - Windows
+      - packer
+      - hyper-v
+      - X64
+    strategy:
+      fail-fast: false
+      matrix:
+        box:
+          - rocky9
+          - rocky8
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build Rocky CIS box
+        run: |
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-base.sh rocky ${{ matrix.box }}
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh rocky ${{ matrix.box }} base
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-cis.sh rocky ${{ matrix.box }}
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh rocky ${{ matrix.box }} cis
+  rocky_cleanup:
+    name: Cleanup Rocky output
+    needs:
+      - rocky_base
+      - rocky_cis
+    if: always()
+    runs-on:
+      - self-hosted
+      - Windows
+      - packer
+      - hyper-v
+      - X64
+    steps:
+      - name: Cleanup
+        run: |
+          Remove-Item -Path .\rocky\01-base\output -Force -Recurse -ErrorAction SilentlyContinue
+          Remove-Item -Path .\rocky\02-cis\output -Force -Recurse -ErrorAction SilentlyContinue
+          Remove-Item -Path .\rocky\vagrant\output -Force -Recurse -ErrorAction SilentlyContinue
+          Remove-Item -Path .\rocky\vagrant\*.box -Force -ErrorAction SilentlyContinue
+  ubuntu:
+    name: Build Ubuntu boxes
+    needs: prerequisites
+    runs-on:
+      - self-hosted
+      - Windows
+      - packer
+      - hyper-v
+      - X64
+    strategy:
+      fail-fast: false
+      matrix:
+        box:
+          - ubuntu2204
+          - ubuntu2404
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build Ubuntu box
+        run: |
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-base.sh ubuntu ${{ matrix.box }}
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh ubuntu ${{ matrix.box }} base
+  ubuntu_cleanup:
+    name: Cleanup Ubuntu output
+    needs: ubuntu
+    if: always()
+    runs-on:
+      - self-hosted
+      - Windows
+      - packer
+      - hyper-v
+      - X64
+    steps:
+      - name: Cleanup
+        run: |
+          Remove-Item -Path .\ubuntu\01-base\output -Force -Recurse -ErrorAction SilentlyContinue
+          Remove-Item -Path .\ubuntu\vagrant\output -Force -Recurse -ErrorAction SilentlyContinue
+          Remove-Item -Path .\ubuntu\vagrant\*.box -Force -ErrorAction SilentlyContinue
+  windows_base:
+    name: Build Windows boxes with base only
+    needs: prerequisites
+    runs-on:
+      - self-hosted
+      - Windows
+      - packer
+      - hyper-v
+      - X64
+    strategy:
+      fail-fast: false
+      matrix:
+        box:
+          - w10_22h2
+          - w11_23h2
+          - w11_24h2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build Windows box
+        run: |
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-base.sh windows ${{ matrix.box }}
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh windows ${{ matrix.box }} base
+  windows_cis:
+    name: Build Windows boxes with CIS
+    needs: prerequisites
+    runs-on:
+      - self-hosted
+      - Windows
+      - packer
+      - hyper-v
+      - X64
+    strategy:
+      fail-fast: false
+      matrix:
+        box:
+          - w2019
+          - w2022
+          - w2025
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build Windows box
+        run: |
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-base.sh windows ${{ matrix.box }}
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh windows ${{ matrix.box }} base
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-cis.sh windows ${{ matrix.box }}
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh windows ${{ matrix.box }} cis
+  windows_cleanup:
+    name: Cleanup Ubuntu output
+    needs:
+      - windows_base
+      - windows_cis
+    if: always()
+    runs-on:
+      - self-hosted
+      - Windows
+      - packer
+      - hyper-v
+      - X64
+    steps:
+      - name: Cleanup
+        run: |
+          Remove-Item -Path .\windows\01-base\output -Force -Recurse -ErrorAction SilentlyContinue
+          Remove-Item -Path .\windows\02-cis\output -Force -Recurse -ErrorAction SilentlyContinue
+          Remove-Item -Path .\windows\vagrant\output -Force -Recurse -ErrorAction SilentlyContinue
+          Remove-Item -Path .\windows\vagrant\*.box -Force -ErrorAction SilentlyContinue
   cleanup:
     name: Final cleanup
     needs:
       - debian_cleanup
+      - fedora_cleanup
+      - rocky_cleanup
+      - ubuntu_cleanup
+      - windows_cleanup
     if: always()
     runs-on:
       - self-hosted
@@ -70,5 +283,5 @@ jobs:
     steps:
       - name: Final cleanup
         run: |
-          Remove-Item -Path "C:\Users\github-actions\AppData\Local\Temp\hyperv*" -Recurse -Force
-          Remove-Item -Path "C:\Users\github-actions\AppData\Local\Temp\packer*" -Force
+          Remove-Item -Path "C:\Users\github-actions\AppData\Local\Temp\hyperv*" -Recurse -Force -ErrorAction SilentlyContinue
+          Remove-Item -Path "C:\Users\github-actions\AppData\Local\Temp\packer*" -Force -ErrorAction SilentlyContinue
