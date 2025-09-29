@@ -1,0 +1,61 @@
+---
+name: Debian Hyper-V Boxes
+'on':
+  workflow_dispatch: {}
+jobs:
+  prerequisites:
+    name: Install prerequisites
+    runs-on:
+      - self-hosted
+      - Windows
+      - packer
+      - hyper-v
+      - X64
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install prerequisites
+        run: |
+          C:\Windows\System32\wsl.exe -e ./.github/workflows/scripts/hyperv/install-prerequisites.sh
+  debian_base:
+    name: Build Debian base images
+    needs: prerequisites
+    runs-on:
+      - self-hosted
+      - Windows
+      - packer
+      - hyper-v
+      - X64
+    strategy:
+      fail-fast: false
+      matrix:
+        box:
+          - debian12
+          - debian13
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build Debian base box
+        run: |
+          C:\Windows\System32\wsl.exe -e ./.github/workflows/scripts/hyperv/build-base.sh debian ${{ matrix.box }}
+  debian_vagrant:
+    name: Build Debian Vagrant boxes
+    needs: debian_base
+    runs-on:
+      - self-hosted
+      - Windows
+      - packer
+      - hyper-v
+      - X64
+    strategy:
+      fail-fast: false
+      matrix:
+        box:
+          - debian12
+          - debian13
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build Debian Vagrant box
+        run: |
+          C:\Windows\System32\wsl.exe -e ./.github/workflows/scripts/hyperv/build-box.sh debian ${{ matrix.box }} base
