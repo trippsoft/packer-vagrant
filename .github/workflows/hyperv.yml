@@ -1,5 +1,5 @@
 ---
-name: Debian Hyper-V Boxes
+name: Hyper-V Boxes
 'on':
   workflow_dispatch: {}
 jobs:
