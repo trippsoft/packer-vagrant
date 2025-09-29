@@ -59,3 +59,35 @@ jobs:
       - name: Build Debian Vagrant box
         run: |
           C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh debian ${{ matrix.box }} base
+  debian_cleanup:
+    name: Cleanup Debian output
+    needs: debian_vagrant
+    if: always()
+    runs-on:
+      - self-hosted
+      - Windows
+      - packer
+      - hyper-v
+      - X64
+    steps:
+      - name: Cleanup
+        run: |
+          Remove-Item -Path .\debian\01-base\output -Force -Recurse
+          Remove-Item -Path .\debian\vagrant\output -Force -Recurse
+          Remove-Item -Path .\debian\vagrant\*.box -Force
+  cleanup:
+    name: Final cleanup
+    needs:
+      - debian_cleanup
+    if: always()
+    runs-on:
+      - self-hosted
+      - Windows
+      - packer
+      - hyper-v
+      - X64
+    steps:
+      - name: Final cleanup
+        run: |
+          Remove-Item -Path "C:\Users\github-actions\AppData\Local\Temp\hyperv*" -Recurse -Force
+          Remove-Item -Path "C:\Users\github-actions\AppData\Local\Temp\packer*" -Force
