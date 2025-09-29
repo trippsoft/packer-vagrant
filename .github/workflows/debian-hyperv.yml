@@ -11,7 +11,7 @@ jobs:
     name: Build Debian Hyper-V boxes
     runs-on:
       - self-hosted
-      - windows
+      - Windows
       - packer
       - hyper-v
       - x64
