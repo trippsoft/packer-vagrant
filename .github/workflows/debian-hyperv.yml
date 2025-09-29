@@ -4,8 +4,7 @@ name: Debian Hyper-V Boxes
   workflow_dispatch: {}
 defaults:
   run:
-    working-directory: 'trippsc2.packer-vagrant'
-    shell: wsl-bash {0}
+    shell: C:\Windows\System32\wsl.exe
 jobs:
   packer:
     name: Build Debian Hyper-V boxes
@@ -24,8 +23,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          path: 'trippsc2.packer-vagrant'
       - name: Install Ansible collections
         run: |
           source ~/venv/ansible-2.16/bin/activate
