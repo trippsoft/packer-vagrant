@@ -56,7 +56,11 @@ build {
         }
 
         post-processor "vagrant" {
-            only = ["hyperv-vmcx.hyperv"]
+            only = [
+                "hyperv-vmcx.hyperv",
+                "vmware-vmx.vmware"
+            ]
+
             vagrantfile_template = "${path.root}/Vagrantfile"
             output = "${path.root}/${local.vm_name}_{{.BuildName}}_{{.Provider}}_{{.Architecture}}.box"
         }
