@@ -34,11 +34,13 @@ source "hyperv-iso" "hyperv" {
         "<leftCtrlOn>x<leftCtrlOff>"
     ]
 
+    communicator = "ssh"
     ssh_username = "vagrant"
     ssh_password = "vagrant"
-    ssh_timeout = "60m"
+    ssh_timeout = "10m"
 
     shutdown_command = "sudo -S /sbin/halt -h -p"
+    shutdown_timeout = "5m"
 
     output_directory = local.hyperv_output_directory
 }

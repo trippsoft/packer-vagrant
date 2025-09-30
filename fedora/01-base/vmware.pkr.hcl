@@ -36,11 +36,13 @@ source "vmware-iso" "vmware" {
         "e<down><down><end><bs><bs><bs><bs><bs>inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<leftCtrlOn>x<leftCtrlOff>"
     ]
 
+    communicator = "ssh"
     ssh_username = "vagrant"
     ssh_password = "vagrant"
-    ssh_timeout = "60m"
+    ssh_timeout = "20m"
 
-    shutdown_command = "sudo shutdown -h now"
+    shutdown_command = "sudo -S /sbin/halt -h -p"
+    shutdown_timeout = "5m"
 
     output_directory = local.vmware_output_directory
 }

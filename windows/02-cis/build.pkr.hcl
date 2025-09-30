@@ -17,6 +17,7 @@ build {
     provisioner "ansible" {
         playbook_file = "${local.project_directory}/ansible/win_cis.yml"
         use_proxy = false
+        timeout = "30m"
         
         ansible_env_vars = [
             "ANSIBLE_HOST_KEY_CHECKING=False",

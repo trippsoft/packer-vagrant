@@ -17,6 +17,7 @@ build {
     provisioner "ansible" {
         playbook_file = "${local.project_directory}/ansible/fedora_first_steps.yml"
         use_proxy = false
+        timeout = "15m"
 
         ansible_env_vars = [
             "ANSIBLE_HOST_KEY_CHECKING=False",

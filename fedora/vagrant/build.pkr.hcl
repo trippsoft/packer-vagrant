@@ -22,6 +22,7 @@ build {
     provisioner "ansible" {
         playbook_file = "${local.project_directory}/ansible/fedora_seal_for_template.yml"
         use_proxy = false
+        timeout = "10m"
 
         ansible_env_vars = [
             "ANSIBLE_HOST_KEY_CHECKING=False",

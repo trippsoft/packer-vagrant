@@ -18,9 +18,10 @@ source "vmware-vmx" "vmware" {
     communicator = "ssh"
     ssh_username = "Administrator"
     ssh_password = "Packer42-"
+    ssh_timeout = "5m"
 
     shutdown_command = "shutdown /s /t 10 /f"
-    shutdown_timeout = "10m"
+    shutdown_timeout = "5m"
 
     output_directory = local.vmware_output_directory
 }

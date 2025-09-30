@@ -30,11 +30,13 @@ source "hyperv-iso" "hyperv" {
     boot_wait = var.boot_wait
     boot_command = var.boot_command
 
+    communicator = "ssh"
     ssh_username = "vagrant"
     ssh_password = "vagrant"
-    ssh_timeout = "60m"
+    ssh_timeout = "15m"
 
     shutdown_command = "sudo -S /sbin/halt -h -p"
+    shutdown_timeout = "5m"
 
     output_directory = local.hyperv_output_directory
 }

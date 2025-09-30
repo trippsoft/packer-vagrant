@@ -44,11 +44,11 @@ source "qemu" "qemu" {
     communicator = "winrm"
     winrm_username = "Administrator"
     winrm_password = "Packer42-"
-    winrm_timeout = "1h"
     winrm_use_ssl = false
+    winrm_timeout = "20m"
 
     shutdown_command = "shutdown /s /t 10 /f"
-    shutdown_timeout = "10m"
+    shutdown_timeout = "5m"
 
     output_directory = local.qemu_output_directory
 }

@@ -29,7 +29,8 @@ source "hyperv-vmcx" "hyperv" {
     communicator = "ssh"
     ssh_username = "Administrator"
     ssh_password = "Packer42-"
-    
+    ssh_timeout = "5m"
+
     shutdown_command = "D:\\shutdown.cmd"
     shutdown_timeout = "10m"
 

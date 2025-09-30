@@ -31,11 +31,13 @@ source "qemu" "qemu" {
         "<down><tab>priority=critical net.ifnames=0 biosdevname=0 auto=true preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg<enter>"
     ]
 
+    communicator = "ssh"
     ssh_username = "vagrant"
     ssh_password = "vagrant"
-    ssh_timeout = "60m"
+    ssh_timeout = "10m"
 
     shutdown_command = "sudo -S /sbin/halt -h -p"
+    shutdown_timeout = "5m"
 
     output_directory = local.qemu_output_directory
 }

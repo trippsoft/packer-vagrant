@@ -221,7 +221,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Build Windows box
         run: |
-          ln -s /home/github-actions/vmware-drivers/${{ matrix.box }} ./windows/01-base/cd/${{ matrix.box }}/vmware-drivers
+          mkdir -p ./windows/01-base/cd/${{ matrix.box }}/vmware-drivers
+          cp -R /home/github-actions/vmware-drivers/${{ matrix.box }}/* ./windows/01-base/cd/${{ matrix.box }}/vmware-drivers/
           ./.github/workflows/scripts/vmware/build-base.sh windows ${{ matrix.box }}
           ./.github/workflows/scripts/vmware/build-box.sh windows ${{ matrix.box }} base
           rm .\windows\01-base\cd\${{ matrix.box }}\vmware-drivers || /bin/true
@@ -246,7 +247,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Build Windows box
         run: |
-          ln -s /home/github-actions/vmware-drivers/${{ matrix.box }} ./windows/01-base/cd/${{ matrix.box }}/vmware-drivers
+          mkdir -p ./windows/01-base/cd/${{ matrix.box }}/vmware-drivers
+          cp -R /home/github-actions/vmware-drivers/${{ matrix.box }}/* ./windows/01-base/cd/${{ matrix.box }}/vmware-drivers/
           ./.github/workflows/scripts/vmware/build-base.sh windows ${{ matrix.box }}
           ./.github/workflows/scripts/vmware/build-box.sh windows ${{ matrix.box }} base
           ./.github/workflows/scripts/vmware/build-cis.sh windows ${{ matrix.box }}

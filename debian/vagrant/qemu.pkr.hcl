@@ -28,8 +28,10 @@ source "qemu" "qemu" {
     communicator = "ssh"
     ssh_username = "vagrant"
     ssh_password = "vagrant"
+    ssh_timeout = "5m"
 
     shutdown_command = "sudo -S /sbin/halt -h -p"
+    shutdown_timeout = "5m"
 
     output_directory = local.qemu_output_directory
 }

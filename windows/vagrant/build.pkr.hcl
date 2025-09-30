@@ -22,6 +22,7 @@ build {
     provisioner "ansible" {
         playbook_file = "${local.project_directory}/ansible/win_seal_for_template.yml"
         use_proxy = false
+        timeout = "25m"
 
         ansible_env_vars = [
             "ANSIBLE_HOST_KEY_CHECKING=False",

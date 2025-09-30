@@ -16,6 +16,7 @@ build {
 
     provisioner "windows-update" {
         search_criteria = "BrowseOnly=0 and IsInstalled=0"
+        timeout = "40m"
 
         filters = [
             "exclude:$_.Title -like '*Preview*'",
@@ -31,5 +32,6 @@ build {
         ]
 
         valid_exit_codes = [0, 3010, 4294967295]
+        timeout = "10m"
     }
 }
