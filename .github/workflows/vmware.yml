@@ -19,187 +19,187 @@ jobs:
       - name: Install prerequisites
         run: |
           ./.github/workflows/scripts/vmware/install-prerequisites.sh
-  debian:
-    name: Build Debian boxes
-    needs: prerequisites
-    runs-on:
-      - self-hosted
-      - Linux
-      - packer
-      - vmware
-      - X64
-    strategy:
-      fail-fast: false
-      matrix:
-        box:
-          - debian12
-          - debian13
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Build Debian box
-        run: |
-          ./.github/workflows/scripts/vmware/build-base.sh debian ${{ matrix.box }}
-          ./.github/workflows/scripts/vmware/build-box.sh debian ${{ matrix.box }} base
-  debian_cleanup:
-    name: Cleanup Debian output
-    needs: debian
-    if: always()
-    runs-on:
-      - self-hosted
-      - Linux
-      - packer
-      - vmware
-      - X64
-    steps:
-      - name: Cleanup
-        run: |
-          rm -rf .\debian\01-base\output || /bin/true
-          rm -rf .\debian\vagrant\output || /bin/true
-          rm -rf .\debian\vagrant\*.box || /bin/true
-  fedora:
-    name: Build Fedora boxes
-    needs: prerequisites
-    runs-on:
-      - self-hosted
-      - Linux
-      - packer
-      - vmware
-      - X64
-    strategy:
-      fail-fast: false
-      matrix:
-        box:
-          - fedora41
-          - fedora42
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Build Fedora box
-        run: |
-          ./.github/workflows/scripts/vmware/build-base.sh fedora ${{ matrix.box }}
-          ./.github/workflows/scripts/vmware/build-box.sh fedora ${{ matrix.box }} base
-  fedora_cleanup:
-    name: Cleanup Fedora output
-    needs: fedora
-    if: always()
-    runs-on:
-      - self-hosted
-      - Linux
-      - packer
-      - vmware
-      - X64
-    steps:
-      - name: Cleanup
-        run: |
-          rm -rf .\fedora\01-base\output || /bin/true
-          rm -rf .\fedora\vagrant\output || /bin/true
-          rm -rf .\fedora\vagrant\*.box || /bin/true
-  rocky_base:
-    name: Build Rocky boxes with base only
-    needs: prerequisites
-    runs-on:
-      - self-hosted
-      - Linux
-      - packer
-      - vmware
-      - X64
-    strategy:
-      fail-fast: false
-      matrix:
-        box:
-          - rocky10
-          - rocky10_ws
-          - rocky9_ws
-          - rocky8_ws
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Build Rocky box
-        run: |
-          ./.github/workflows/scripts/vmware/build-base.sh rocky ${{ matrix.box }}
-          ./.github/workflows/scripts/vmware/build-box.sh rocky ${{ matrix.box }} base
-  rocky_cis:
-    name: Build Rocky boxes with CIS
-    needs: prerequisites
-    runs-on:
-      - self-hosted
-      - Linux
-      - packer
-      - vmware
-      - X64
-    strategy:
-      fail-fast: false
-      matrix:
-        box:
-          - rocky9
-          - rocky8
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Build Rocky CIS box
-        run: |
-          ./.github/workflows/scripts/vmware/build-base.sh rocky ${{ matrix.box }}
-          ./.github/workflows/scripts/vmware/build-box.sh rocky ${{ matrix.box }} base
-          ./.github/workflows/scripts/vmware/build-cis.sh rocky ${{ matrix.box }}
-          ./.github/workflows/scripts/vmware/build-box.sh rocky ${{ matrix.box }} cis
-  rocky_cleanup:
-    name: Cleanup Rocky output
-    needs:
-      - rocky_base
-      - rocky_cis
-    if: always()
-    runs-on:
-      - self-hosted
-      - Linux
-      - packer
-      - vmware
-      - X64
-    steps:
-      - name: Cleanup
-        run: |
-          rm -rf .\rocky\01-base\output || /bin/true
-          rm -rf .\rocky\02-cis\output || /bin/true
-          rm -rf .\rocky\vagrant\output || /bin/true
-          rm -rf .\rocky\vagrant\*.box || /bin/true
-  ubuntu:
-    name: Build Ubuntu boxes
-    needs: prerequisites
-    runs-on:
-      - self-hosted
-      - Linux
-      - packer
-      - vmware
-      - X64
-    strategy:
-      fail-fast: false
-      matrix:
-        box:
-          - ubuntu2204
-          - ubuntu2404
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Build Ubuntu box
-        run: |
-          ./.github/workflows/scripts/vmware/build-base.sh ubuntu ${{ matrix.box }}
-          ./.github/workflows/scripts/vmware/build-box.sh ubuntu ${{ matrix.box }} base
-  ubuntu_cleanup:
-    name: Cleanup Ubuntu output
-    needs: ubuntu
-    if: always()
-    runs-on:
-      - self-hosted
-      - Linux
-      - packer
-      - vmware
-      - X64
-    steps:
-      - name: Cleanup
-        run: |
-          rm -rf .\ubuntu\01-base\output || /bin/true
-          rm -rf .\ubuntu\vagrant\output || /bin/true
-          rm -rf .\ubuntu\vagrant\*.box || /bin/true
+  # debian:
+  #   name: Build Debian boxes
+  #   needs: prerequisites
+  #   runs-on:
+  #     - self-hosted
+  #     - Linux
+  #     - packer
+  #     - vmware
+  #     - X64
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       box:
+  #         - debian12
+  #         - debian13
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #     - name: Build Debian box
+  #       run: |
+  #         ./.github/workflows/scripts/vmware/build-base.sh debian ${{ matrix.box }}
+  #         ./.github/workflows/scripts/vmware/build-box.sh debian ${{ matrix.box }} base
+  # debian_cleanup:
+  #   name: Cleanup Debian output
+  #   needs: debian
+  #   if: always()
+  #   runs-on:
+  #     - self-hosted
+  #     - Linux
+  #     - packer
+  #     - vmware
+  #     - X64
+  #   steps:
+  #     - name: Cleanup
+  #       run: |
+  #         rm -rf .\debian\01-base\output || /bin/true
+  #         rm -rf .\debian\vagrant\output || /bin/true
+  #         rm -rf .\debian\vagrant\*.box || /bin/true
+  # fedora:
+  #   name: Build Fedora boxes
+  #   needs: prerequisites
+  #   runs-on:
+  #     - self-hosted
+  #     - Linux
+  #     - packer
+  #     - vmware
+  #     - X64
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       box:
+  #         - fedora41
+  #         - fedora42
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #     - name: Build Fedora box
+  #       run: |
+  #         ./.github/workflows/scripts/vmware/build-base.sh fedora ${{ matrix.box }}
+  #         ./.github/workflows/scripts/vmware/build-box.sh fedora ${{ matrix.box }} base
+  # fedora_cleanup:
+  #   name: Cleanup Fedora output
+  #   needs: fedora
+  #   if: always()
+  #   runs-on:
+  #     - self-hosted
+  #     - Linux
+  #     - packer
+  #     - vmware
+  #     - X64
+  #   steps:
+  #     - name: Cleanup
+  #       run: |
+  #         rm -rf .\fedora\01-base\output || /bin/true
+  #         rm -rf .\fedora\vagrant\output || /bin/true
+  #         rm -rf .\fedora\vagrant\*.box || /bin/true
+  # rocky_base:
+  #   name: Build Rocky boxes with base only
+  #   needs: prerequisites
+  #   runs-on:
+  #     - self-hosted
+  #     - Linux
+  #     - packer
+  #     - vmware
+  #     - X64
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       box:
+  #         - rocky10
+  #         - rocky10_ws
+  #         - rocky9_ws
+  #         - rocky8_ws
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #     - name: Build Rocky box
+  #       run: |
+  #         ./.github/workflows/scripts/vmware/build-base.sh rocky ${{ matrix.box }}
+  #         ./.github/workflows/scripts/vmware/build-box.sh rocky ${{ matrix.box }} base
+  # rocky_cis:
+  #   name: Build Rocky boxes with CIS
+  #   needs: prerequisites
+  #   runs-on:
+  #     - self-hosted
+  #     - Linux
+  #     - packer
+  #     - vmware
+  #     - X64
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       box:
+  #         - rocky9
+  #         - rocky8
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #     - name: Build Rocky CIS box
+  #       run: |
+  #         ./.github/workflows/scripts/vmware/build-base.sh rocky ${{ matrix.box }}
+  #         ./.github/workflows/scripts/vmware/build-box.sh rocky ${{ matrix.box }} base
+  #         ./.github/workflows/scripts/vmware/build-cis.sh rocky ${{ matrix.box }}
+  #         ./.github/workflows/scripts/vmware/build-box.sh rocky ${{ matrix.box }} cis
+  # rocky_cleanup:
+  #   name: Cleanup Rocky output
+  #   needs:
+  #     - rocky_base
+  #     - rocky_cis
+  #   if: always()
+  #   runs-on:
+  #     - self-hosted
+  #     - Linux
+  #     - packer
+  #     - vmware
+  #     - X64
+  #   steps:
+  #     - name: Cleanup
+  #       run: |
+  #         rm -rf .\rocky\01-base\output || /bin/true
+  #         rm -rf .\rocky\02-cis\output || /bin/true
+  #         rm -rf .\rocky\vagrant\output || /bin/true
+  #         rm -rf .\rocky\vagrant\*.box || /bin/true
+  # ubuntu:
+  #   name: Build Ubuntu boxes
+  #   needs: prerequisites
+  #   runs-on:
+  #     - self-hosted
+  #     - Linux
+  #     - packer
+  #     - vmware
+  #     - X64
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       box:
+  #         - ubuntu2204
+  #         - ubuntu2404
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #     - name: Build Ubuntu box
+  #       run: |
+  #         ./.github/workflows/scripts/vmware/build-base.sh ubuntu ${{ matrix.box }}
+  #         ./.github/workflows/scripts/vmware/build-box.sh ubuntu ${{ matrix.box }} base
+  # ubuntu_cleanup:
+  #   name: Cleanup Ubuntu output
+  #   needs: ubuntu
+  #   if: always()
+  #   runs-on:
+  #     - self-hosted
+  #     - Linux
+  #     - packer
+  #     - vmware
+  #     - X64
+  #   steps:
+  #     - name: Cleanup
+  #       run: |
+  #         rm -rf .\ubuntu\01-base\output || /bin/true
+  #         rm -rf .\ubuntu\vagrant\output || /bin/true
+  #         rm -rf .\ubuntu\vagrant\*.box || /bin/true
   windows_base:
     name: Build Windows boxes with base only
     needs: prerequisites
