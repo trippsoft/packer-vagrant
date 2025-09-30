@@ -24,7 +24,7 @@ source "vmware-vmx" "vmware" {
     ssh_password = "Packer42-"
     ssh_timeout = "5m"
 
-    shutdown_command = "D:\\shutdown.cmd"
+    shutdown_command = "E:\\shutdown.cmd"
     shutdown_timeout = "10m"
 
     output_directory = local.vmware_output_directory
