@@ -16,7 +16,7 @@ source "vmware-vmx" "vmware" {
     source_path = local.vmware_source_path
 
     cd_files = [
-        "${path.root}/cd/qemu/*"
+        "${path.root}/cd/vmware/*"
     ]
 
     communicator = "ssh"
