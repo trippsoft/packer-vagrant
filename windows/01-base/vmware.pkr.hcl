@@ -50,5 +50,10 @@ source "vmware-iso" "vmware" {
     shutdown_command = "shutdown /s /t 10 /f"
     shutdown_timeout = "5m"
 
+    vmx_data_post = {
+        "ide0:0.present" = "FALSE"
+        "ide1:0.present" = "FALSE"
+    }
+
     output_directory = local.vmware_output_directory
 }

@@ -27,5 +27,10 @@ source "vmware-vmx" "vmware" {
     shutdown_command = "E:\\shutdown.cmd"
     shutdown_timeout = "10m"
 
+    vmx_data_post = {
+        "ide0:0.present" = "FALSE"
+        "ide1:0.present" = "FALSE"
+    }
+
     output_directory = local.vmware_output_directory
 }
