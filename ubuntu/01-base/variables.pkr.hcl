@@ -34,6 +34,11 @@ variable "hyperv_switch_name" {
     default = "LAN"
 }
 
+variable "vmware_version" {
+    type = number
+    default = 19
+}
+
 locals {
     vm_name = "${var.vm_name_prefix}_base"
     project_directory = replace(path.root, "/ubuntu/01-base", "")
@@ -41,4 +46,6 @@ locals {
     hyperv_output_directory = "${path.root}/output/${var.vm_name_prefix}/hyperv"
     qemu_http_directory = "${path.root}/http/${var.vm_name_prefix}/qemu"
     qemu_output_directory = "${path.root}/output/${var.vm_name_prefix}/qemu"
+    vmware_http_directory = "${path.root}/http/${var.vm_name_prefix}/vmware"
+    vmware_output_directory = "${path.root}/output/${var.vm_name_prefix}/vmware"
 }

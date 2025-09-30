@@ -24,6 +24,7 @@ source "vmware-iso" "vmware" {
 
     disk_size = 81920
     disk_adapter_type = "pvscsi"
+    disk_type_id = "0"
 
     iso_url = var.iso_url
     iso_checksum = var.iso_checksum

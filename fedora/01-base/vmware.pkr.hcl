@@ -12,14 +12,14 @@ source "vmware-iso" "vmware" {
     headless = var.headless
     version = var.vmware_version
     firmware = "efi-secure"
-    guest_os_type = "debian11-64" # Debian 11 64-bit is closest match to current Debian
+    guest_os_type = "fedora-64"
 
     vnc_disable_password = true
 
     http_directory = local.vmware_http_directory
 
     cpus = 2
-    memory = 2048
+    memory = 4096
 
     network = "nat"
     network_adapter_type = "vmxnet3"
@@ -33,16 +33,14 @@ source "vmware-iso" "vmware" {
 
     boot_wait = "12s"
     boot_command = [
-        "<down>e",
-        "<down><down><down><end>priority=critical net.ifnames=0 biosdevname=0 auto=true preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg",
-        "<leftCtrlOn>x<leftCtrlOff>"
+        "e<down><down><end><bs><bs><bs><bs><bs>inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<leftCtrlOn>x<leftCtrlOff>"
     ]
 
     ssh_username = "vagrant"
     ssh_password = "vagrant"
     ssh_timeout = "60m"
 
-    shutdown_command = "sudo -S /sbin/halt -h -p"
+    shutdown_command = "sudo shutdown -h now"
 
     output_directory = local.vmware_output_directory
 }

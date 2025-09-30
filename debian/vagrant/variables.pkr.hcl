@@ -34,11 +34,6 @@ variable "hyperv_switch_name" {
     default = "LAN"
 }
 
-variable "vmware_version" {
-    type = number
-    default = 19
-}
-
 locals {
     vm_name = "${var.vm_name_prefix}_${var.vm_name_suffix}"
     box_tag = "jtarpley/${local.vm_name}"

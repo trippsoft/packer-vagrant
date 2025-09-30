@@ -24,4 +24,6 @@ locals {
     qemu_efi_vars = "${local.project_directory}/rocky/01-base/output/${var.vm_name_prefix}/qemu/efivars.fd"
     qemu_source_path = "${local.project_directory}/rocky/01-base/output/${var.vm_name_prefix}/qemu/${var.vm_name_prefix}_base"
     qemu_output_directory = "${path.root}/output/${var.vm_name_prefix}/qemu"
+    vmware_source_path = "${local.previous_vm_directory}/rocky/01-base/output/${var.vm_name_prefix}/vmware/${var.vm_name_prefix}_${var.previous_vm_suffix}.vmx"
+    vmware_output_directory = "${path.root}/output/${var.vm_name_prefix}/vmware"
 }
