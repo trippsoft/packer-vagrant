@@ -11,7 +11,7 @@ jobs:
       - self-hosted
       - Linux
       - packer
-      - qemu
+      - vmware
       - X64
     steps:
       - name: Checkout
@@ -26,7 +26,7 @@ jobs:
       - self-hosted
       - Linux
       - packer
-      - qemu
+      - vmware
       - X64
     strategy:
       fail-fast: false
@@ -49,7 +49,7 @@ jobs:
       - self-hosted
       - Linux
       - packer
-      - qemu
+      - vmware
       - X64
     steps:
       - name: Cleanup
@@ -64,7 +64,7 @@ jobs:
       - self-hosted
       - Linux
       - packer
-      - qemu
+      - vmware
       - X64
     strategy:
       fail-fast: false
@@ -87,7 +87,7 @@ jobs:
       - self-hosted
       - Linux
       - packer
-      - qemu
+      - vmware
       - X64
     steps:
       - name: Cleanup
@@ -102,7 +102,7 @@ jobs:
       - self-hosted
       - Linux
       - packer
-      - qemu
+      - vmware
       - X64
     strategy:
       fail-fast: false
@@ -126,7 +126,7 @@ jobs:
       - self-hosted
       - Linux
       - packer
-      - qemu
+      - vmware
       - X64
     strategy:
       fail-fast: false
@@ -153,7 +153,7 @@ jobs:
       - self-hosted
       - Linux
       - packer
-      - qemu
+      - vmware
       - X64
     steps:
       - name: Cleanup
@@ -169,7 +169,7 @@ jobs:
       - self-hosted
       - Linux
       - packer
-      - qemu
+      - vmware
       - X64
     strategy:
       fail-fast: false
@@ -192,7 +192,7 @@ jobs:
       - self-hosted
       - Linux
       - packer
-      - qemu
+      - vmware
       - X64
     steps:
       - name: Cleanup
@@ -207,7 +207,7 @@ jobs:
       - self-hosted
       - Linux
       - packer
-      - qemu
+      - vmware
       - X64
     strategy:
       fail-fast: false
@@ -232,7 +232,7 @@ jobs:
       - self-hosted
       - Linux
       - packer
-      - qemu
+      - vmware
       - X64
     strategy:
       fail-fast: false
@@ -262,7 +262,7 @@ jobs:
       - self-hosted
       - Linux
       - packer
-      - qemu
+      - vmware
       - X64
     steps:
       - name: Cleanup
