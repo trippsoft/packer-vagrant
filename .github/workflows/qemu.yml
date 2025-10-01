@@ -267,7 +267,7 @@ jobs:
     steps:
       - name: Cleanup
         run: |
-          rm .\windows\01-base\cd\qemu\virtio-win || /bin/true
+          rm -rf .\windows\01-base\cd\qemu\virtio-win || /bin/true
           rm -rf .\windows\01-base\output || /bin/true
           rm -rf .\windows\02-cis\output || /bin/true
           rm -rf .\windows\vagrant\output || /bin/true

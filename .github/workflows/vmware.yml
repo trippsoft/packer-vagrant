@@ -225,7 +225,7 @@ jobs:
           cp -R /home/github-actions/vmware-drivers/${{ matrix.box }}/* ./windows/01-base/cd/${{ matrix.box }}/vmware-drivers/
           ./.github/workflows/scripts/vmware/build-base.sh windows ${{ matrix.box }}
           ./.github/workflows/scripts/vmware/build-box.sh windows ${{ matrix.box }} base
-          rm .\windows\01-base\cd\${{ matrix.box }}\vmware-drivers || /bin/true
+          rm -rf .\windows\01-base\cd\${{ matrix.box }}\vmware-drivers || /bin/true
   windows_cis:
     name: Build Windows boxes with CIS
     needs: prerequisites
@@ -253,7 +253,7 @@ jobs:
           ./.github/workflows/scripts/vmware/build-box.sh windows ${{ matrix.box }} base
           ./.github/workflows/scripts/vmware/build-cis.sh windows ${{ matrix.box }}
           ./.github/workflows/scripts/vmware/build-box.sh windows ${{ matrix.box }} cis
-          rm .\windows\01-base\cd\${{ matrix.box }}\vmware-drivers || /bin/true
+          rm -rf .\windows\01-base\cd\${{ matrix.box }}\vmware-drivers || /bin/true
   windows_cleanup:
     name: Cleanup Windows output
     needs:
