@@ -3,7 +3,7 @@ name: Hyper-V Boxes
 'on':
   workflow_dispatch: {}
   schedule:
-    - cron: '0 0 * * WED'
+    - cron: '30 0 * * 3'
 jobs:
   prerequisites:
     name: Install prerequisites
