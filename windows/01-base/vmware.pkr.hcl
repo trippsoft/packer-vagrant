@@ -45,7 +45,7 @@ source "vmware-iso" "vmware" {
     winrm_username = "Administrator"
     winrm_password = "Packer42-"
     winrm_use_ssl = false
-    winrm_timeout = "20m"
+    winrm_timeout = "40m"
 
     shutdown_command = "shutdown /s /t 10 /f"
     shutdown_timeout = "5m"
