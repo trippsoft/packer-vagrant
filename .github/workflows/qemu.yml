@@ -213,7 +213,6 @@ jobs:
       fail-fast: false
       matrix:
         box:
-          - w10_22h2
           - w11_23h2
           - w11_24h2
     steps:
