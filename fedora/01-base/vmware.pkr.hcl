@@ -18,6 +18,14 @@ source "vmware-iso" "vmware" {
 
     http_directory = local.vmware_http_directory
 
+    vmx_data = {
+        "mainMem.useNamedFile" = "FALSE"
+        "MemTrimRate" = "0"
+        "prefvmx.useRecommendedLockedMemSize" = "TRUE"
+        "MemAllowAutoScaleDown" = "FALSE"
+        "sched.mem.pshare.enable" = "FALSE"
+    }
+
     cpus = 2
     memory = 4096
 
