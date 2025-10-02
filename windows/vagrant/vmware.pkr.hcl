@@ -15,6 +15,14 @@ source "vmware-vmx" "vmware" {
 
     source_path = local.vmware_source_path
 
+    vmx_data = {
+        "mainMem.useNamedFile" = "FALSE"
+        "MemTrimRate" = "0"
+        "prefvmx.useRecommendedLockedMemSize" = "TRUE"
+        "MemAllowAutoScaleDown" = "FALSE"
+        "sched.mem.pshare.enable" = "FALSE"
+    }
+
     cd_files = [
         "${path.root}/cd/vmware/*"
     ]

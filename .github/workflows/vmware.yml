@@ -19,28 +19,28 @@ jobs:
       - name: Install prerequisites
         run: |
           ./.github/workflows/scripts/vmware/install-prerequisites.sh
-  debian:
-    name: Build Debian boxes
-    needs: prerequisites
-    runs-on:
-      - self-hosted
-      - Linux
-      - packer
-      - vmware
-      - X64
-    strategy:
-      fail-fast: false
-      matrix:
-        box:
-          - debian12
-          - debian13
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Build Debian box
-        run: |
-          ./.github/workflows/scripts/vmware/build-base.sh debian ${{ matrix.box }}
-          ./.github/workflows/scripts/vmware/build-box.sh debian ${{ matrix.box }} base
+  # debian:
+  #   name: Build Debian boxes
+  #   needs: prerequisites
+  #   runs-on:
+  #     - self-hosted
+  #     - Linux
+  #     - packer
+  #     - vmware
+  #     - X64
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       box:
+  #         - debian12
+  #         - debian13
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #     - name: Build Debian box
+  #       run: |
+  #         ./.github/workflows/scripts/vmware/build-base.sh debian ${{ matrix.box }}
+  #         ./.github/workflows/scripts/vmware/build-box.sh debian ${{ matrix.box }} base
   # debian_cleanup:
   #   name: Cleanup Debian output
   #   needs: debian
@@ -200,76 +200,76 @@ jobs:
   #         rm -rf .\ubuntu\01-base\output || /bin/true
   #         rm -rf .\ubuntu\vagrant\output || /bin/true
   #         rm -rf .\ubuntu\vagrant\*.box || /bin/true
-  # windows_base:
-  #   name: Build Windows boxes with base only
-  #   needs: prerequisites
-  #   runs-on:
-  #     - self-hosted
-  #     - Linux
-  #     - packer
-  #     - vmware
-  #     - X64
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       box:
-  #         - w11_23h2
-  #         - w11_24h2
-  #         - w11_25h2
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-  #     - name: Build Windows box
-  #       run: |
-  #         mkdir -p ./windows/01-base/cd/${{ matrix.box }}/vmware-drivers
-  #         cp -R /home/github-actions/vmware-drivers/${{ matrix.box }}/* ./windows/01-base/cd/${{ matrix.box }}/vmware-drivers/
-  #         ./.github/workflows/scripts/vmware/build-base.sh windows ${{ matrix.box }}
-  #         ./.github/workflows/scripts/vmware/build-box.sh windows ${{ matrix.box }} base
-  #         rm -rf .\windows\01-base\cd\${{ matrix.box }}\vmware-drivers || /bin/true
-  # windows_cis:
-  #   name: Build Windows boxes with CIS
-  #   needs: prerequisites
-  #   runs-on:
-  #     - self-hosted
-  #     - Linux
-  #     - packer
-  #     - vmware
-  #     - X64
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       box:
-  #         - w2019
-  #         - w2022
-  #         - w2025
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-  #     - name: Build Windows box
-  #       run: |
-  #         mkdir -p ./windows/01-base/cd/${{ matrix.box }}/vmware-drivers
-  #         cp -R /home/github-actions/vmware-drivers/${{ matrix.box }}/* ./windows/01-base/cd/${{ matrix.box }}/vmware-drivers/
-  #         ./.github/workflows/scripts/vmware/build-base.sh windows ${{ matrix.box }}
-  #         ./.github/workflows/scripts/vmware/build-box.sh windows ${{ matrix.box }} base
-  #         ./.github/workflows/scripts/vmware/build-cis.sh windows ${{ matrix.box }}
-  #         ./.github/workflows/scripts/vmware/build-box.sh windows ${{ matrix.box }} cis
-  #         rm -rf .\windows\01-base\cd\${{ matrix.box }}\vmware-drivers || /bin/true
-  # windows_cleanup:
-  #   name: Cleanup Windows output
-  #   needs:
-  #     - windows_base
-  #     - windows_cis
-  #   if: always()
-  #   runs-on:
-  #     - self-hosted
-  #     - Linux
-  #     - packer
-  #     - vmware
-  #     - X64
-  #   steps:
-  #     - name: Cleanup
-  #       run: |
-  #         rm -rf .\windows\01-base\output || /bin/true
-  #         rm -rf .\windows\02-cis\output || /bin/true
-  #         rm -rf .\windows\vagrant\output || /bin/true
-  #         rm -rf .\windows\vagrant\*.box || /bin/true
+  windows_base:
+    name: Build Windows boxes with base only
+    needs: prerequisites
+    runs-on:
+      - self-hosted
+      - Linux
+      - packer
+      - vmware
+      - X64
+    strategy:
+      fail-fast: false
+      matrix:
+        box:
+          - w11_23h2
+          - w11_24h2
+          - w11_25h2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build Windows box
+        run: |
+          mkdir -p ./windows/01-base/cd/${{ matrix.box }}/vmware-drivers
+          cp -R /home/github-actions/vmware-drivers/${{ matrix.box }}/* ./windows/01-base/cd/${{ matrix.box }}/vmware-drivers/
+          ./.github/workflows/scripts/vmware/build-base.sh windows ${{ matrix.box }}
+          ./.github/workflows/scripts/vmware/build-box.sh windows ${{ matrix.box }} base
+          rm -rf .\windows\01-base\cd\${{ matrix.box }}\vmware-drivers || /bin/true
+  windows_cis:
+    name: Build Windows boxes with CIS
+    needs: prerequisites
+    runs-on:
+      - self-hosted
+      - Linux
+      - packer
+      - vmware
+      - X64
+    strategy:
+      fail-fast: false
+      matrix:
+        box:
+          - w2019
+          - w2022
+          - w2025
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build Windows box
+        run: |
+          mkdir -p ./windows/01-base/cd/${{ matrix.box }}/vmware-drivers
+          cp -R /home/github-actions/vmware-drivers/${{ matrix.box }}/* ./windows/01-base/cd/${{ matrix.box }}/vmware-drivers/
+          ./.github/workflows/scripts/vmware/build-base.sh windows ${{ matrix.box }}
+          ./.github/workflows/scripts/vmware/build-box.sh windows ${{ matrix.box }} base
+          ./.github/workflows/scripts/vmware/build-cis.sh windows ${{ matrix.box }}
+          ./.github/workflows/scripts/vmware/build-box.sh windows ${{ matrix.box }} cis
+          rm -rf .\windows\01-base\cd\${{ matrix.box }}\vmware-drivers || /bin/true
+  windows_cleanup:
+    name: Cleanup Windows output
+    needs:
+      - windows_base
+      - windows_cis
+    if: always()
+    runs-on:
+      - self-hosted
+      - Linux
+      - packer
+      - vmware
+      - X64
+    steps:
+      - name: Cleanup
+        run: |
+          rm -rf .\windows\01-base\output || /bin/true
+          rm -rf .\windows\02-cis\output || /bin/true
+          rm -rf .\windows\vagrant\output || /bin/true
+          rm -rf .\windows\vagrant\*.box || /bin/true

@@ -16,6 +16,14 @@ source "vmware-iso" "vmware" {
 
     vnc_disable_password = true
 
+    vmx_data = {
+        "mainMem.useNamedFile" = "FALSE"
+        "MemTrimRate" = "0"
+        "prefvmx.useRecommendedLockedMemSize" = "TRUE"
+        "MemAllowAutoScaleDown" = "FALSE"
+        "sched.mem.pshare.enable" = "FALSE"
+    }
+
     cpus = 4
     memory = 8192
 
