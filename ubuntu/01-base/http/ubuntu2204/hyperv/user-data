@@ -33,7 +33,7 @@ autoinstall:
         id: sda1
         device: sda
         number: 1
-        size: 512MB
+        size: 1GB
         flag: boot
         partition_type: EF00
         wipe: superblock
