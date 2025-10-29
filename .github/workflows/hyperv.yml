@@ -286,4 +286,3 @@ jobs:
       - name: Final cleanup
         run: |
           Remove-Item -Path "C:\Users\github-actions\AppData\Local\Temp\hyperv*" -Recurse -Force -ErrorAction SilentlyContinue
-          Remove-Item -Path "C:\Users\github-actions\AppData\Local\Temp\packer*" -Force -ErrorAction SilentlyContinue
