@@ -2,7 +2,7 @@
 
 source ~/venv/ansible-2.16/bin/activate
 
-ansible-galaxy collection install --upgrade trippsc2.cis trippsc2.first_steps trippsc2.template
+ansible-galaxy collection install --upgrade trippsc2.cis trippsc2.first_steps trippsc2.template 'community.general<12.0.0'
 
 /usr/bin/packer init ./debian/01-base
 /usr/bin/packer init ./debian/vagrant
