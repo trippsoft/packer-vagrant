@@ -50,8 +50,8 @@ IgnoreRhosts yes
 PasswordAuthentication yes
 PermitEmptyPasswords no
 
-#AllowAgentForwarding yes
-#AllowTcpForwarding yes
+AllowAgentForwarding yes
+AllowTcpForwarding yes
 #GatewayPorts no
 #PermitTTY yes
 #PrintMotd yes
@@ -86,4 +86,4 @@ Subsystem	sftp	sftp-server.exe
 KexAlgorithms -diffie-hellman-group14-sha1
 MACs -umac-64@openssh.com,umac-64-etm@openssh.com
 
-DisableForwarding yes
+DisableForwarding no
