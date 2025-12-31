@@ -203,15 +203,21 @@
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
+                    <CommandLine>C:\Windows\System32\WindowsPowershell\v1.0\powershell.exe -Command "E:\install-gsudo.ps1"</CommandLine>
+                    <Description>Install gsudo</Description>
+                    <Order>8</Order>
+                    <RequiresUserInput>true</RequiresUserInput>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
                     <CommandLine>C:\Windows\System32\WindowsPowershell\v1.0\powershell.exe -Command "E:\allow-winrm.ps1"</CommandLine>
                     <Description>Enable WinRM Firewall Rule</Description>
-                    <Order>8</Order>
+                    <Order>9</Order>
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
                     <CommandLine>cmd.exe /c E:\configure-winrm.bat</CommandLine>
                     <Description>Configure WinRM</Description>
-                    <Order>9</Order>
+                    <Order>10</Order>
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
             </FirstLogonCommands>
