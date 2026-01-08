@@ -36,6 +36,8 @@ source "qemu" "qemu" {
         "${path.root}/cd/qemu/*"
     ]
 
+    boot_wait = "-1s"
+
     communicator = "ssh"
     ssh_username = "Administrator"
     ssh_password = "Packer42-"

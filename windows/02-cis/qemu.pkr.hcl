@@ -29,6 +29,8 @@ source "qemu" "qemu" {
     disk_discard = "unmap"
     format = "qcow2"
 
+    boot_wait = "-1s"
+
     iso_url = local.qemu_source_path
     iso_checksum = "none"
 

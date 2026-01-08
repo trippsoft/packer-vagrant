@@ -22,6 +22,8 @@ source "hyperv-vmcx" "hyperv" {
 
     disk_size = "81920"
 
+    boot_wait = "-1s"
+
     communicator = "ssh"
     ssh_username = "Administrator"
     ssh_password = "Packer42-"

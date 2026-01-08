@@ -23,6 +23,8 @@ source "vmware-vmx" "vmware" {
         "sched.mem.pshare.enable" = "FALSE"
     }
 
+    boot_wait = "-1s"
+
     communicator = "ssh"
     ssh_username = "vagrant"
     ssh_password = "vagrant"

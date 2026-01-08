@@ -22,6 +22,8 @@ source "hyperv-vmcx" "hyperv" {
 
     disk_size = "40960"
 
+    boot_wait = "-1s"
+
     communicator = "ssh"
     ssh_username = "vagrant"
     ssh_password = "vagrant"

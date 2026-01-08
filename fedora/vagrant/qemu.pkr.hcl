@@ -29,6 +29,8 @@ source "qemu" "qemu" {
     iso_url = local.qemu_source_path
     iso_checksum = "none"
 
+    boot_wait = "-1s"
+
     communicator = "ssh"
     ssh_username = "vagrant"
     ssh_password = "vagrant"
