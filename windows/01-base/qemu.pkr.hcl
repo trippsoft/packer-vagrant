@@ -16,7 +16,6 @@ source "qemu" "qemu" {
     machine_type = "q35"
 
     qemuargs = [
-        ["--enable-kvm"],
         ["-cpu", "host,hv_relaxed,hv_vapic,hv_spinlocks=0x1fff,hv_vpindex,hv_runtime,hv_synic,hv_frequencies,hv_tlbflush,hv_ipi,hv_avic"],
         ["-device", "virtio-tablet"]
     ]

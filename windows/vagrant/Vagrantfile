@@ -24,7 +24,6 @@ Vagrant.configure(2) do |config|
     lv.nvram = "/tmp/#{SecureRandom.uuid}.fd"
     lv.video_type = 'vga'
     lv.input :type => 'tablet', :bus => 'usb'
-    lv.qemuargs :value => "--enable-kvm"
     lv.qemuargs :value => "-cpu"
     lv.qemuargs :value => "host,hv_relaxed,hv_vapic,hv_spinlocks=0x1fff,hv_vpindex,hv_runtime,hv_synic,hv_frequencies,hv_tlbflush,hv_ipi,hv_avic"
   end
