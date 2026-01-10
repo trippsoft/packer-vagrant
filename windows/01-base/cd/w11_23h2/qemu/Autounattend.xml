@@ -14,9 +14,45 @@
         <component name="Microsoft-Windows-PnpCustomizationsWinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <DriverPaths>
                 <PathAndCredentials wcm:keyValue="1" wcm:action="add">
-                    <Path>E:\virtio-win\NetKVM\w11\amd64\</Path> 
+                    <Path>E:\virtio-win\Balloon\w11\amd64\</Path> 
                 </PathAndCredentials>
                 <PathAndCredentials wcm:keyValue="2" wcm:action="add">
+                    <Path>E:\virtio-win\fwcfg\w11\amd64\</Path> 
+                </PathAndCredentials>
+                <PathAndCredentials wcm:keyValue="3" wcm:action="add">
+                    <Path>E:\virtio-win\NetKVM\w11\amd64\</Path> 
+                </PathAndCredentials>
+                <PathAndCredentials wcm:keyValue="4" wcm:action="add">
+                    <Path>E:\virtio-win\pvpanic\w11\amd64\</Path> 
+                </PathAndCredentials>
+                <PathAndCredentials wcm:keyValue="5" wcm:action="add">
+                    <Path>E:\virtio-win\qemufwcfg\w11\amd64\</Path> 
+                </PathAndCredentials>
+                <PathAndCredentials wcm:keyValue="6" wcm:action="add">
+                    <Path>E:\virtio-win\qemupciserial\w11\amd64\</Path> 
+                </PathAndCredentials>
+                <PathAndCredentials wcm:keyValue="7" wcm:action="add">
+                    <Path>E:\virtio-win\viofs\w11\amd64\</Path> 
+                </PathAndCredentials>
+                <PathAndCredentials wcm:keyValue="8" wcm:action="add">
+                    <Path>E:\virtio-win\viogpudo\w11\amd64\</Path> 
+                </PathAndCredentials>
+                <PathAndCredentials wcm:keyValue="9" wcm:action="add">
+                    <Path>E:\virtio-win\vioinput\w11\amd64\</Path> 
+                </PathAndCredentials>
+                <PathAndCredentials wcm:keyValue="10" wcm:action="add">
+                    <Path>E:\virtio-win\viomem\w11\amd64\</Path> 
+                </PathAndCredentials>
+                <PathAndCredentials wcm:keyValue="11" wcm:action="add">
+                    <Path>E:\virtio-win\viorng\w11\amd64\</Path> 
+                </PathAndCredentials>
+                <PathAndCredentials wcm:keyValue="12" wcm:action="add">
+                    <Path>E:\virtio-win\vioscsi\w11\amd64\</Path> 
+                </PathAndCredentials>
+                <PathAndCredentials wcm:keyValue="13" wcm:action="add">
+                    <Path>E:\virtio-win\vioserial\w11\amd64\</Path> 
+                </PathAndCredentials>
+                <PathAndCredentials wcm:keyValue="14" wcm:action="add">
                     <Path>E:\virtio-win\viostor\w11\amd64\</Path> 
                 </PathAndCredentials>
             </DriverPaths>
@@ -200,33 +236,27 @@
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
-                    <CommandLine>C:\Windows\System32\WindowsPowershell\v1.0\powershell.exe -Command "E:\install-qemu-guest-agent.ps1"</CommandLine>
-                    <Description>Install QEMU Guest Agent</Description>
-                    <Order>8</Order>
-                    <RequiresUserInput>true</RequiresUserInput>
-                </SynchronousCommand>
-                <SynchronousCommand wcm:action="add">
                     <CommandLine>C:\Windows\System32\WindowsPowershell\v1.0\powershell.exe -Command "E:\start-openssh.ps1"</CommandLine>
                     <Description>Start OpenSSH</Description>
-                    <Order>9</Order>
+                    <Order>8</Order>
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
                     <CommandLine>C:\Windows\System32\WindowsPowershell\v1.0\powershell.exe -Command "E:\install-gsudo.ps1"</CommandLine>
                     <Description>Install gsudo</Description>
-                    <Order>10</Order>
+                    <Order>9</Order>
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
                     <CommandLine>C:\Windows\System32\WindowsPowershell\v1.0\powershell.exe -Command "E:\allow-winrm.ps1"</CommandLine>
                     <Description>Enable WinRM Firewall Rule</Description>
-                    <Order>11</Order>
+                    <Order>10</Order>
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
                     <CommandLine>cmd.exe /c E:\configure-winrm.bat</CommandLine>
                     <Description>Configure WinRM</Description>
-                    <Order>12</Order>
+                    <Order>11</Order>
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
             </FirstLogonCommands>

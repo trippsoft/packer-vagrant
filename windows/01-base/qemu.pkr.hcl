@@ -10,14 +10,15 @@ packer {
 source "qemu" "qemu" {
     vm_name = local.vm_name
     headless = var.headless
-    display = "none"
     efi_boot = true
     efi_firmware_code = "/usr/share/OVMF/OVMF_CODE.secboot.fd"
     use_pflash = true
     machine_type = "q35"
 
     qemuargs = [
-        ["-cpu", "host,arch_capabilities=off"]
+        ["--enable-kvm"],
+        ["-cpu", "host,hv_relaxed,hv_vapic,hv_spinlocks=0x1fff,hv_vpindex,hv_runtime,hv_synic,hv_frequencies,hv_tlbflush,hv_ipi,hv_avic"],
+        ["-device", "virtio-tablet"]
     ]
 
     cores = 4
