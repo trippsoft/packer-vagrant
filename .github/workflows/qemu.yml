@@ -178,6 +178,7 @@ jobs:
         box:
           - ubuntu2204
           - ubuntu2404
+          - ubuntu2604
     steps:
       - name: Checkout
         uses: actions/checkout@v6
