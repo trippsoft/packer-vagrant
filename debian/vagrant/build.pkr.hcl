@@ -45,6 +45,19 @@ build {
 
     post-processors {
         post-processor "vagrant" {
+            only = [
+                "hyperv-vmcx.hyperv",
+                "qemu.qemu",
+            ]
+
+            vagrantfile_template = "${path.root}/Vagrantfile"
+            output = "${path.root}/${local.vm_name}_{{.BuildName}}_{{.Provider}}_{{.Architecture}}.box"
+        }
+
+        post-processor "vagrant" {
+            only = ["vmware-vmx.vmware"]
+
+            provider_override = "vmware"
             vagrantfile_template = "${path.root}/Vagrantfile"
             output = "${path.root}/${local.vm_name}_{{.BuildName}}_{{.Provider}}_{{.Architecture}}.box"
         }
