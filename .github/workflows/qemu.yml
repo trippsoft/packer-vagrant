@@ -70,7 +70,6 @@ jobs:
       fail-fast: false
       matrix:
         box:
-          - fedora42
           - fedora43
           - fedora44
     steps:
