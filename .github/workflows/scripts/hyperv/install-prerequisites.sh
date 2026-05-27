@@ -8,7 +8,7 @@ export TMPDIR='/mnt/c/Users/github-actions/AppData/Local/Temp'
 
 source ~/venv/ansible-2.16/bin/activate
 
-ansible-galaxy collection install --upgrade trippsc2.cis trippsc2.first_steps trippsc2.template 'community.general<12.0.0'
+ansible-galaxy collection install --upgrade trippsc2.cis trippsc2.first_steps trippsc2.template 'community.general<12.0.0' 'ansible.windows<3.6.0'
 
 /usr/bin/packer init ./debian/01-base
 /usr/bin/packer init ./debian/vagrant
