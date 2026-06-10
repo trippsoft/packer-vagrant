@@ -32,7 +32,6 @@ jobs:
       fail-fast: false
       matrix:
         box:
-          - debian12
           - debian13
     steps:
       - name: Checkout
