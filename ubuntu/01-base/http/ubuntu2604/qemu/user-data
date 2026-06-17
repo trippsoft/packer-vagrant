@@ -3,7 +3,8 @@ autoinstall:
   version: 1
   early-commands:
     # Stop ssh for packer
-    - sudo systemctl stop ssh
+    - systemctl stop ssh.service
+    - systemctl stop ssh.socket
   locale: en_US
   timezone: America/New_York
   keyboard:
