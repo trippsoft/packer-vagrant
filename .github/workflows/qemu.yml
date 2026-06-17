@@ -91,9 +91,9 @@ jobs:
     steps:
       - name: Cleanup
         run: |
-          rm -rf .\fedora\01-base\output || /bin/true
-          rm -rf .\fedora\vagrant\output || /bin/true
-          rm -rf .\fedora\vagrant\*.box || /bin/true
+          rm -rf ./fedora/01-base/output || /bin/true
+          rm -rf ./fedora/vagrant/output || /bin/true
+          rm -rf ./fedora/vagrant/*.box || /bin/true
   rocky_base:
     name: Build Rocky boxes with base only
     needs: prerequisites
@@ -157,10 +157,10 @@ jobs:
     steps:
       - name: Cleanup
         run: |
-          rm -rf .\rocky\01-base\output || /bin/true
-          rm -rf .\rocky\02-cis\output || /bin/true
-          rm -rf .\rocky\vagrant\output || /bin/true
-          rm -rf .\rocky\vagrant\*.box || /bin/true
+          rm -rf ./rocky/01-base/output || /bin/true
+          rm -rf ./rocky/02-cis/output || /bin/true
+          rm -rf ./rocky/vagrant/output || /bin/true
+          rm -rf ./rocky/vagrant/*.box || /bin/true
   ubuntu:
     name: Build Ubuntu boxes
     needs: prerequisites
@@ -197,9 +197,9 @@ jobs:
     steps:
       - name: Cleanup
         run: |
-          rm -rf .\ubuntu\01-base\output || /bin/true
-          rm -rf .\ubuntu\vagrant\output || /bin/true
-          rm -rf .\ubuntu\vagrant\*.box || /bin/true
+          rm -rf ./ubuntu/01-base/output || /bin/true
+          rm -rf ./ubuntu/vagrant/output || /bin/true
+          rm -rf ./ubuntu/vagrant/*.box || /bin/true
   windows_base:
     name: Build Windows boxes with base only
     needs: prerequisites
@@ -267,8 +267,8 @@ jobs:
     steps:
       - name: Cleanup
         run: |
-          rm -rf .\windows\01-base\cd\qemu\virtio-win || /bin/true
-          rm -rf .\windows\01-base\output || /bin/true
-          rm -rf .\windows\02-cis\output || /bin/true
-          rm -rf .\windows\vagrant\output || /bin/true
-          rm -rf .\windows\vagrant\*.box || /bin/true
+          rm -rf ./windows/01-base/cd/qemu/virtio-win || /bin/true
+          rm -rf ./windows/01-base/output || /bin/true
+          rm -rf ./windows/02-cis/output || /bin/true
+          rm -rf ./windows/vagrant/output || /bin/true
+          rm -rf ./windows/vagrant/*.box || /bin/true
