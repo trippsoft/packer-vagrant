@@ -31,7 +31,7 @@ source "hyperv-iso" "hyperv" {
 
     boot_wait = "-1s"
     boot_command = [
-        "<enter><wait><enter><wait><enter><wait><enter>"
+        "<enter><wait><enter><wait><enter><wait><enter><wait><enter>"
     ]
 
     communicator = "winrm"
