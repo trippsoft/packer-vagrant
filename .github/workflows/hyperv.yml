@@ -39,7 +39,7 @@ jobs:
       - name: Build Debian box
         run: |
           C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-base.sh debian ${{ matrix.box }}
-          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh debian ${{ matrix.box }} base
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh debian ${{ matrix.box }} base ${{ secrets.VAGRANT_HCP_CLIENT_ID }} ${{ secrets.VAGRANT_HCP_CLIENT_SECRET }}
   debian_cleanup:
     name: Cleanup Debian output
     needs: debian
@@ -77,7 +77,7 @@ jobs:
       - name: Build Fedora box
         run: |
           C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-base.sh fedora ${{ matrix.box }}
-          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh fedora ${{ matrix.box }} base
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh fedora ${{ matrix.box }} base ${{ secrets.VAGRANT_HCP_CLIENT_ID }} ${{ secrets.VAGRANT_HCP_CLIENT_SECRET }}
   fedora_cleanup:
     name: Cleanup Fedora output
     needs: fedora
@@ -117,7 +117,7 @@ jobs:
       - name: Build Rocky box
         run: |
           C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-base.sh rocky ${{ matrix.box }}
-          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh rocky ${{ matrix.box }} base
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh rocky ${{ matrix.box }} base ${{ secrets.VAGRANT_HCP_CLIENT_ID }} ${{ secrets.VAGRANT_HCP_CLIENT_SECRET }}
   rocky_cis:
     name: Build Rocky boxes with CIS
     needs: prerequisites
@@ -139,9 +139,9 @@ jobs:
       - name: Build Rocky CIS box
         run: |
           C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-base.sh rocky ${{ matrix.box }}
-          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh rocky ${{ matrix.box }} base
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh rocky ${{ matrix.box }} base ${{ secrets.VAGRANT_HCP_CLIENT_ID }} ${{ secrets.VAGRANT_HCP_CLIENT_SECRET }}
           C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-cis.sh rocky ${{ matrix.box }}
-          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh rocky ${{ matrix.box }} cis
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh rocky ${{ matrix.box }} cis ${{ secrets.VAGRANT_HCP_CLIENT_ID }} ${{ secrets.VAGRANT_HCP_CLIENT_SECRET }}
   rocky_cleanup:
     name: Cleanup Rocky output
     needs:
@@ -183,7 +183,7 @@ jobs:
       - name: Build Ubuntu box
         run: |
           C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-base.sh ubuntu ${{ matrix.box }}
-          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh ubuntu ${{ matrix.box }} base
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh ubuntu ${{ matrix.box }} base ${{ secrets.VAGRANT_HCP_CLIENT_ID }} ${{ secrets.VAGRANT_HCP_CLIENT_SECRET }}
   ubuntu_cleanup:
     name: Cleanup Ubuntu output
     needs: ubuntu
@@ -222,7 +222,7 @@ jobs:
       - name: Build Windows box
         run: |
           C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-base.sh windows ${{ matrix.box }}
-          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh windows ${{ matrix.box }} base
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh windows ${{ matrix.box }} base ${{ secrets.VAGRANT_HCP_CLIENT_ID }} ${{ secrets.VAGRANT_HCP_CLIENT_SECRET }}
   windows_cis:
     name: Build Windows boxes with CIS
     needs: prerequisites
@@ -245,9 +245,9 @@ jobs:
       - name: Build Windows box
         run: |
           C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-base.sh windows ${{ matrix.box }}
-          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh windows ${{ matrix.box }} base
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh windows ${{ matrix.box }} base ${{ secrets.VAGRANT_HCP_CLIENT_ID }} ${{ secrets.VAGRANT_HCP_CLIENT_SECRET }}
           C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-cis.sh windows ${{ matrix.box }}
-          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh windows ${{ matrix.box }} cis
+          C:\Windows\System32\wsl.exe ./.github/workflows/scripts/hyperv/build-box.sh windows ${{ matrix.box }} cis ${{ secrets.VAGRANT_HCP_CLIENT_ID }} ${{ secrets.VAGRANT_HCP_CLIENT_SECRET }}
   windows_cleanup:
     name: Cleanup Windows output
     needs:

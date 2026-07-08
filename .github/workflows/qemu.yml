@@ -71,6 +71,9 @@ jobs:
         box:
           - fedora43
           - fedora44
+    env:
+      PKR_VAR_vagrant_hcp_client_id: ${{ secrets.VAGRANT_HCP_CLIENT_ID }}
+      PKR_VAR_vagrant_hcp_client_secret: ${{ secrets.VAGRANT_HCP_CLIENT_SECRET }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -111,6 +114,9 @@ jobs:
           - rocky10_ws
           - rocky9_ws
           - rocky8_ws
+    env:
+      PKR_VAR_vagrant_hcp_client_id: ${{ secrets.VAGRANT_HCP_CLIENT_ID }}
+      PKR_VAR_vagrant_hcp_client_secret: ${{ secrets.VAGRANT_HCP_CLIENT_SECRET }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -133,6 +139,9 @@ jobs:
         box:
           - rocky9
           - rocky8
+    env:
+      PKR_VAR_vagrant_hcp_client_id: ${{ secrets.VAGRANT_HCP_CLIENT_ID }}
+      PKR_VAR_vagrant_hcp_client_secret: ${{ secrets.VAGRANT_HCP_CLIENT_SECRET }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -177,6 +186,9 @@ jobs:
           - ubuntu2204
           - ubuntu2404
           - ubuntu2604
+    env:
+      PKR_VAR_vagrant_hcp_client_id: ${{ secrets.VAGRANT_HCP_CLIENT_ID }}
+      PKR_VAR_vagrant_hcp_client_secret: ${{ secrets.VAGRANT_HCP_CLIENT_SECRET }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -216,6 +228,9 @@ jobs:
           - w11_23h2
           - w11_24h2
           - w11_25h2
+    env:
+      PKR_VAR_vagrant_hcp_client_id: ${{ secrets.VAGRANT_HCP_CLIENT_ID }}
+      PKR_VAR_vagrant_hcp_client_secret: ${{ secrets.VAGRANT_HCP_CLIENT_SECRET }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -241,6 +256,9 @@ jobs:
           - w2019
           - w2022
           - w2025
+    env:
+      PKR_VAR_vagrant_hcp_client_id: ${{ secrets.VAGRANT_HCP_CLIENT_ID }}
+      PKR_VAR_vagrant_hcp_client_secret: ${{ secrets.VAGRANT_HCP_CLIENT_SECRET }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6

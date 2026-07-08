@@ -1,7 +1,7 @@
 packer {
     required_plugins {
         vmware = {
-            version = ">= 2.1.1"
+            version = ">= 2.1.3"
             source = "github.com/vmware/vmware"
         }
     }

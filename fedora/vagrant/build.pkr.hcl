@@ -1,12 +1,12 @@
 packer {
     required_plugins {
         ansible = {
-            version = ">= 1.1.4"
+            version = ">= 1.1.5"
             source = "github.com/hashicorp/ansible"
         }
 
         vagrant = {
-            version = ">= 1.1.6"
+            version = ">= 1.1.7"
             source = "github.com/hashicorp/vagrant"
         }
     }
@@ -46,12 +46,12 @@ build {
     post-processors {
         post-processor "vagrant" {
             only = ["qemu.qemu"]
-            vagrantfile_template = "${path.root}/Vagrantfile"
 
             include = [
                 "${local.qemu_output_directory}/efivars.fd"
             ]
 
+            vagrantfile_template = "${path.root}/Vagrantfile"
             output = "${path.root}/${local.vm_name}_{{.BuildName}}_{{.Provider}}_{{.Architecture}}.box"
         }
 
@@ -65,7 +65,6 @@ build {
         post-processor "vagrant" {
             only = ["vmware-vmx.vmware"]
 
-            provider_override = "vmware"
             vagrantfile_template = "${path.root}/Vagrantfile"
             output = "${path.root}/${local.vm_name}_{{.BuildName}}_{{.Provider}}_{{.Architecture}}.box"
         }

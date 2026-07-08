@@ -9,22 +9,21 @@ export TMPDIR='/mnt/c/Users/github-actions/AppData/Local/Temp'
 source ~/venv/ansible-2.16/bin/activate
 
 PACKER_VAR_FILE="./$1/vagrant/${2}_$3.pkrvars.hcl"
+PKR_VAR_vagrant_hcp_client_id="$4"
+PKR_VAR_vagrant_hcp_client_secret="$5"
 
 /usr/bin/packer build \
     -only "*.hyperv" \
     -var-file="$PACKER_VAR_FILE" \
-    -var-file="/mnt/c/Users/github-actions/vagrant.pkrvars.hcl" \
     -force \
     ./$1/vagrant || \
 /usr/bin/packer build \
     -only "*.hyperv" \
     -var-file="$PACKER_VAR_FILE" \
-    -var-file="/mnt/c/Users/github-actions/vagrant.pkrvars.hcl" \
     -force \
     ./$1/vagrant || \
 /usr/bin/packer build \
     -only "*.hyperv" \
     -var-file="$PACKER_VAR_FILE" \
-    -var-file="/mnt/c/Users/github-actions/vagrant.pkrvars.hcl" \
     -force \
     ./$1/vagrant

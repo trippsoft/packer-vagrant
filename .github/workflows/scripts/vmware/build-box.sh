@@ -7,18 +7,15 @@ PACKER_VAR_FILE="./$1/vagrant/${2}_$3.pkrvars.hcl"
 /usr/bin/packer build \
     -only "*.vmware" \
     -var-file="$PACKER_VAR_FILE" \
-    -var-file="/home/github-actions/vagrant.pkrvars.hcl" \
     -force \
     ./$1/vagrant || \
 /usr/bin/packer build \
     -only "*.vmware" \
     -var-file="$PACKER_VAR_FILE" \
-    -var-file="/home/github-actions/vagrant.pkrvars.hcl" \
     -force \
     ./$1/vagrant || \
 /usr/bin/packer build \
     -only "*.vmware" \
     -var-file="$PACKER_VAR_FILE" \
-    -var-file="/home/github-actions/vagrant.pkrvars.hcl" \
     -force \
     ./$1/vagrant
