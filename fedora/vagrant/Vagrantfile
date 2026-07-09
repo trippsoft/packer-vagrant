@@ -1,15 +1,9 @@
 require 'securerandom'
 
 Vagrant.configure(2) do |config|
-  config.vm.guest = :linux
   config.vm.boot_timeout = 600
-  
+
   config.vm.synced_folder '.', '/vagrant', disabled: true
-  
-  config.vm.provider 'virtualbox' do |vb|
-    vb.cpus = 2
-    vb.memory = 4096
-  end
 
   config.vm.provider 'hyperv' do |hv|
     hv.cpus = 2
@@ -26,5 +20,11 @@ Vagrant.configure(2) do |config|
     lv.nvram = "/tmp/#{SecureRandom.uuid}.fd"
     lv.video_type = 'vga'
     lv.input :type => 'tablet', :bus => 'usb'
+  end
+
+  config.vm.provider 'vmware_desktop' do |vmd|
+    vmd.cpus = 2
+    vmd.memory = 4096
+    vmd.force_vmware_license = "workstation"
   end
 end
