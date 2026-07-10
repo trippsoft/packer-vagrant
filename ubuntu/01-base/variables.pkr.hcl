@@ -36,7 +36,7 @@ variable "hyperv_switch_name" {
 
 variable "vmware_version" {
     type = number
-    default = 19
+    default = 22
 }
 
 locals {
