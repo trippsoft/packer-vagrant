@@ -3,6 +3,7 @@
 source ~/venv/ansible-2.16/bin/activate
 
 PACKER_VAR_FILE="./$1/02-cis/$2.pkrvars.hcl"
+export TMPDIR="/home/github-actions/.tmp"
 
 /usr/bin/packer build \
     -only "*.vmware" \
@@ -19,3 +20,5 @@ PACKER_VAR_FILE="./$1/02-cis/$2.pkrvars.hcl"
     -var-file="$PACKER_VAR_FILE" \
     -force \
     ./$1/02-cis
+
+export TMPDIR=""
