@@ -55,7 +55,6 @@ build {
             box_tag = local.box_tag
             version = local.box_version
             keep_input_artifact = true
-            no_direct_upload = true
         }
     }
 }
