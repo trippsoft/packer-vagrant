@@ -16,7 +16,7 @@ autoinstall:
         eth0:
           dhcp4: true
   identity:
-    hostname: ubuntu2604
+    hostname: ubuntu-server
     username: vagrant
     password: '$6$rounds=4096$5CU3LEj/MQvbkfPb$LmKEF9pCfU8R.dA.GemgE/8GT6r9blge3grJvdsVTMFKyLEQwzEF3SGWqAzjawY/XHRpWj4fOiLBrRyxJhIRJ1'
   ssh:
