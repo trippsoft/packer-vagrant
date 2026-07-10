@@ -200,7 +200,6 @@ autoinstall:
             systemctl disable apt-daily-upgrade.service; \
             systemctl disable apt-daily-upgrade.timer; \
             systemctl enable ssh.service; \
-            timedatectl set-local-rtc 1; \
             ufw enable; \
             ufw allow ssh; \
             exit 0 \
