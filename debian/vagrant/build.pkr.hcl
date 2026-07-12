@@ -47,6 +47,7 @@ build {
         post-processor "vagrant" {
             vagrantfile_template = "${path.root}/Vagrantfile"
             output = "${path.root}/${local.vm_name}_{{.BuildName}}_{{.Provider}}_{{.Architecture}}.box"
+            compression_level = 9
         }
 
         post-processor "vagrant-registry" {
