@@ -33,6 +33,9 @@ jobs:
       matrix:
         box:
           - debian13
+    env:
+      PKR_VAR_vagrant_hcp_client_id: ${{ secrets.VAGRANT_HCP_CLIENT_ID }}
+      PKR_VAR_vagrant_hcp_client_secret: ${{ secrets.VAGRANT_HCP_CLIENT_SECRET }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
