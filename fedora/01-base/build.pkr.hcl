@@ -1,18 +1,14 @@
 packer {
     required_plugins {
         ansible = {
-            version = ">= 1.1.5"
+            version = ">= 1.1.6"
             source = "github.com/hashicorp/ansible"
         }
     }
 }
 
 build {
-    sources = [
-        "source.qemu.qemu",
-        "source.hyperv-iso.hyperv",
-        "source.vmware-iso.vmware"
-    ]
+    sources = ["source.qemu.qemu"]
 
     provisioner "ansible" {
         playbook_file = "${local.project_directory}/ansible/fedora_first_steps.yml"

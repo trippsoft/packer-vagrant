@@ -1,0 +1,583 @@
+---
+name: Build QEMU Boxes
+'on':
+  workflow_dispatch: {}
+  schedule:
+    - cron: '10 0 * * 3'
+jobs:
+  setup:
+    name: Setup
+    runs-on:
+      - self-hosted
+      - Linux
+      - X64
+      - packer
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Install prerequisites
+        run: |
+          ./.github/workflows/scripts/install-prerequisites.sh
+      - name: Set version
+        id: version
+        run: |
+          echo "Version: $(date +'%Y.%m.%d')"
+          echo "version=$(date +'%Y.%m.%d')" >> $GITHUB_OUTPUT
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+  debian:
+    name: Build Debian boxes
+    needs: setup
+    runs-on:
+      - self-hosted
+      - Linux
+      - packer
+      - X64
+    strategy:
+      fail-fast: false
+      matrix:
+        box:
+          - debian13
+          - debian12
+    env:
+      TMPDIR: /var/tmp
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Build base Debian install
+        run: |
+          ./.github/workflows/scripts/build-base.sh ansible-2.21 debian ${{ matrix.box }}
+      - name: Build base Debian box
+        run: |
+          ./.github/workflows/scripts/build-box.sh ansible-2.21 debian ${{ matrix.box }} base
+      - name: Cleanup base Debian install
+        run: |
+          rm -rf ./debian/01-base/output || /bin/true
+      - name: Get box SHA256 Hash
+        id: hash
+        run: |
+          echo "sha256=$(sha256sum ./debian/vagrant/boxes/${{ matrix.box }}_base/libvirt-amd64.box | awk '{print $1}')" >> $GITHUB_OUTPUT
+      - name: Copy box to NAS
+        env:
+          CATALOG_JSON: |-
+            {
+              "name": "trippsc2/${{ matrix.box }}_base",
+              "versions": [
+                {
+                  "version": "${{ needs.setup.outputs.version }}",
+                  "providers": [
+                    {
+                      "name": "libvirt",
+                      "architecture": "amd64",
+                      "url": "/mnt/vagrant-boxes/${{ matrix.box }}_base/${{ needs.setup.outputs.version }}/libvirt-amd64.box",
+                      "checksum_type": "sha256",
+                      "checksum": "${{ steps.hash.outputs.sha256 }}"
+                    }
+                  ]
+                }
+              ]
+            }
+        run: |
+          mkdir -p /mnt/vagrant-boxes/${{ matrix.box }}_base/${{ needs.setup.outputs.version }}
+          cp ./debian/vagrant/boxes/${{ matrix.box }}_base/libvirt-amd64.box /mnt/vagrant-boxes/${{ matrix.box }}_base/${{ needs.setup.outputs.version }}/
+          echo "$CATALOG_JSON" > /mnt/vagrant-boxes/${{ matrix.box }}_base/catalog.json
+          echo "Copied box to NAS at /mnt/vagrant-boxes/${{ matrix.box }}_base/${{ needs.setup.outputs.version }}"
+      - name: Cleanup base Debian box
+        run: |
+          rm -rf ./debian/vagrant/output || /bin/true
+          rm -f ./debian/vagrant/boxes/${{ matrix.box }}_base/libvirt-amd64.box || /bin/true
+      - name: Cleanup old Debian box versions
+        run: |
+          find /mnt/vagrant-boxes/${{ matrix.box }}_base/ -mindepth 1 -maxdepth 1 -type d ! -name "${{ needs.setup.outputs.version }}" -exec rm -rf {} + || /bin/true
+  fedora:
+    name: Build Fedora boxes
+    needs: setup
+    runs-on:
+      - self-hosted
+      - Linux
+      - packer
+      - X64
+    strategy:
+      fail-fast: false
+      matrix:
+        box:
+          - fedora43
+          - fedora44
+    env:
+      TMPDIR: /var/tmp
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Build base Fedora install
+        run: |
+          ./.github/workflows/scripts/build-base.sh ansible-2.21 fedora ${{ matrix.box }}
+      - name: Build Fedora base box
+        run: |
+          ./.github/workflows/scripts/build-box.sh ansible-2.21 fedora ${{ matrix.box }} base
+      - name: Cleanup base Fedora install
+        run: |
+          rm -rf ./fedora/01-base/output || /bin/true
+      - name: Get box SHA256 Hash
+        id: hash
+        run: |
+          echo "sha256=$(sha256sum ./fedora/vagrant/boxes/${{ matrix.box }}_base/libvirt-amd64.box | awk '{print $1}')" >> $GITHUB_OUTPUT
+      - name: Copy box to NAS
+        env:
+          CATALOG_JSON: |-
+            {
+              "name": "trippsc2/${{ matrix.box }}_base",
+              "versions": [
+                {
+                  "version": "${{ needs.setup.outputs.version }}",
+                  "providers": [
+                    {
+                      "name": "libvirt",
+                      "architecture": "amd64",
+                      "url": "/mnt/vagrant-boxes/${{ matrix.box }}_base/${{ needs.setup.outputs.version }}/libvirt-amd64.box",
+                      "checksum_type": "sha256",
+                      "checksum": "${{ steps.hash.outputs.sha256 }}"
+                    }
+                  ]
+                }
+              ]
+            }
+        run: |
+          mkdir -p /mnt/vagrant-boxes/${{ matrix.box }}_base/${{ needs.setup.outputs.version }}
+          cp ./fedora/vagrant/boxes/${{ matrix.box }}_base/libvirt-amd64.box /mnt/vagrant-boxes/${{ matrix.box }}_base/${{ needs.setup.outputs.version }}/
+          echo "$CATALOG_JSON" > /mnt/vagrant-boxes/${{ matrix.box }}_base/catalog.json
+          echo "Copied box to NAS at /mnt/vagrant-boxes/${{ matrix.box }}_base/${{ needs.setup.outputs.version }}"
+      - name: Cleanup base Fedora box
+        run: |
+          rm -rf ./fedora/vagrant/output || /bin/true
+          rm -f ./fedora/vagrant/boxes/${{ matrix.box }}_base/libvirt-amd64.box || /bin/true
+      - name: Cleanup old Fedora box versions
+        run: |
+          find /mnt/vagrant-boxes/${{ matrix.box }}_base/ -mindepth 1 -maxdepth 1 -type d ! -name "${{ needs.setup.outputs.version }}" -exec rm -rf {} + || /bin/true
+  rocky_base:
+    name: Build Rocky boxes with base only
+    needs: setup
+    runs-on:
+      - self-hosted
+      - Linux
+      - packer
+      - X64
+    strategy:
+      fail-fast: false
+      matrix:
+        box:
+          - name: rocky10
+            venv: ansible-2.21
+          - name: rocky10_ws
+            venv: ansible-2.21
+          - name: rocky9_ws
+            venv: ansible-2.21
+          - name: rocky8_ws
+            venv: ansible-2.16
+    env:
+      TMPDIR: /var/tmp
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Build base Rocky install
+        run: |
+          ./.github/workflows/scripts/build-base.sh ${{ matrix.box.venv }} rocky ${{ matrix.box.name }}
+      - name: Build Rocky base box
+        run: |
+          ./.github/workflows/scripts/build-box.sh ${{ matrix.box.venv }} rocky ${{ matrix.box.name }} base
+      - name: Cleanup base Rocky install
+        run: |
+          rm -rf ./rocky/01-base/output || /bin/true
+      - name: Get box SHA256 Hash
+        id: hash
+        run: |
+          echo "sha256=$(sha256sum ./rocky/vagrant/boxes/${{ matrix.box.name }}_base/libvirt-amd64.box | awk '{print $1}')" >> $GITHUB_OUTPUT
+      - name: Copy box to NAS
+        env:
+          CATALOG_JSON: |-
+            {
+              "name": "trippsc2/${{ matrix.box.name }}_base",
+              "versions": [
+                {
+                  "version": "${{ needs.setup.outputs.version }}",
+                  "providers": [
+                    {
+                      "name": "libvirt",
+                      "architecture": "amd64",
+                      "url": "/mnt/vagrant-boxes/${{ matrix.box.name }}_base/${{ needs.setup.outputs.version }}/libvirt-amd64.box",
+                      "checksum_type": "sha256",
+                      "checksum": "${{ steps.hash.outputs.sha256 }}"
+                    }
+                  ]
+                }
+              ]
+            }
+        run: |
+          mkdir -p /mnt/vagrant-boxes/${{ matrix.box.name }}_base/${{ needs.setup.outputs.version }}
+          cp ./rocky/vagrant/boxes/${{ matrix.box.name }}_base/libvirt-amd64.box /mnt/vagrant-boxes/${{ matrix.box.name }}_base/${{ needs.setup.outputs.version }}/
+          echo "$CATALOG_JSON" > /mnt/vagrant-boxes/${{ matrix.box.name }}_base/catalog.json
+          echo "Copied box to NAS at /mnt/vagrant-boxes/${{ matrix.box.name }}_base/${{ needs.setup.outputs.version }}"
+      - name: Cleanup base Rocky box
+        run: |
+          rm -rf ./rocky/vagrant/output || /bin/true
+          rm -f ./rocky/vagrant/boxes/${{ matrix.box.name }}_base/libvirt-amd64.box || /bin/true
+      - name: Cleanup old Rocky box versions
+        run: |
+          find /mnt/vagrant-boxes/${{ matrix.box.name }}_base/ -mindepth 1 -maxdepth 1 -type d ! -name "${{ needs.setup.outputs.version }}" -exec rm -rf {} + || /bin/true
+  rocky_cis:
+    name: Build Rocky boxes with CIS
+    needs: setup
+    runs-on:
+      - self-hosted
+      - Linux
+      - packer
+      - X64
+    strategy:
+      fail-fast: false
+      matrix:
+        box:
+          - name: rocky9
+            venv: ansible-2.16
+          - name: rocky8
+            venv: ansible-2.16
+    env:
+      TMPDIR: /var/tmp
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Build base Rocky install
+        run: |
+          ./.github/workflows/scripts/build-base.sh ${{ matrix.box.venv }} rocky ${{ matrix.box.name }}
+      - name: Build Rocky base box
+        run: |
+          ./.github/workflows/scripts/build-box.sh ${{ matrix.box.venv }} rocky ${{ matrix.box.name }} base
+      - name: Get box SHA256 Hash
+        id: base_hash
+        run: |
+          echo "sha256=$(sha256sum ./rocky/vagrant/boxes/${{ matrix.box.name }}_base/libvirt-amd64.box | awk '{print $1}')" >> $GITHUB_OUTPUT
+      - name: Copy box to NAS
+        env:
+          CATALOG_JSON: |-
+            {
+              "name": "trippsc2/${{ matrix.box.name }}_base",
+              "versions": [
+                {
+                  "version": "${{ needs.setup.outputs.version }}",
+                  "providers": [
+                    {
+                      "name": "libvirt",
+                      "architecture": "amd64",
+                      "url": "/mnt/vagrant-boxes/${{ matrix.box.name }}_base/${{ needs.setup.outputs.version }}/libvirt-amd64.box",
+                      "checksum_type": "sha256",
+                      "checksum": "${{ steps.base_hash.outputs.sha256 }}"
+                    }
+                  ]
+                }
+              ]
+            }
+        run: |
+          mkdir -p /mnt/vagrant-boxes/${{ matrix.box.name }}_base/${{ needs.setup.outputs.version }}
+          cp ./rocky/vagrant/boxes/${{ matrix.box.name }}_base/libvirt-amd64.box /mnt/vagrant-boxes/${{ matrix.box.name }}_base/${{ needs.setup.outputs.version }}/
+          echo "$CATALOG_JSON" > /mnt/vagrant-boxes/${{ matrix.box.name }}_base/catalog.json
+          echo "Copied box to NAS at /mnt/vagrant-boxes/${{ matrix.box.name }}_base/${{ needs.setup.outputs.version }}"
+      - name: Cleanup base Rocky box
+        run: |
+          rm -rf ./rocky/vagrant/output || /bin/true
+          rm -f ./rocky/vagrant/boxes/${{ matrix.box.name }}_base/libvirt-amd64.box || /bin/true
+      - name: Cleanup old Rocky box versions
+        run: |
+          find /mnt/vagrant-boxes/${{ matrix.box.name }}_base/ -mindepth 1 -maxdepth 1 -type d ! -name "${{ needs.setup.outputs.version }}" -exec rm -rf {} + || /bin/true
+      - name: Build CIS Rocky install
+        run: |
+          ./.github/workflows/scripts/build-cis.sh ${{ matrix.box.venv }} rocky ${{ matrix.box.name }}
+      - name: Cleanup base Rocky install
+        run: |
+          rm -rf ./rocky/01-base/output || /bin/true
+      - name: Build Rocky CIS box
+        run: |
+          ./.github/workflows/scripts/build-box.sh ${{ matrix.box.venv }} rocky ${{ matrix.box.name }} cis
+      - name: Cleanup CIS Rocky install
+        run: |
+          rm -rf ./rocky/02-cis/output || /bin/true
+      - name: Get box SHA256 Hash
+        id: cis_hash
+        run: |
+          echo "sha256=$(sha256sum ./rocky/vagrant/boxes/${{ matrix.box.name }}_cis/libvirt-amd64.box | awk '{print $1}')" >> $GITHUB_OUTPUT
+      - name: Copy box to NAS
+        env:
+          CATALOG_JSON: |-
+            {
+              "name": "trippsc2/${{ matrix.box.name }}_cis",
+              "versions": [
+                {
+                  "version": "${{ needs.setup.outputs.version }}",
+                  "providers": [
+                    {
+                      "name": "libvirt",
+                      "architecture": "amd64",
+                      "url": "/mnt/vagrant-boxes/${{ matrix.box.name }}_cis/${{ needs.setup.outputs.version }}/libvirt-amd64.box",
+                      "checksum_type": "sha256",
+                      "checksum": "${{ steps.cis_hash.outputs.sha256 }}"
+                    }
+                  ]
+                }
+              ]
+            }
+        run: |
+          mkdir -p /mnt/vagrant-boxes/${{ matrix.box.name }}_cis/${{ needs.setup.outputs.version }}
+          cp ./rocky/vagrant/boxes/${{ matrix.box.name }}_cis/libvirt-amd64.box /mnt/vagrant-boxes/${{ matrix.box.name }}_cis/${{ needs.setup.outputs.version }}/
+          echo "$CATALOG_JSON" > /mnt/vagrant-boxes/${{ matrix.box.name }}_cis/catalog.json
+          echo "Copied box to NAS at /mnt/vagrant-boxes/${{ matrix.box.name }}_cis/${{ needs.setup.outputs.version }}"
+      - name: Cleanup CIS Rocky box
+        run: |
+          rm -rf ./rocky/vagrant/output || /bin/true
+          rm -f ./rocky/vagrant/boxes/${{ matrix.box.name }}_cis/libvirt-amd64.box || /bin/true
+      - name: Cleanup old Rocky box versions
+        run: |
+          find /mnt/vagrant-boxes/${{ matrix.box.name }}_cis/ -mindepth 1 -maxdepth 1 -type d ! -name "${{ needs.setup.outputs.version }}" -exec rm -rf {} + || /bin/true
+  ubuntu:
+    name: Build Ubuntu boxes
+    needs: setup
+    runs-on:
+      - self-hosted
+      - Linux
+      - packer
+      - X64
+    strategy:
+      fail-fast: false
+      matrix:
+        box:
+          - ubuntu2204
+          - ubuntu2404
+          - ubuntu2604
+    env:
+      TMPDIR: /var/tmp
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Build base Ubuntu install
+        run: |
+          ./.github/workflows/scripts/build-base.sh ansible-2.21 ubuntu ${{ matrix.box }}
+      - name: Build base Ubuntu box
+        run: |
+          ./.github/workflows/scripts/build-box.sh ansible-2.21 ubuntu ${{ matrix.box }} base
+      - name: Cleanup base Ubuntu install
+        run: |
+          rm -rf ./ubuntu/01-base/output || /bin/true
+      - name: Get box SHA256 Hash
+        id: hash
+        run: |
+          echo "sha256=$(sha256sum ./ubuntu/vagrant/boxes/${{ matrix.box }}_base/libvirt-amd64.box | awk '{print $1}')" >> $GITHUB_OUTPUT
+      - name: Copy box to NAS
+        env:
+          CATALOG_JSON: |-
+            {
+              "name": "trippsc2/${{ matrix.box }}_base",
+              "versions": [
+                {
+                  "version": "${{ needs.setup.outputs.version }}",
+                  "providers": [
+                    {
+                      "name": "libvirt",
+                      "architecture": "amd64",
+                      "url": "/mnt/vagrant-boxes/${{ matrix.box }}_base/${{ needs.setup.outputs.version }}/libvirt-amd64.box",
+                      "checksum_type": "sha256",
+                      "checksum": "${{ steps.hash.outputs.sha256 }}"
+                    }
+                  ]
+                }
+              ]
+            }
+        run: |
+          mkdir -p /mnt/vagrant-boxes/${{ matrix.box }}_base/${{ needs.setup.outputs.version }}
+          cp ./ubuntu/vagrant/boxes/${{ matrix.box }}_base/libvirt-amd64.box /mnt/vagrant-boxes/${{ matrix.box }}_base/${{ needs.setup.outputs.version }}/
+          echo "$CATALOG_JSON" > /mnt/vagrant-boxes/${{ matrix.box }}_base/catalog.json
+          echo "Copied box to NAS at /mnt/vagrant-boxes/${{ matrix.box }}_base/${{ needs.setup.outputs.version }}"
+      - name: Cleanup base Ubuntu box
+        run: |
+          rm -rf ./ubuntu/vagrant/output || /bin/true
+          rm -f ./ubuntu/vagrant/boxes/${{ matrix.box }}_base/libvirt-amd64.box || /bin/true
+      - name: Cleanup old Ubuntu box versions
+        run: |
+          find /mnt/vagrant-boxes/${{ matrix.box }}_base/ -mindepth 1 -maxdepth 1 -type d ! -name "${{ needs.setup.outputs.version }}" -exec rm -rf {} + || /bin/true
+  windows_base:
+    name: Build Windows boxes with base only
+    needs: setup
+    runs-on:
+      - self-hosted
+      - Linux
+      - packer
+      - X64
+    strategy:
+      fail-fast: false
+      matrix:
+        box:
+          - w11_24h2
+          - w11_25h2
+    env:
+      TMPDIR: /var/tmp
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Copy Virtio drivers
+        run: |
+          mkdir -p ./windows/01-base/cd/common/virtio-win
+          cp -R /home/github-actions/virtio-win/* ./windows/01-base/cd/common/virtio-win/
+      - name: Build base Windows install
+        run: |
+          ./.github/workflows/scripts/build-base.sh ansible-2.21 windows ${{ matrix.box }}
+      - name: Build base Windows box
+        run: |
+          ./.github/workflows/scripts/build-box.sh ansible-2.21 windows ${{ matrix.box }} base
+      - name: Cleanup base Windows install
+        run: |
+          rm -rf ./windows/01-base/output || /bin/true
+      - name: Get box SHA256 Hash
+        id: hash
+        run: |
+          echo "sha256=$(sha256sum ./windows/vagrant/boxes/${{ matrix.box }}_base/libvirt-amd64.box | awk '{print $1}')" >> $GITHUB_OUTPUT
+      - name: Copy box to NAS
+        env:
+          CATALOG_JSON: |-
+            {
+              "name": "trippsc2/${{ matrix.box }}_base",
+              "versions": [
+                {
+                  "version": "${{ needs.setup.outputs.version }}",
+                  "providers": [
+                    {
+                      "name": "libvirt",
+                      "architecture": "amd64",
+                      "url": "/mnt/vagrant-boxes/${{ matrix.box }}_base/${{ needs.setup.outputs.version }}/libvirt-amd64.box",
+                      "checksum_type": "sha256",
+                      "checksum": "${{ steps.hash.outputs.sha256 }}"
+                    }
+                  ]
+                }
+              ]
+            }
+        run: |
+          mkdir -p /mnt/vagrant-boxes/${{ matrix.box }}_base/${{ needs.setup.outputs.version }}
+          cp ./windows/vagrant/boxes/${{ matrix.box }}_base/libvirt-amd64.box /mnt/vagrant-boxes/${{ matrix.box }}_base/${{ needs.setup.outputs.version }}/
+          echo "$CATALOG_JSON" > /mnt/vagrant-boxes/${{ matrix.box }}_base/catalog.json
+          echo "Copied box to NAS at /mnt/vagrant-boxes/${{ matrix.box }}_base/${{ needs.setup.outputs.version }}"
+      - name: Cleanup base Windows box
+        run: |
+          rm -rf ./windows/vagrant/output || /bin/true
+          rm -f ./windows/vagrant/boxes/${{ matrix.box }}_base/libvirt-amd64.box || /bin/true
+      - name: Cleanup old Windows box versions
+        run: |
+          find /mnt/vagrant-boxes/${{ matrix.box }}_base/ -mindepth 1 -maxdepth 1 -type d ! -name "${{ needs.setup.outputs.version }}" -exec rm -rf {} + || /bin/true
+  windows_cis:
+    name: Build Windows boxes with CIS
+    needs: setup
+    runs-on:
+      - self-hosted
+      - Linux
+      - packer
+      - X64
+    strategy:
+      fail-fast: false
+      matrix:
+        box:
+          - w2019
+          - w2022
+          - w2025
+    env:
+      TMPDIR: /var/tmp
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Copy Virtio drivers
+        run: |
+          mkdir -p ./windows/01-base/cd/common/virtio-win
+          cp -R /home/github-actions/virtio-win/* ./windows/01-base/cd/common/virtio-win/
+      - name: Build base Windows install
+        run: |
+          ./.github/workflows/scripts/build-base.sh ansible-2.21 windows ${{ matrix.box }}
+      - name: Build Windows base box
+        run: |
+          ./.github/workflows/scripts/build-box.sh ansible-2.21 windows ${{ matrix.box }} base
+      - name: Get box SHA256 Hash
+        id: base_hash
+        run: |
+          echo "sha256=$(sha256sum ./windows/vagrant/boxes/${{ matrix.box }}_base/libvirt-amd64.box | awk '{print $1}')" >> $GITHUB_OUTPUT
+      - name: Copy box to NAS
+        env:
+          CATALOG_JSON: |-
+            {
+              "name": "trippsc2/${{ matrix.box }}_base",
+              "versions": [
+                {
+                  "version": "${{ needs.setup.outputs.version }}",
+                  "providers": [
+                    {
+                      "name": "libvirt",
+                      "architecture": "amd64",
+                      "url": "/mnt/vagrant-boxes/${{ matrix.box }}_base/${{ needs.setup.outputs.version }}/libvirt-amd64.box",
+                      "checksum_type": "sha256",
+                      "checksum": "${{ steps.base_hash.outputs.sha256 }}"
+                    }
+                  ]
+                }
+              ]
+            }
+        run: |
+          mkdir -p /mnt/vagrant-boxes/${{ matrix.box }}_base/${{ needs.setup.outputs.version }}
+          cp ./windows/vagrant/boxes/${{ matrix.box }}_base/libvirt-amd64.box /mnt/vagrant-boxes/${{ matrix.box }}_base/${{ needs.setup.outputs.version }}/
+          echo "$CATALOG_JSON" > /mnt/vagrant-boxes/${{ matrix.box }}_base/catalog.json
+          echo "Copied box to NAS at /mnt/vagrant-boxes/${{ matrix.box }}_base/${{ needs.setup.outputs.version }}"
+      - name: Cleanup base Windows box
+        run: |
+          rm -rf ./windows/vagrant/output || /bin/true
+          rm -f ./windows/vagrant/boxes/${{ matrix.box }}_base/libvirt-amd64.box || /bin/true
+      - name: Cleanup old Windows box versions
+        run: |
+          find /mnt/vagrant-boxes/${{ matrix.box }}_base/ -mindepth 1 -maxdepth 1 -type d ! -name "${{ needs.setup.outputs.version }}" -exec rm -rf {} + || /bin/true
+      - name: Build CIS Windows install
+        run: |
+          ./.github/workflows/scripts/build-cis.sh ansible-2.21 windows ${{ matrix.box }}
+      - name: Cleanup base Windows install
+        run: |
+          rm -rf ./windows/01-base/output || /bin/true
+      - name: Build Windows CIS box
+        run: |
+          ./.github/workflows/scripts/build-box.sh ansible-2.21 windows ${{ matrix.box }} cis
+      - name: Cleanup CIS Windows install
+        run: |
+          rm -rf ./windows/02-cis/output || /bin/true
+      - name: Get box SHA256 Hash
+        id: cis_hash
+        run: |
+          echo "sha256=$(sha256sum ./windows/vagrant/boxes/${{ matrix.box }}_cis/libvirt-amd64.box | awk '{print $1}')" >> $GITHUB_OUTPUT
+      - name: Copy box to NAS
+        env:
+          CATALOG_JSON: |-
+            {
+              "name": "trippsc2/${{ matrix.box }}_cis",
+              "versions": [
+                {
+                  "version": "${{ needs.setup.outputs.version }}",
+                  "providers": [
+                    {
+                      "name": "libvirt",
+                      "architecture": "amd64",
+                      "url": "/mnt/vagrant-boxes/${{ matrix.box }}_cis/${{ needs.setup.outputs.version }}/libvirt-amd64.box",
+                      "checksum_type": "sha256",
+                      "checksum": "${{ steps.cis_hash.outputs.sha256 }}"
+                    }
+                  ]
+                }
+              ]
+            }
+        run: |
+          mkdir -p /mnt/vagrant-boxes/${{ matrix.box }}_cis/${{ needs.setup.outputs.version }}
+          cp ./windows/vagrant/boxes/${{ matrix.box }}_cis/libvirt-amd64.box /mnt/vagrant-boxes/${{ matrix.box }}_cis/${{ needs.setup.outputs.version }}/
+          echo "$CATALOG_JSON" > /mnt/vagrant-boxes/${{ matrix.box }}_cis/catalog.json
+          echo "Copied box to NAS at /mnt/vagrant-boxes/${{ matrix.box }}_cis/${{ needs.setup.outputs.version }}"
+      - name: Cleanup CIS Windows box
+        run: |
+          rm -rf ./windows/vagrant/output || /bin/true
+          rm -f ./windows/vagrant/boxes/${{ matrix.box }}_cis/libvirt-amd64.box || /bin/true
+      - name: Cleanup old Windows box versions
+        run: |
+          find /mnt/vagrant-boxes/${{ matrix.box }}_cis/ -mindepth 1 -maxdepth 1 -type d ! -name "${{ needs.setup.outputs.version }}" -exec rm -rf {} + || /bin/true

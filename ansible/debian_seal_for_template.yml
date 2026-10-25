@@ -5,5 +5,4 @@
   roles:
     - role: trippsc2.template.debian
       vars:
-        debian_target_hostname: "{{ target_hostname }}"
         debian_is_vagrant: true

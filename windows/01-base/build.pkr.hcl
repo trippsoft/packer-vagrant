@@ -1,22 +1,18 @@
 packer {
     required_plugins {
         windows-update = {
-            version = ">= 0.18.3"
+            version = ">= 0.18.5"
             source = "github.com/rgl/windows-update"
         }
     }
 }
 
 build {
-    sources = [
-        "source.qemu.qemu",
-        "source.hyperv-iso.hyperv",
-        "source.vmware-iso.vmware"
-    ]
+    sources = ["source.qemu.qemu"]
 
     provisioner "windows-update" {
         search_criteria = "BrowseOnly=0 and IsInstalled=0"
-        timeout = "40m"
+        timeout = "90m"
 
         filters = [
             "exclude:$_.Title -like '*Preview*'",

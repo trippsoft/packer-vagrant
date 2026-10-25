@@ -1,7 +1,7 @@
 packer {
     required_plugins {
         ansible = {
-            version = ">= 1.1.5"
+            version = ">= 1.1.6"
             source = "github.com/hashicorp/ansible"
         }
 
@@ -13,11 +13,7 @@ packer {
 }
 
 build {
-    sources = [
-        "source.qemu.qemu",
-        "source.hyperv-vmcx.hyperv",
-        "source.vmware-vmx.vmware"
-    ]
+    sources = ["source.qemu.qemu"]
 
     provisioner "ansible" {
         playbook_file = "${local.project_directory}/ansible/debian_seal_for_template.yml"
@@ -37,7 +33,7 @@ build {
 
         extra_arguments = [
             "-e",
-            "target_hostname=${local.hostname} ansible_password=vagrant",
+            "ansible_password=${build.Password}",
             "--scp-extra-args",
             "'-O'"
         ]
@@ -46,15 +42,12 @@ build {
     post-processors {
         post-processor "vagrant" {
             vagrantfile_template = "${path.root}/Vagrantfile"
-            output = "${path.root}/${local.vm_name}_{{.BuildName}}_{{.Provider}}_{{.Architecture}}.box"
-        }
+            output = "${path.root}/boxes/${local.vm_name}/{{.Provider}}-{{.Architecture}}.box"
+            compression_level = 9
 
-        post-processor "vagrant-registry" {
-            client_id = var.vagrant_hcp_client_id
-            client_secret = var.vagrant_hcp_client_secret
-            box_tag = local.box_tag
-            version = local.box_version
-            keep_input_artifact = true
+            include = [
+                "${local.output_directory}/efivars.fd"
+            ]
         }
     }
 }

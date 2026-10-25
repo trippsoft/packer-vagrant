@@ -1,7 +1,7 @@
 packer {
     required_plugins {
         qemu = {
-            version = ">= 1.1.5"
+            version = ">= 1.1.7"
             source = "github.com/hashicorp/qemu"
         }
     }
@@ -11,16 +11,16 @@ source "qemu" "qemu" {
     vm_name = local.vm_name
     headless = var.headless
     efi_boot = true
-    efi_firmware_code = "/usr/share/OVMF/OVMF_CODE.secboot.fd"
-    efi_firmware_vars = local.qemu_efi_vars
+    efi_firmware_code = "/usr/share/edk2/ovmf/OVMF_CODE.secboot.fd"
+    efi_firmware_vars = local.efi_vars
     use_pflash = true
     machine_type = "q35"
 
     qemuargs = [
-        ["-cpu", "host,hv_relaxed,hv_vapic,hv_spinlocks=0x1fff,hv_vpindex,hv_runtime,hv_synic,hv_frequencies,hv_tlbflush,hv_ipi,hv_avic"],
         ["-device", "virtio-tablet"]
     ]
 
+    cpu_model = "host"
     cores = 4
     memory = 8192
 
@@ -31,7 +31,7 @@ source "qemu" "qemu" {
 
     boot_wait = "-1s"
 
-    iso_url = local.qemu_source_path
+    iso_url = local.source_path
     iso_checksum = "none"
 
     communicator = "ssh"
@@ -42,5 +42,5 @@ source "qemu" "qemu" {
     shutdown_command = "shutdown /s /t 10 /f"
     shutdown_timeout = "5m"
 
-    output_directory = local.qemu_output_directory
+    output_directory = local.output_directory
 }

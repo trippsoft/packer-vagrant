@@ -5,5 +5,4 @@
   roles:
     - role: trippsc2.template.ubuntu
       vars:
-        ubuntu_target_hostname: "{{ target_hostname }}"
         ubuntu_is_vagrant: true

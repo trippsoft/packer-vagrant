@@ -1,14 +1,17 @@
 require 'securerandom'
 
+BOX_DIR = File.expand_path(File.dirname(__FILE__))
+LOCAL_NVRAM = "/tmp/#{SecureRandom.uuid}.fd"
+
+if File.exist?("#{BOX_DIR}/efivars.fd") && !File.exist?(LOCAL_NVRAM)
+  require 'fileutils'
+  FileUtils.mkdir_p(File.dirname(LOCAL_NVRAM))
+  FileUtils.cp("#{BOX_DIR}/efivars.fd", LOCAL_NVRAM)
+end
+
 Vagrant.configure(2) do |config|
   config.vm.boot_timeout = 600
-
   config.vm.synced_folder '.', '/vagrant', disabled: true
-
-  config.vm.provider 'hyperv' do |hv|
-    hv.cpus = 2
-    hv.memory = 2048
-  end
 
   config.vm.provider 'libvirt' do |lv|
     lv.cpus = 2
@@ -16,15 +19,9 @@ Vagrant.configure(2) do |config|
     lv.disk_driver :discard => 'unmap', :detect_zeroes => 'unmap'
     lv.machine_type = 'q35'
     lv.nested = true
-    lv.loader = "/usr/share/OVMF/OVMF_CODE.secboot.fd"
-    lv.nvram = "/tmp/#{SecureRandom.uuid}.fd"
+    lv.loader = "/usr/share/edk2/ovmf/OVMF_CODE.secboot.fd"
+    lv.nvram = LOCAL_NVRAM
     lv.video_type = 'vga'
     lv.input :type => 'tablet', :bus => 'usb'
-  end
-
-  config.vm.provider 'vmware_desktop' do |vmd|
-    vmd.cpus = 2
-    vmd.memory = 2048
-    vmd.force_vmware_license = "workstation"
   end
 end

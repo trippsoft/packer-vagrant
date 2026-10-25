@@ -1,18 +1,14 @@
 packer {
     required_plugins {
         ansible = {
-            version = ">= 1.1.5"
+            version = ">= 1.1.6"
             source = "github.com/hashicorp/ansible"
         }
     }
 }
 
 build {
-    sources = [
-        "source.qemu.qemu",
-        "source.hyperv-vmcx.hyperv",
-        "source.vmware-vmx.vmware"
-    ]
+    sources = ["source.qemu.qemu"]
 
     provisioner "ansible" {
         playbook_file = "${local.project_directory}/ansible/rocky_cis.yml"
@@ -32,7 +28,7 @@ build {
 
         extra_arguments = [
             "-e",
-            "ansible_password=${build.Password} machine_type=server",
+            "ansible_password=${build.Password} machine_type=${var.machine_type}",
             "--scp-extra-args",
             "'-O'"
         ]

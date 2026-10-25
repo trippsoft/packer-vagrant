@@ -14,38 +14,16 @@ variable "vm_name_suffix" {
     type = string
 }
 
-variable "vagrant_hcp_client_id" {
-    type = string
-    sensitive = true
-}
-
-variable "vagrant_hcp_client_secret" {
-    type = string
-    sensitive = true
-}
-
 variable "headless" {
     type = bool
     default = true
 }
 
-variable "hyperv_switch_name" {
-    type = string
-    default = "LAN"
-}
-
 locals {
     vm_name = "${var.vm_name_prefix}_${var.vm_name_suffix}"
-    box_tag = "jtarpley/${local.vm_name}"
-    hostname = replace("${local.vm_name}", "_", "-")
-    box_version = formatdate("YYYY.MM.DD", timestamp())
     project_directory = replace(path.root, "/rocky/vagrant", "")
     previous_vm_directory = "${local.project_directory}/rocky/${var.relative_previous_vm_directory}"
-    hyperv_source_path = "${local.previous_vm_directory}/${var.vm_name_prefix}/hyperv"
-    hyperv_output_directory = "${path.root}/output/${local.vm_name}/hyperv"
-    qemu_efi_vars = "${local.previous_vm_directory}/${var.vm_name_prefix}/qemu/efivars.fd"
-    qemu_source_path = "${local.previous_vm_directory}/${var.vm_name_prefix}/qemu/${var.vm_name_prefix}_${var.previous_vm_suffix}"
-    qemu_output_directory = "${path.root}/output/${local.vm_name}/qemu"
-    vmware_source_path = "${local.previous_vm_directory}/${var.vm_name_prefix}/vmware/${var.vm_name_prefix}_${var.previous_vm_suffix}.vmx"
-    vmware_output_directory = "${path.root}/output/${local.vm_name}/vmware"
+    efi_vars = "${local.previous_vm_directory}/output/${var.vm_name_prefix}/efivars.fd"
+    source_path = "${local.previous_vm_directory}/output/${var.vm_name_prefix}/${var.vm_name_prefix}_${var.previous_vm_suffix}"
+    output_directory = "${path.root}/output/${local.vm_name}"
 }
