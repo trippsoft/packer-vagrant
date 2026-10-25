@@ -28,7 +28,7 @@ build {
 
         extra_arguments = [
             "-e",
-            "ansible_password=${build.Password} ansible_shell_type=cmd ansible_become_method=runas ansible_become_user=SYSTEM",
+            "ansible_password=${build.Password} ansible_shell_type=powershell ansible_become_method=runas ansible_become_user=SYSTEM",
             "--scp-extra-args",
             "'-O'"
         ]

@@ -413,6 +413,7 @@ jobs:
         box:
           - w11_24h2
           - w11_25h2
+          - w11_26h2
     env:
       TMPDIR: /var/tmp
     steps:

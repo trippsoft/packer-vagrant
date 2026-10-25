@@ -30,4 +30,12 @@ build {
         valid_exit_codes = [0, 3010, 4294967295]
         timeout = "10m"
     }
+
+    provisioner "powershell" {
+        inline = [
+            "New-ItemProperty -Path 'HKLM:\\SOFTWARE\\OpenSSH' -Name 'DefaultShell' -Value 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe' -PropertyType String -Force"
+        ]
+
+        timeout = "10m"
+    }
 }
