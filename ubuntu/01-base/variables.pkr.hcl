@@ -20,10 +20,6 @@ variable "boot_wait" {
     default = "5s"
 }
 
-variable "boot_command" {
-    type = list(string)
-}
-
 variable "headless" {
     type = bool
     default = true

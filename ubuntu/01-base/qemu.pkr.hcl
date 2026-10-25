@@ -30,7 +30,12 @@ source "qemu" "qemu" {
     iso_checksum = var.iso_checksum
     
     boot_wait = var.boot_wait
-    boot_command = var.boot_command
+    boot_command = [
+        "e<wait>",
+        "<down><down><down><end>",
+        " net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=1 autoinstall ds=nocloud\\;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/",
+        "<f10>"
+    ]
     
     communicator = "ssh"
     ssh_username = "vagrant"
