@@ -13,7 +13,7 @@ Vagrant.configure(2) do |config|
   config.vm.guest = :windows
   config.vm.boot_timeout = 600
   config.vm.communicator = 'winssh'
-  config.winssh.shell = 'cmd'
+  config.winssh.shell = 'powershell'
   config.vm.synced_folder '.', '/vagrant', disabled: true
 
   config.vm.provider 'libvirt' do |lv|
