@@ -37,8 +37,8 @@ jobs:
       fail-fast: false
       matrix:
         box:
-          - debian13
           - debian12
+          - debian13
     env:
       TMPDIR: /var/tmp
     steps:
@@ -165,14 +165,14 @@ jobs:
       fail-fast: false
       matrix:
         box:
+          - name: rocky8_ws
+            venv: ansible-2.16
+          - name: rocky9_ws
+            venv: ansible-2.21
           - name: rocky10
             venv: ansible-2.21
           - name: rocky10_ws
             venv: ansible-2.21
-          - name: rocky9_ws
-            venv: ansible-2.21
-          - name: rocky8_ws
-            venv: ansible-2.16
     env:
       TMPDIR: /var/tmp
     steps:
@@ -235,9 +235,9 @@ jobs:
       fail-fast: false
       matrix:
         box:
-          - name: rocky9
-            venv: ansible-2.16
           - name: rocky8
+            venv: ansible-2.16
+          - name: rocky9
             venv: ansible-2.16
     env:
       TMPDIR: /var/tmp
