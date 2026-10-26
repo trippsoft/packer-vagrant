@@ -44,6 +44,10 @@ build {
             vagrantfile_template = "${path.root}/Vagrantfile"
             output = "${path.root}/boxes/${local.vm_name}/{{.Provider}}-{{.Architecture}}.box"
             compression_level = 9
+
+            include = [
+                "${local.output_directory}/efivars.fd"
+            ]
         }
     }
 }
